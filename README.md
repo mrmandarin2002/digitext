@@ -1,2 +1,2 @@
-# digitext
-St. Paul's High School Textbook Digitalization Project
+# textbook_digitalization
+Digitizing St. Paul High School's textbook distribution and return system

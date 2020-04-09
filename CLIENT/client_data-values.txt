@@ -1,0 +1,9 @@
+Controller Variables:
+
+student_info --> student information returned from info_s
+student_textbooks --> current textbooks taken out by student
+student_textbooks_title --> current textbooks taken out by student (list of string as opposed to the barcodes)
+student_needed_textbooks --> textbooks assigned to student based on course
+student_courses --> the courses that the student are taking
+textbook_info --> textbook information returned from info_t
+textbook_list --> list of all the textbook titlesin the server

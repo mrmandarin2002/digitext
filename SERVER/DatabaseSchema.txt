@@ -1,0 +1,56 @@
+Students:
+
+StudentId: int [Primary Key]
+StudentNumber: text required
+StudentName: text required
+
+
+
+Textbooks:
+
+TextbookId: int [Primary Key]
+TextbookNumber: text required
+TextbookTitle: text required
+TextbookCost: real required
+
+
+
+Withdrawls:
+
+WithdrawlId: int [Primary Key]
+StudentNumber: required [References Students]
+TextbookNumber: required [References Textbooks]
+Over_Summer: int required
+StartCondition: int required
+StartDate: text required
+EndCondition: int
+EndDate: text
+
+
+
+Deposit Changes
+
+ChangeId: int [Primary Key]
+StudentId: required [References Students]
+ChangeAmount: real required
+ChangeDate: date required
+ChangeReason: text required
+
+
+
+General Notes:
+
+The purpose of the overall project is to record the withdrawls and returns of school textbooks using
+barcode scanners and a centralized database. The idea came from the teacher in charge of textbooks
+and my friend and I, being the only two students in grade twelve computer science this year,
+convinced our teacher to dedicate our entire first term to this project.
+
+The front end, including barcode scanning, is being developed by a friend of mine using JavaFX
+
+Most of the server is written in Python3 with interaction between the database and the server
+code being through the sqlite3 module from the Python standard library.
+Under my model this most of the math for deposit changes would be handled in the Python code.
+
+Connection between server and client is through a connectionless UDP socket.
+TCP would probably be a better option but the logic is so much easier that I'm probably going
+to stick to a connectionless system unless doing so is a sin against backend development.

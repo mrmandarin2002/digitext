@@ -1,0 +1,3 @@
+check if all functions are still working
+import data from excel file
+create functions
