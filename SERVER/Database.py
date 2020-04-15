@@ -119,6 +119,36 @@ def assign_textbook(conn, TextbookNumber, StudentNumber):
         # commit the changed database
         conn.commit()
 
+def return_textbook(conn, TextbookNumber, TextbookCondition):
+    # find student number and withdrawl condition of the returned textbook
+    StudentNumber = ""
+    for textbook in get_textbooks(conn):
+        if textbook[1] == TextbookNumber:
+            StudentNumber = textbook[5]
+            WithdrawlCondition = textbook[4]
+            break
+    # create an sql command string
+    sql_cmd = """INSERT INTO ReturnedTextbooks(TextbookNumber, StudentNumber, WithdrawlCondition, ReturnCondition)
+                 VALUES (?,?,?)"""
+    # create a cursor object
+    cur = conn.cursor()
+    # execute the sql command string using the function parameters
+    cur.execute(sql_cmd, (TextbookNumber, StudentNumber, WithdrawlCondition, TextbookCondition))
+    # commit the changes to the database
+    conn.commit()
+    # return true to indicate that the operation has been successfuly applied
+    cur.close()
+
+def get_returned_textbooks(conn):
+    # create a cursor object
+    cur = conn.cursor()
+    # execute an sql command string
+    cur.execute("SELECT * FROM ReturnedTextbooks WHERE 1")
+    # return the results of the query
+    result = cur.fetchall()
+    cur.close()
+    return result
+
 def insert_course(conn, CourseNumber, CourseName, CourseTeacher):
     # create an sql command string
     sql_cmd = """INSERT INTO Courses(CourseNumber, CourseName, CourseTeacher, CourseTextbooks)

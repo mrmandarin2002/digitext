@@ -4,8 +4,6 @@ from tkinter import font  as tkfont # python 3
 from tkinter import ttk
 from tkinter import messagebox
 
-#test
-
 #import own files
 import interactions, calculations, window, barcode_interaction
 
@@ -240,6 +238,7 @@ class TextbookManagement(tk.Frame):
                         #price
                         #waiting for functions to be complete
                         ###
+                        #once there are no textbooks left
                         if(not self.num_of_textbooks):
                             messagebox.showwarning("Done!", controller.student_info[2] + " is done returning textbooks!")
                     elif(controller.textbook_info[4] != "None"):
@@ -251,6 +250,7 @@ class TextbookManagement(tk.Frame):
         else:
             messagebox.showerror("Error", "I don't know what you scanned in my dude")
 
+    #switches from distribution to return or vice-versa
     def switch_mode(self):
         self.clear()
         if(self.day == 'D'):
@@ -305,6 +305,7 @@ class TextbookManagement(tk.Frame):
         self.textbook_listbox = tk.Listbox(self, bd = 0, bg = MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = MAROON)
         self.textbook_listbox.grid(row = 1, column = 1, sticky = "NW", rowspan = 10)
 
+#where teachers assign textbooks to courses
 class TeacherAssignment(tk.Frame):
 
     idx = -1
@@ -334,20 +335,16 @@ class TeacherAssignment(tk.Frame):
         course_check = []
         self.courses_info.clear()
         self.full_courses_info.clear()
-        cnt = 0
-        for course in self.teacher_courses:
+        for x, course in self.teacher_courses:
             course_info = controller.scanner.server.info_c(course)
-            print(course_info)
             if(self.identical_courses):
-                self.course_list.insert(cnt, course_info[1])
+                self.course_list.insert(x, course_info[1])
                 self.courses_info.append(course_info)
-                cnt += 1
             else:
                 if(course_info[1] not in course_check):
-                    self.course_list.insert(cnt, course_info[1])
+                    self.course_list.insert(x, course_info[1])
                     self.courses_info.append(course_info)
                     course_check.append(course_info[1])
-                    cnt += 1
             self.full_courses_info.append(course_info)
                     
     def display_identical_courses(self,controller):
@@ -424,7 +421,7 @@ class TeacherAssignment(tk.Frame):
                 if(course[1] == self.courses_info[self.cidx][1]):
                     controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
 
-
+    #searches for a teacher's name
     def search_teacher(self, controller):
         check = False
         first_name = self.first_name_entry.get()
@@ -432,8 +429,7 @@ class TeacherAssignment(tk.Frame):
         if(first_name and last_name):
             for t_name in controller.scanner.teachers:
                 if(first_name.lower() in t_name.lower() and last_name.lower() in t_name.lower()):
-                    confirm = messagebox.askyesno(title = "Confirm", message = "Are you " + t_name + "?")
-                    if(confirm):
+                    if(messagebox.askyesno(title = "Confirm", message = "Are you " + t_name + "?")):
                         check = True
                         self.current_teacher = t_name
                         self.teacher_courses = controller.scanner.server.get_teacher_c(self.current_teacher)
@@ -442,14 +438,11 @@ class TeacherAssignment(tk.Frame):
                         self.course_selected = False
                         self.teacher_selected = True
                         break
-                    else:
-                        messagebox.showinfo("YOU ARE WHO YOU ARE", "NANI?!?")
         if(not check):
-            messagebox.showerror(title = "Error", message = "YOU ARE NOBODY")
+            messagebox.showerror(title = "Error", message = "Do you even know how to spell your name?")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.controller = controller
         TeacherAssignment.configure(self, background = MAROON)
 
         self.courses = controller.scanner.server.courses_n()
