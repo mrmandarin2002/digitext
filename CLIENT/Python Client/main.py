@@ -318,8 +318,6 @@ class TeacherAssignment(tk.Frame):
     full_courses_info = []
     textbook_nums = 0
     current_textbook_list = []
-    disable_lambda1 = False
-    disable_lambda2 = False
     changes_made = False
     new_course = False
 
@@ -400,11 +398,7 @@ class TeacherAssignment(tk.Frame):
         elif(not self.course_selected):
             messagebox.showerror("Error", "Please select a course first before adding textbooks")
         else:
-            self.disable_lambda1 = True
-            self.disable_lambda2 = True
             current_textbook_name = window.add_textbook_window(self, controller).show()
-            self.disable_lambda1 = False
-            self.disable_lambda2 = False
             if(current_textbook_name in self.current_textbook_list):
                 messagebox.showwarning("WARNING", "You already have the identical textbook for this course")
             elif(len(current_textbook_name) > 0):
