@@ -142,3 +142,7 @@ class Client:
     # gets a list of textbook titles
     def get_textbook_titles(self):
         return self.command("get_textbook_titles", []).split("|")
+
+    # get a list of returned textbooks for a specified student
+    def get_student_returned(self, student_id):
+        return "|".join([textbook.split("|") for textbook in self.command("student_returned", [student_id]).split("~")])

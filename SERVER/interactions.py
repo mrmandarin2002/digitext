@@ -49,24 +49,17 @@ def student_textbooks(args): # student number
     return "|".join(textbooks)
 
 # gets the textbook return information of a specific student from the database
-# the information consists of two lists
-#   1. Entries from the textbooks table that currently correspond the the student
-#   2. Entries from the returned textbooks table corresponding to the student
+# the information consists of a list: entries from the returned textbooks table corresponding to the student
 def student_return_info(args): # student number
     print(get_time()+"Returning textbook return information of student "+args[0]+"...")
     conn = Database.create_connection("server.db")
-    # get the textbooks currently held by the student
-    student_textbooks = []
-    for textbook in Database.get_textbooks(conn):
-        if textbook[2] == args[0]:
-            student_textbooks.append(textbook)
     # get the textbooks returned by the student
     student_returned_textbooks = []
     for textbook in Database.get_returned_textbooks(conn):
         if textbook[2] == args[0]:
-            student_returned_textbooks.append(textbook)
+            student_returned_textbooks.append("|".join(textbook))
     # return gathered information
-    return "|".join(student_textbooks)+"~"+"|".join(student_returned_textbook)
+    return "~".join(student_returned_textbook)
 
 # get textbooks that a student should have
 def student_requisites(args): # student number
@@ -226,6 +219,7 @@ interact = {"valid_t": valid_textbook,
             "delete_t": delete_textbook,
             "student_t": student_textbooks,
             "student_r": student_requisites,
+            "student_returned": student_return_info,
             "get_teachers": get_teachers,
             "get_teacher_c": get_teacher_courses,
             "set_course_r": set_course_textbooks,
