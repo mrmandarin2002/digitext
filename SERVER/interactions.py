@@ -48,6 +48,26 @@ def student_textbooks(args): # student number
             textbooks.append(t[1])
     return "|".join(textbooks)
 
+# gets the textbook return information of a specific student from the database
+# the information consists of two lists
+#   1. Entries from the textbooks table that currently correspond the the student
+#   2. Entries from the returned textbooks table corresponding to the student
+def student_return_info(args): # student number
+    print(get_time()+"Returning textbook return information of student "+args[0]+"...")
+    conn = Database.create_connection("server.db")
+    # get the textbooks currently held by the student
+    student_textbooks = []
+    for textbook in Database.get_textbooks(conn):
+        if textbook[2] == args[0]:
+            student_textbooks.append(textbook)
+    # get the textbooks returned by the student
+    student_returned_textbooks = []
+    for textbook in Database.get_returned_textbooks(conn):
+        if textbook[2] == args[0]:
+            student_returned_textbooks.append(textbook)
+    # return gathered information
+    return "|".join(student_textbooks)+"~"+"|".join(student_returned_textbook)
+
 # get textbooks that a student should have
 def student_requisites(args): # student number
     print(get_time()+"Returning requisite textbooks for student: "+args[0])
@@ -113,9 +133,10 @@ def assign_textbook(args): # textbook number, student number
 
 # return a textbook from a student in the database
 def return_textbook(args):
-    print(get_time()+"Returning textbook: "+args[0]+" from student...")
+    print(get_time()+"Returning textbook: "+args[0]+" with condition: "+args[1]+" from student...")
     conn = Database.create_connection("server.db")
     Database.assign_textbook(conn, args[0], "None")
+    Database.return_textbook(conn, args[0], args[1])
     conn.close()
     return "1"
 
@@ -149,6 +170,7 @@ def course_numbers(args):
     conn.close()
     return "|".join(numbers)
 
+# sets the requisite textbooks for a given course
 def set_course_textbooks(args):
     print(get_time()+"Setting textbooks:\n\t"+"\n\t".join(args[1].split("~"))+"\nAs requisites to course: "+args[0])
     conn = Database.create_connection("server.db")
@@ -156,6 +178,7 @@ def set_course_textbooks(args):
     conn.close()
     return "1"
 
+# gets information of all teachers
 def get_teachers(args):
     print(get_time()+"Getting teacher names and numbers...")
     conn = Database.create_connection("server.db")
@@ -166,6 +189,7 @@ def get_teachers(args):
     conn.close()
     return "|".join(teachers)
 
+# gets the course numbers for a specified teacher
 def get_teacher_courses(args):
     print(get_time()+"Getting courses of teacher: "+args[0]+"...")
     conn = Database.create_connection("server.db")
@@ -176,6 +200,7 @@ def get_teacher_courses(args):
     conn.close()
     return "|".join(courses)
 
+# gets a list of textbook names
 def get_textbook_names(args):
     print(get_time()+"Getting a list of textbook names...")
     conn = Database.create_connection("server.db")

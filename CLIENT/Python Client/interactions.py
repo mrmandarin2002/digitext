@@ -6,7 +6,7 @@ class Client:
     server_connection = True
 
     # initialization method
-    def __init__(self, address, port):
+    def __init__(self, address, port, debug_mode=False):
 
         # define server address
         self.server_address = (address, port)
@@ -15,7 +15,8 @@ class Client:
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind(("", 7357))
         self.udp_socket.settimeout(1)
-        self.check_connection()
+        if not debug_mode:
+            self.check_connection()
 
     def check_connection(self):
         threading.Timer(5.0, self.check_connection).start()
@@ -111,8 +112,8 @@ class Client:
         return self.command("assign_t", [textbook_id, student_id])
 
     # retun textbook from student in database
-    def return_t(self, textbook_id):
-        return self.command("return_t", [textbook_id])
+    def return_t(self, textbook_id, textbook_condition):
+        return self.command("return_t", [textbook_id, textbook_condition])
 
     # get a list of all course numbers
     def courses_n(self):

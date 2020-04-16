@@ -58,6 +58,8 @@ class scanner:
         self.teachers = self.server.get_teachers()
         #all the textboosk at school
         self.textbook_list = self.server.get_textbook_titles()
+        #sort the textbook_list alphabetically
+        self.textbook_list = sorted(self.textbook_list)
 
         #starts the thread where program listens for input (if there is input call on_press function below)
         keyLis = Listener(on_press=lambda key : self.on_press(key, controller))
