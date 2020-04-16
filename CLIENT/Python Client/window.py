@@ -108,4 +108,32 @@ class add_textbook_window(tk.Toplevel):
     def show(self):
         self.wait_window()
         return self.textbook_name.get()
-        
+
+class price_window(tk.Toplevel):
+
+    def __init__(self, parent, controller):
+        tk.Toplevel.__init__(self, parent)
+        self.condition = tk.StringVar()
+        self.TITLE_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=20, weight="bold")
+        self.SUBTITLE_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 14, weight = "bold")
+        self.FIELD_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 11)
+        self.BUTTON_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=10)
+        self.BACK_BUTTON_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 8)
+        self.MENU_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=11)
+        self.configure(background = font_info.MAROON)
+        self.title("Condition of Textbook?")
+        title_label = tk.Label(self, text = "What is the current condition of this textbook?", font = self.MENU_FONT, bg = font_info.MAROON)
+        title_label.grid(row = 0, column = 0, padx = 5, pady = 5)
+        self.condition_choices = ["New", "Good", "Fair", "Poor", "Destroyed"]
+        self.condition_entry = ttk.Combobox(self, values = self.condition_choices, font = self.FIELD_FONT, state = "readonly", width = 10)
+        self.condition_entry.grid(row = 1, column = 0, padx = 5, pady = 5)
+        confirm_button = tk.Button(self, text = "Confirm Condition", font = self.BUTTON_FONT, command = self.death)
+        confirm_button.grid(row = 3, column = 0, padx = 5, pady = (0, 10))
+
+    def death(self, event = None):
+        self.condition.set(self.condition_entry.get())
+        self.destroy()
+
+    def show(self):
+        self.wait_window()
+        return self.condition.get()

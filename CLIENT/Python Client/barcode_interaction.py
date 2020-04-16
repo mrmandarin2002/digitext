@@ -41,8 +41,10 @@ class scanner:
     #the titles of the student's textbooks (student_textbooks is based on barcode id)
     student_textbooks_title = []
     #a textbook's info{
-    # ----
-    # ----
+    #0 : barcode
+    #1 : title
+    #2 : price
+    #3 : condition
     # }
     textbook_info = []
     #list of all textbooks
@@ -141,5 +143,5 @@ class scanner:
             self.barcode_status = "Unknown"     
     
     #updates the textbook_list to include the latest books
-    def update_textbook_list(self, controller):
-        self.textbook_list = controller.server.get_textbook_titles()
+    def update_textbook_list(self):
+        self.textbook_list = self.server.get_textbook_titles()

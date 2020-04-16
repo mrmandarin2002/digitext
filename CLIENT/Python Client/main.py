@@ -38,6 +38,9 @@ class client(tk.Tk):
         #the relevant code is in barcode_interactions.py
         self.scanner = barcode_interaction.scanner(self)
 
+        print("CURRENT TEXTBOOK LIST:")
+        print(self.scanner.textbook_list)
+
         #some other lines of code that the stack overflow provided
         container = tk.Frame(self)
         container.pack(side = "top", fill = "both", expand = True)
@@ -210,7 +213,7 @@ class TextbookManagement(tk.Frame):
                             #asks if you want to replace it
                             if(messagebox.askyesno("Override?", "This textbook is already assigned to " + controller.server.info_s(controller.textbook_info[4])[2] + ". Would you like to replace anyways?")):
                                 #returns the textbook to the system and then assigns it to student
-                                controller.server.return_t(controller.current_barcode)
+                                controller.server.return_t(controller.current_barcode, controller.textbook_info[3])
                                 controller.server.assign_t(controller.current_barcode, self.current_student_barcode)
                                 self.num_of_textbooks += 1
                                 self.student_tnum_label["text"] = "Textbooks taken out: " + str(self.num_of_textbooks)
@@ -232,13 +235,9 @@ class TextbookManagement(tk.Frame):
                         self.num_of_textbooks -= 1
                         self.student_tnum_label["text"] = "Textbooks taken out: " + str(self.num_of_textbooks)
                         self.textbook_listbox.delete(controller.student_textbooks.index(controller.current_barcode))
+                        final_condition = window.price_window(self, controller).show()
                         controller.student_textbooks.remove(controller.current_barcode)
-                        controller.server.return_t(controller.current_barcode)
-                        ###
-                        #price
-                        #waiting for functions to be complete
-                        ###
-                        #once there are no textbooks left
+                        controller.server.return_t(controller.current_barcode, calculations.get_textbook_condition(final_condition))
                         if(not self.num_of_textbooks):
                             messagebox.showwarning("Done!", controller.student_info[2] + " is done returning textbooks!")
                     elif(controller.textbook_info[4] != "None"):
@@ -333,7 +332,7 @@ class TeacherAssignment(tk.Frame):
         course_check = []
         self.courses_info.clear()
         self.full_courses_info.clear()
-        for x, course in self.teacher_courses:
+        for x, course in enumerate(self.teacher_courses):
             course_info = controller.scanner.server.info_c(course)
             if(self.identical_courses):
                 self.course_list.insert(x, course_info[1])
@@ -531,7 +530,7 @@ class TextbookScanner(tk.Frame):
         else:
             price_string = self.price_entry.get()
             try:
-                similar_list = calculations.check_similarity(self.title_entry.get(), controller.textbook_list)
+                similar_list = calculations.check_similarity(self.title_entry.get(), controller.scanner.textbook_list)
                 print(similar_list)
                 self.current_price = float(price_string)
                 self.current_title = self.title_entry.get()
@@ -637,16 +636,16 @@ class Info(tk.Frame):
         self.barcode_status_label["text"] = "Barcode Type: " + controller.barcode_status
 
     def delete_textbook(self, controller):
-        if(controller.barcode_status == "Textbook"):
-            controller.server.delete_t(controller.current_barcode)
+        if(controller.scanner.barcode_status == "Textbook"):
+            controller.scanner.server.delete_t(controller.scanner.current_barcode)
             messagebox.showwarning("DELETED!", "This textbook has been deleted")
             self.clear()
         elif(self.textbook_selected):
             option = messagebox.askyesno("Warning", "Would you like to the delete (return) the textbook you selected?")
             if(option):
-                controller.server.return_t(controller.textbook_info[0])
+                controller.scanner.server.return_t(controller.textbook_info[0], 4)
                 self.textbook_list.delete(self.textbook_selected_index)
-                controller.student_textbooks.remove(controller.textbook_info[0])
+                controller.scanner.student_textbooks.remove(controller.scanner.textbook_info[0])
         else:
             messagebox.showerror("ERROR", "Please select a textbook you would like to delete")
 
