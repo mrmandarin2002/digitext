@@ -119,6 +119,31 @@ def assign_textbook(conn, TextbookNumber, StudentNumber):
         # commit the changed database
         conn.commit()
 
+def update_condition(conn, TextbookNumber, Condition):
+    # get textbook information
+    for t in get_textbooks(conn):
+        if t[1] == TextbookNumber:
+            textbook = list(t)
+    if textbook:
+        textbook[4] = Condition
+        textbook.append(textbook[0])
+        textbook = textbook[1:]
+        # create a cursor object
+        cur = conn.cursor()
+        # create an sql command string to update textbooks table with new information
+        sql = """UPDATE Textbooks
+                SET TextbookNumber = ? ,
+                    TextbookTitle = ? ,
+                    TextbookCost = ? ,
+                    TextbookCondition = ? ,
+                    StudentNumber = ?
+                WHERE TextbookId = ?"""
+        # execute sql command string with selected textbook as input parameters and close cursor object
+        cur.execute(sql, textbook)
+        cur.close()
+        # commit the changed database
+        conn.commit()
+
 def return_textbook(conn, TextbookNumber, TextbookCondition):
     # find student number and withdrawl condition of the returned textbook
     StudentNumber = ""

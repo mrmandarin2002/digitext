@@ -129,6 +129,7 @@ def return_textbook(args):
     print(get_time()+"Returning textbook: "+args[0]+" with condition: "+args[1]+" from student...")
     conn = Database.create_connection("server.db")
     Database.return_textbook(conn, args[0], args[1])
+    Database.update_condition(conn, args[0], args[1])
     Database.assign_textbook(conn, args[0], "None")
     conn.close()
     return "1"
