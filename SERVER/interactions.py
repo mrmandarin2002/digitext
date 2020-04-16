@@ -57,9 +57,9 @@ def student_return_info(args): # student number
     student_returned_textbooks = []
     for textbook in Database.get_returned_textbooks(conn):
         if textbook[2] == args[0]:
-            student_returned_textbooks.append("|".join(textbook))
+            student_returned_textbooks.append("|".join([str(field) for field in textbook]))
     # return gathered information
-    return "~".join(student_returned_textbook)
+    return "~".join(student_returned_textbooks)
 
 # get textbooks that a student should have
 def student_requisites(args): # student number
@@ -128,8 +128,8 @@ def assign_textbook(args): # textbook number, student number
 def return_textbook(args):
     print(get_time()+"Returning textbook: "+args[0]+" with condition: "+args[1]+" from student...")
     conn = Database.create_connection("server.db")
-    Database.assign_textbook(conn, args[0], "None")
     Database.return_textbook(conn, args[0], args[1])
+    Database.assign_textbook(conn, args[0], "None")
     conn.close()
     return "1"
 

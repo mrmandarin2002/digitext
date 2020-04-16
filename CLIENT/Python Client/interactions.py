@@ -113,7 +113,7 @@ class Client:
 
     # retun textbook from student in database
     def return_t(self, textbook_id, textbook_condition):
-        return self.command("return_t", [textbook_id, textbook_condition])
+        return self.command("return_t", [textbook_id, str(textbook_condition)])
 
     # get a list of all course numbers
     def courses_n(self):
@@ -145,4 +145,4 @@ class Client:
 
     # get a list of returned textbooks for a specified student
     def get_student_returned(self, student_id):
-        return "|".join([textbook.split("|") for textbook in self.command("student_returned", [student_id]).split("~")])
+        return [textbook.split("|") for textbook in self.command("student_returned", [student_id]).split("~")]

@@ -129,7 +129,7 @@ def return_textbook(conn, TextbookNumber, TextbookCondition):
             break
     # create an sql command string
     sql_cmd = """INSERT INTO ReturnedTextbooks(TextbookNumber, StudentNumber, WithdrawlCondition, ReturnCondition)
-                 VALUES (?,?,?)"""
+                 VALUES (?,?,?,?)"""
     # create a cursor object
     cur = conn.cursor()
     # execute the sql command string using the function parameters
