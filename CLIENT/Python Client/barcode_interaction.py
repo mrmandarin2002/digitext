@@ -12,6 +12,7 @@ from pynput.keyboard import Key, Listener
 #basic idea for barcode detection is that since the barcode scanner sends input as keyboard...
 #we can basically have a temporary string that keeps track of keyboard inputs. This string clears...
 #every time more than 40 milliseconds elapses between inputs
+#also keeps a lot of data regarding textbooks
 #####
 
 class scanner:
@@ -49,9 +50,13 @@ class scanner:
     textbook_info = []
     #list of all textbooks
     textbook_list = []
+    
+    textbook_conditions = ["New", "Good", "Fair", "Poor", "Destroyed"]
+    textbook_conditions_rev = {"New": 0, "Good": 1, "Fair": 2, "Poor": 3, "Destroyed": 4}
+
 
     def __init__(self, controller):
-
+        self.controller = controller
         #where the interaction with server happens
         self.server = interactions.Client(address = "127.0.0.1", port = 7356)
         #all the courses available
@@ -88,7 +93,7 @@ class scanner:
                 #checks what the actual hell the barcode is
                 self.check_barcode()
                 #executes a function in each frame respectively that will process the barcode
-                controller.call_barcode_function(self)
+                controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
         else:
             #in case this is the start of a scanner's input, we add the first ccharacter
             self.barcode_string = str(key)[1:-1]
