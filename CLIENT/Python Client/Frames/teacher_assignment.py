@@ -137,7 +137,7 @@ class TeacherAssignment(tk.Frame):
         TeacherAssignment.configure(self, background = controller.MAROON)
 
         self.courses = controller.scanner.server.courses_n()
-        controller.make_back_button(self).grid(row = 8, column = 0, padx = 10, pady = (15,0))
+        controller.make_back_button(self).grid(row = 8, column = 0, padx = 10, pady = (40,0))
         self.first_name_entry = tk.Entry(self)
         self.last_name_entry = tk.Entry(self)
         teacher_name_label = tk.Label(self, text = "Who art thee?", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
