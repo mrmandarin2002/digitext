@@ -113,7 +113,7 @@ class TextbookScanner(tk.Frame):
 
         #buttons
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 8, column = 0, padx = 10, pady = (120,0), sticky = "W")
+        back_button.grid(row = 8, column = 0, padx = 10, pady = (150,0), sticky = "W")
         self.set_button = tk.Button(self, text = "Set Values", command = lambda : self.set_values(controller = controller), font = controller.BUTTON_FONT)
         self.set_button.grid(row = 7, column = 0, padx = 10, pady = 10, sticky = "W")
 

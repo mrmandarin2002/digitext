@@ -4,10 +4,8 @@ from tkinter import font as tkfont
 from tkinter import messagebox
 import sys
 
-import interactions
-
 MAIN_FONT = "Helvetica"
-MAROON = '#B03060'
+MAROON = '#DFF9FB'
 PINK = '#FF00D4'
 NEON_GREEN = '#4DFF4D'
 WHITE = (255,255,255)

@@ -166,7 +166,7 @@ class TextbookManagement(tk.Frame):
         self.student_textbooks_label = tk.Label(self, text = "Needed Textbooks: ", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         self.student_textbooks_label.grid(row = 0, column = 1, sticky = "W", pady = (30, 0))
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 11, column = 0, padx = 10, pady = (40,0), sticky = "W")
+        back_button.grid(row = 11, column = 0, padx = 10, pady = (60,0), sticky = "W")
         invisible_label = tk.Label(self, text = "", bg = controller.MAROON)
         invisible_label.grid(row = 12, padx = 150)
         self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON)

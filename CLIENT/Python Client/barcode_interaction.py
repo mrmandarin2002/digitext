@@ -85,7 +85,8 @@ class scanner:
                 self.barcode_string += str(key)[1:-1]
             #since the final input of scanner is always enter, if the string we have been adding to is a certain length...
             #the program decides its a barcode. It's quite foolproof
-            if(key == Key.enter and len(self.barcode_string) > 4):
+            if(key == Key.enter and len(self.barcode_string) > 5):
+                print("IN")
                 #this makes "self.current_barcode" our official barcode id! For now...
                 self.current_barcode = self.barcode_string
                 #reset the the temporary barcode string

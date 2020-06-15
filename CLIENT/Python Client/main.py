@@ -24,7 +24,7 @@ class client(tk.Tk):
         self.scene_list = (welcome_page.WelcomePage, menu.Menu, textbook_management.TextbookManagement, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
 
         self.MAIN_FONT = "Helvetica"
-        self.MAROON = '#FFE8F6'
+        self.MAROON = "#DFF9FB"
         self.PINK = '#FF00D4'
 
         #different type of fonts used throughout the program
@@ -57,9 +57,10 @@ class client(tk.Tk):
             frame = scene(parent=container, controller = self)
             self.frames[page_name] = frame
             frame.grid(row = 0, column = 0, sticky = "nswe")
+            
 
         #this is the starting window
-        self.show_frame("WelcomePage")
+        self.show_frame("Info")
 
     #this shows the frame / window of the page we want to display
     def show_frame(self, page_name):
@@ -70,7 +71,7 @@ class client(tk.Tk):
     #allows the creation of buttons
     def make_button(self, controller, d_text, scene, option):
         if(option == "menu"):
-            return tk.Button(controller, text = d_text, command = lambda: self.show_frame(scene), font = self.MENU_FONT, fg = self.PINK)
+            return tk.Button(controller, text = d_text, command = lambda: self.show_frame(scene), font = self.MENU_FONT)
         else:
             return tk.Button(controller, text = d_text, command = lambda: self.show_frame(scene), font = self.BUTTON_FONT)
     

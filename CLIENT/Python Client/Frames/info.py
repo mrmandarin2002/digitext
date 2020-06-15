@@ -28,7 +28,7 @@ class Info(tk.Frame):
 
     def display_textbook_info(self, controller):
         self.textbook_title_label["text"] = "Textbook Title: " + controller.textbook_info[1]
-        self.textbook_condition_label["text"] = "Textbook Condition: " + controller.textbook_conditions[controller.textbook_info[3]]
+        self.textbook_condition_label["text"] = "Textbook Condition: " + controller.textbook_conditions[int(controller.textbook_info[3])]
         self.textbook_price_label["text"] = "Textbook Price: " + controller.textbook_info[2]
         self.textbook_barcode_label["text"] = "Textbook Barcode " + controller.textbook_info[0]
 
@@ -111,6 +111,6 @@ class Info(tk.Frame):
         if(controller.version == "teacher"):
             delete_button = tk.Button(self, text = "Delete Textbook", font = controller.MENU_FONT, command = lambda: self.delete_textbook(controller = controller))
             delete_button.grid(row = 9, column = 0, padx = 10, pady = (20, 0), sticky = "W")    
-            pady_dif_back = 110    
+            pady_dif_back = 55    
         back_button = controller.make_back_button(controller = self)
         back_button.grid(row = 11, column = 0, padx = 10, pady = (132 - pady_dif_back,0), sticky = "W")
