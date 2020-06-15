@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import window
 
 #where teachers assign textbooks to courses
 class TeacherAssignment(tk.Frame):

@@ -4,7 +4,14 @@ from tkinter import font as tkfont
 from tkinter import messagebox
 import sys
 
-import interactions, font_info
+import interactions
+
+MAIN_FONT = "Helvetica"
+MAROON = '#B03060'
+PINK = '#FF00D4'
+NEON_GREEN = '#4DFF4D'
+WHITE = (255,255,255)
+BLACK = (0,0,0)
 
 class add_textbook_window(tk.Toplevel):
 
@@ -36,19 +43,19 @@ class add_textbook_window(tk.Toplevel):
 
     def __init__(self, parent, controller):
         tk.Toplevel.__init__(self, parent)
-        self.configure(background = font_info.MAROON)
+        self.configure(background = MAROON)
         self.title("Add Textbook")
         self.iconbitmap("sphs_icon.ico")
         self.textbook_name = tk.StringVar()
-        title_label = tk.Label(self, text = "Enter the name of the textbook:", font = controller.MENU_FONT, bg = font_info.MAROON)
+        title_label = tk.Label(self, text = "Enter the name of the textbook:", font = controller.MENU_FONT, bg = MAROON)
         title_label.grid(row = 0, column = 0,padx = 5, pady = 5)
         self.textbook_entry = tk.Entry(self)
         self.textbook_entry.grid(row = 1, column = 0, padx = 5, pady = 5)
         textbook_button = tk.Button(self, text = "Search textbook", font = controller.BUTTON_FONT, command = lambda : self.search_textbook(controller))
         textbook_button.grid(row = 2, column = 0, padx = 5, pady = 5)
-        pot_textbook_label = tk.Label(self, text = "Potential Textbooks:", font = controller.MENU_FONT, bg = font_info.MAROON)
+        pot_textbook_label = tk.Label(self, text = "Potential Textbooks:", font = controller.MENU_FONT, bg = MAROON)
         pot_textbook_label.grid(row = 3, column = 0, padx = 5, pady = (10, 0))
-        self.textbook_list = tk.Listbox(self, bd = 0, bg = font_info.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = font_info.MAROON)
+        self.textbook_list = tk.Listbox(self, bd = 0, bg = MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = MAROON)
         self.textbook_list.grid(row = 4, column = 0, padx = 5, pady = (0, 10))
         self.textbook_list.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller))
         confirm_button = tk.Button(self, text = "Add Textbook", font = controller.BUTTON_FONT, command = self.death)
@@ -66,15 +73,15 @@ class price_window(tk.Toplevel):
     def __init__(self, parent, controller):
         tk.Toplevel.__init__(self, parent)
         self.condition = tk.StringVar()
-        self.TITLE_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=20, weight="bold")
-        self.SUBTITLE_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 14, weight = "bold")
-        self.FIELD_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 11)
-        self.BUTTON_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=10)
-        self.BACK_BUTTON_FONT = tkfont.Font(family = font_info.MAIN_FONT, size = 8)
-        self.MENU_FONT = tkfont.Font(family=font_info.MAIN_FONT, size=11)
-        self.configure(background = font_info.MAROON)
+        self.TITLE_FONT = tkfont.Font(family=MAIN_FONT, size=20, weight="bold")
+        self.SUBTITLE_FONT = tkfont.Font(family = MAIN_FONT, size = 14, weight = "bold")
+        self.FIELD_FONT = tkfont.Font(family = MAIN_FONT, size = 11)
+        self.BUTTON_FONT = tkfont.Font(family=MAIN_FONT, size=10)
+        self.BACK_BUTTON_FONT = tkfont.Font(family = MAIN_FONT, size = 8)
+        self.MENU_FONT = tkfont.Font(family=MAIN_FONT, size=11)
+        self.configure(background = MAROON)
         self.title("Condition of Textbook?")
-        title_label = tk.Label(self, text = "What is the current condition of this textbook?", font = self.MENU_FONT, bg = font_info.MAROON)
+        title_label = tk.Label(self, text = "What is the current condition of this textbook?", font = self.MENU_FONT, bg = MAROON)
         title_label.grid(row = 0, column = 0, padx = 5, pady = 5)
         self.condition_choices = ["New", "Good", "Fair", "Poor", "Destroyed"]
         self.condition_entry = ttk.Combobox(self, values = self.condition_choices, font = self.FIELD_FONT, state = "readonly", width = 10)
