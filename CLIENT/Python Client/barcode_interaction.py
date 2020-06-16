@@ -93,6 +93,7 @@ class scanner:
                 self.barcode_string = ""
                 #checks what the actual hell the barcode is
                 self.check_barcode(controller)
+                controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
         else:
             #in case this is the start of a scanner's input, we add the first ccharacter
             self.barcode_string = str(key)[1:-1]
@@ -104,8 +105,6 @@ class scanner:
 
     #this function checks what the hell the barcode is
     def check_barcode(self, controller):
-        #executes a function in each frame respectively that will process the barcode
-        controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
         #checks if the barcode is a student's
         if(self.server.valid_s(self.current_barcode)):
             #gets the student's info from the server

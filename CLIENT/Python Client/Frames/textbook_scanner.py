@@ -16,6 +16,7 @@ class TextbookScanner(tk.Frame):
         self.barcode_label["text"] = "Current Barcode :" + controller.current_barcode
         if(self.values_set):
             if(controller.barcode_status == "Textbook"):
+                print(controller.textbook_info)
                 if(controller.textbook_info[1] == self.current_title and float(controller.textbook_info[2]) == self.current_price):
                     messagebox.showerror("Error", "This textbook has the same values as the set values")                        
                 else: 
