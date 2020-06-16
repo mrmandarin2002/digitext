@@ -206,6 +206,21 @@ def get_textbook_names(args):
         textbooks[i] = str(textbooks[i])
     return "|".join(textbooks)
 
+# gets a list of textbook counts
+def get_textbook_counts(args):
+    print(get_time()+"Getting textbook counts...")
+    conn = Database.create_connection("server.db")
+    textbooks = {}
+    for textbook in Database.get_textbooks(conn):
+        if textbook[2] in textbooks.keys():
+            textbooks[textbook[2]] += 1
+        else:
+            textbooks[textbook[2]] = 1
+    serialized = []
+    for k in textbooks.keys():
+        serialized.append(k+"|"+str(textbooks[k]))
+    return "~".join(serialized)
+
 # ping (always return 1)
 def ping(args): # no arguments
     print(get_time()+"Received ping...")
@@ -225,6 +240,7 @@ interact = {"valid_t": valid_textbook,
             "get_teacher_c": get_teacher_courses,
             "set_course_r": set_course_textbooks,
             "get_textbook_titles": get_textbook_names,
+            "get_textbook_counts": get_textbook_counts,
             "add_t": add_textbook,
             "add_s": add_student,
             "courses_n": course_numbers,
