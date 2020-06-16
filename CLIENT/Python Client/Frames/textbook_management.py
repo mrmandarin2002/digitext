@@ -18,7 +18,7 @@ class TextbookManagement(tk.Frame):
         self.textbook_title_label.config(text = "Textbook Title: ")
         self.textbook_condition_label.config(text = "Textbook Condition: ")
         self.textbook_price_label.config(text = "Textbook Price: ")
-        self.student_tnum_label.config(text = "Textbooks taken out: ")
+        self.student_tnum_label.config(text = "Textbooks Taken Out: ")
         self.student_name_label["text"] = "Student Name:"
         self.textbook_listbox.delete(0, tk.END)
  
@@ -36,7 +36,7 @@ class TextbookManagement(tk.Frame):
             #number of textbooks the student currently has
             self.num_of_textbooks = len(controller.student_textbooks)
             #displays the number of textbooks taken out
-            self.student_tnum_label["text"] = "Textbooks taken out: " + str(len(controller.student_textbooks))
+            self.student_tnum_label["text"] = "Textbooks Taken Out: " + str(len(controller.student_textbooks))
             self.current_student_barcode = controller.current_barcode
             #which mode it's in
             if(self.day == 'D'):
@@ -74,7 +74,7 @@ class TextbookManagement(tk.Frame):
                             #officially assigns textbook to student
                             controller.server.assign_t(controller.current_barcode, self.current_student_barcode)
                             self.num_of_textbooks += 1
-                            self.student_tnum_label["text"] = "Textbooks taken out: " + str(self.num_of_textbooks)
+                            self.student_tnum_label["text"] = "Textbooks Taken Out: " + str(self.num_of_textbooks)
                             textbook_assigned = True
                         #if the textbook belongs to another student
                         else:
@@ -84,7 +84,7 @@ class TextbookManagement(tk.Frame):
                                 controller.server.return_t(controller.current_barcode, controller.textbook_info[3])
                                 controller.server.assign_t(controller.current_barcode, self.current_student_barcode)
                                 self.num_of_textbooks += 1
-                                self.student_tnum_label["text"] = "Textbooks taken out: " + str(self.num_of_textbooks)
+                                self.student_tnum_label["text"] = "Textbooks Taken Out: " + str(self.num_of_textbooks)
                                 textbook_assigned = True
                         #this removes the student's needed textbook
                         #once the student doesn't need any more textbooks (assigned by teachers)
@@ -101,7 +101,7 @@ class TextbookManagement(tk.Frame):
                 else:
                     if(controller.textbook_info[4] == self.current_student_barcode):
                         self.num_of_textbooks -= 1
-                        self.student_tnum_label["text"] = "Textbooks taken out: " + str(self.num_of_textbooks)
+                        self.student_tnum_label["text"] = "Textbooks Taken Out: " + str(self.num_of_textbooks)
                         self.textbook_listbox.delete(controller.student_textbooks.index(controller.current_barcode))
                         final_condition = window.price_window(self, controller).show()
                         controller.student_textbooks.remove(controller.current_barcode)
@@ -156,7 +156,7 @@ class TextbookManagement(tk.Frame):
         self.student_name_label.grid(row = 6, column = 0, padx = 10, sticky = "W")
         self.student_grade_label = tk.Label(self, text = "Student Grade: ", font = controller.MENU_FONT, bg = controller.MAROON)
         self.student_grade_label.grid(row = 7, column = 0, padx = 10, sticky = "W")
-        self.student_tnum_label = tk.Label(self, text = "Textbooks taken out: ", font = controller.MENU_FONT, bg = controller.MAROON)
+        self.student_tnum_label = tk.Label(self, text = "Textbooks Taken Out: ", font = controller.MENU_FONT, bg = controller.MAROON)
         self.student_tnum_label.grid(row = 8, column = 0, padx = 10, sticky = "W")
 
         selection_button = tk.Button(self, text = "Switch Mode", font = controller.MENU_FONT, command = lambda : self.switch_mode())

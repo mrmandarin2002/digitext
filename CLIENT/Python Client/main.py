@@ -4,7 +4,14 @@ from tkinter import font  as tkfont # python 3
 from tkinter import ttk
 from tkinter import messagebox
 
-from Frames import *
+from Frames import welcome_page
+from Frames import menu
+from Frames import textbook_management
+from Frames import info
+from Frames import textbook_scanner
+from Frames import teacher_assignment
+
+import json
 
 #import own files
 import interactions, barcode_interaction
@@ -13,10 +20,15 @@ import interactions, barcode_interaction
 class client(tk.Tk):
 
     #there will likely be a few versions of this program (students will have a restricted version)
-    version = "teacher"
+    version = "student"
 
     #some initialization stuff I found on the internet. Don't know how but it works!
     def __init__(self, *args, **kwargs):
+        with open('settings.json') as settings_file:
+            self.settings = json.load(settings_file)
+
+        print("IP ADDRESS: " + self.settings["ip_address"])
+        print("CLIENT VERSION: " + self.settings["version"])
         tk.Tk.__init__(self, *args, **kwargs)
         
         #this is the list of different windows ("frames as called in tkinter"). The basic idea between page switches...
@@ -60,7 +72,8 @@ class client(tk.Tk):
             
 
         #this is the starting window
-        self.show_frame("Info")
+
+        self.show_frame("Menu")
 
     #this shows the frame / window of the page we want to display
     def show_frame(self, page_name):
@@ -78,14 +91,14 @@ class client(tk.Tk):
     def make_back_button(self, controller):
         return tk.Button(controller, text = "Back to Menu", command = lambda: self.show_frame("Menu"), font = self.BACK_BUTTON_FONT)
 
-root = client()
-root.title("DigiText")
-root.iconbitmap("sphs_icon.ico")
-root.geometry("600x500")
-root.resizable(False, False)
-root.mainloop()
+if __name__ == '__main__':
+    root = client()
+    root.title("DigiText")
+    root.geometry("600x500")
+    root.resizable(False, False)
+    root.mainloop()
 
-        
+            
 
 
 

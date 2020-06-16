@@ -58,7 +58,7 @@ class scanner:
     def __init__(self, controller):
         self.controller = controller
         #where the interaction with server happens
-        self.server = interactions.Client(address = "127.0.0.1", port = 7356)
+        self.server = interactions.Client(address = controller.settings["ip_address"], port = 7356)
         #all the courses available
         self.courses = self.server.courses_n()
         #all the teachers at the school
@@ -92,9 +92,7 @@ class scanner:
                 #reset the the temporary barcode string
                 self.barcode_string = ""
                 #checks what the actual hell the barcode is
-                self.check_barcode()
-                #executes a function in each frame respectively that will process the barcode
-                controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
+                self.check_barcode(controller)
         else:
             #in case this is the start of a scanner's input, we add the first ccharacter
             self.barcode_string = str(key)[1:-1]
@@ -105,7 +103,9 @@ class scanner:
         self.previous_time = time_elapsed  
 
     #this function checks what the hell the barcode is
-    def check_barcode(self):
+    def check_barcode(self, controller):
+        #executes a function in each frame respectively that will process the barcode
+        controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
         #checks if the barcode is a student's
         if(self.server.valid_s(self.current_barcode)):
             #gets the student's info from the server

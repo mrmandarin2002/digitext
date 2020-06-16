@@ -22,7 +22,7 @@ class TextbookScanner(tk.Frame):
                     MsgOption = messagebox.askyesno("Textbook already in database!", "Would you like to replace the original values?")
                     if(MsgOption):
                         self.num_scanned += 1
-                        self.textbook_label.config(text = "Number of textbooks scanned: " + str(self.num_scanned))
+                        self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
                         controller.server.delete_t(controller.current_barcode)
                         controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
                         controller.update_textbook_list()
@@ -31,7 +31,7 @@ class TextbookScanner(tk.Frame):
             else:
                 self.num_scanned += 1
                 self.barcode_label.config(text = "Current Barcode: " + controller.current_barcode)
-                self.textbook_label.config(text = "Number of textbooks scanned: " + str(self.num_scanned))
+                self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
                 self.current_condition = controller.textbook_conditions_rev[self.condition_entry.get()]
                 controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
                 controller.update_textbook_list()
@@ -75,7 +75,7 @@ class TextbookScanner(tk.Frame):
             self.set_button.config(text = "SET VALUES")
             self.title_entry.config(state = "normal")
             self.price_entry.config(state = "normal")
-            self.textbook_label.config(text = "Number of textbooks scanned:")
+            self.textbook_label.config(text = "Number of Textbooks Scanned:")
             self.num_scanned = 0
             self.values_set = False
         else:
@@ -86,19 +86,19 @@ class TextbookScanner(tk.Frame):
                 self.current_price = float(price_string)
                 self.current_title = self.title_entry.get()
                 self.set_button.config(text = "RESET")
-                self.textbook_label.config(text = "Number of textbooks scanned: " + str(self.num_scanned))
+                self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
                 self.title_entry.config(state = "disabled")
                 self.price_entry.config(state = "disabled")
                 self.values_set = True
             except ValueError:
-                messagebox.showerror("Error", "Please make sure that the price is actually a number")
+                messagebox.showerror("Error", "Please Make Sure That The Price Is Actually A Number, Idiot.")
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         TextbookScanner.configure(self, background = controller.MAROON)
         
         #labels
-        main_label = tk.Label(self, text="Textbook Scanner", font = controller.TITLE_FONT, bg = controller.MAROON)
+        main_label = tk.Label(self, text="Add Textbooks", font = controller.TITLE_FONT, bg = controller.MAROON)
         main_label.grid(row = 0, column = 0, padx = (95,0))
         title_label = tk.Label(self, text = "Title:", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         title_label.grid(row = 1, column = 0, padx = 10, pady = (20, 0), sticky = "W")
@@ -108,7 +108,7 @@ class TextbookScanner(tk.Frame):
         price_label.grid(row = 5, column = 0, padx = 10, pady = 5, sticky = "W")
         self.barcode_label = tk.Label(self, text = "Current Barcode: ", font = controller.MENU_FONT, bg = controller.MAROON)
         self.barcode_label.grid(row = 3, column = 0, padx= (290,0) , pady = (20,0), sticky = "W")
-        self.textbook_label = tk.Label(self, text = "Number of textbooks scanned: ", font = controller.MENU_FONT, bg = controller.MAROON)
+        self.textbook_label = tk.Label(self, text = "Number of Textbooks Scanned: ", font = controller.MENU_FONT, bg = controller.MAROON)
         self.textbook_label.grid(row = 4, column = 0, padx = (290, 0), sticky = "W")
 
         #buttons

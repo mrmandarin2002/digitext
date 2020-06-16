@@ -108,7 +108,7 @@ class Info(tk.Frame):
         student_textbooks_label.grid(row = 0, column = 1, sticky = "W", pady = (30, 0))
         
         pady_dif_back = 0
-        if(controller.version == "teacher"):
+        if(controller.settings["version"] == "teacher"):
             delete_button = tk.Button(self, text = "Delete Textbook", font = controller.MENU_FONT, command = lambda: self.delete_textbook(controller = controller))
             delete_button.grid(row = 9, column = 0, padx = 10, pady = (20, 0), sticky = "W")    
             pady_dif_back = 55    
