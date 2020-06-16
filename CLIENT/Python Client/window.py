@@ -101,17 +101,21 @@ class manual_barcode_entry_window(tk.Toplevel):
         tk.Toplevel.__init__(self, parent)
         self.configure(background = MAROON)
         self.title("Add Textbook")
-        self.textbook_name = tk.StringVar()
+        self.barcode = tk.StringVar()
         title_label = tk.Label(self, text = "Enter Barcode:", font = controller.MENU_FONT, bg = MAROON)
-        title_label.grid(row = 0, column = 0,padx = 5, pady = 5)
+        title_label.grid(row = 0, column = 0,padx = (15,15), pady = 5)
         self.textbook_entry = tk.Entry(self)
-        self.textbook_entry.grid(row = 1, column = 0, padx = 5, pady = 5)
-        confirm_button = tk.Button(self, text = "Add Textbook", font = controller.BUTTON_FONT, command = self.death)
+        self.textbook_entry.grid(row = 1, column = 0, padx = (15,15), pady = 5)
+        confirm_button = tk.Button(self, text = "Confirm Barcode", font = controller.BUTTON_FONT, command = self.death)
         confirm_button.grid(row = 2, column = 0, padx = 5, pady = (0, 10))
 
     def death(self, event=None):
+        self.barcode.set(self.textbook_entry.get())
         self.destroy()    
 
-    def show(self):
+    def show(self, controller):
         self.wait_window()
-        return self.textbook_name.get()
+        controller.scanner.current_barcode = str(self.barcode.get())
+        controller.scanner.check_barcode(controller)
+        print(controller.scanner.current_barcode)
+

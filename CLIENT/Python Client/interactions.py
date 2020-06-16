@@ -19,7 +19,7 @@ class Client:
             self.check_connection()
 
     def check_connection(self):
-        threading.Timer(5.0, self.check_connection).start()
+        threading.Timer(10.0, self.check_connection).start()
         if(not self.ping() and self.server_connection):
             print("Connection with server is lost")
             self.server_connection = False

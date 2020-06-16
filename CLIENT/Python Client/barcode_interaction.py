@@ -93,14 +93,13 @@ class scanner:
                 self.barcode_string = ""
                 #checks what the actual hell the barcode is
                 self.check_barcode(controller)
-                controller.frames[controller.current_frame_name].barcode_scanned(controller = self)
         else:
             #in case this is the start of a scanner's input, we add the first ccharacter
             self.barcode_string = str(key)[1:-1]
             #once again it would be bad if shifts or enters somehow entered our temporary string...
             if(key == Key.shift or key == Key.enter):
                 self.barcode_string = ""
-        #sets the time of this input
+        #sets the time of this 
         self.previous_time = time_elapsed  
 
     #this function checks what the hell the barcode is
@@ -147,7 +146,8 @@ class scanner:
         #for unknown barcodes
         else:
             print("UNKNOWN BARCODE!")
-            self.barcode_status = "Unknown"     
+            self.barcode_status = "Unknown"    
+        controller.frames[controller.current_frame_name].barcode_scanned(controller = self) 
     
     #updates the textbook_list to include the latest books
     def update_textbook_list(self):

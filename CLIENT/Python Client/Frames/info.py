@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox 
 
+import window
+
 class Info(tk.Frame):
 
     textbook_selected = False
@@ -112,5 +114,7 @@ class Info(tk.Frame):
             delete_button = tk.Button(self, text = "Delete Textbook", font = controller.MENU_FONT, command = lambda: self.delete_textbook(controller = controller))
             delete_button.grid(row = 9, column = 0, padx = 10, pady = (20, 0), sticky = "W")    
             pady_dif_back = 55    
+            manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
+            manual_entry.grid(row = 10, column = 0, padx = 10, pady = (20, 0), sticky = "W")
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 11, column = 0, padx = 10, pady = (132 - pady_dif_back,0), sticky = "W")
+        back_button.grid(row = 11, column = 0, padx = 10, pady = (15,0), sticky = "W")
