@@ -15,7 +15,7 @@ class Client:
         # initialize udp socket
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind(("", 7357))
-        self.udp_socket.settimeout(2)
+        self.udp_socket.settimeout(1)
         if not debug_mode:
             self.check_connection()
 

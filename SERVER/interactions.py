@@ -223,7 +223,7 @@ def get_textbook_counts(args):
 
 # ping (always return 1)
 def ping(args): # no arguments
-    # print(get_time()+"Received ping...")
+    print(get_time()+"Received ping...")
     return "1"
 
 # function dictionary
