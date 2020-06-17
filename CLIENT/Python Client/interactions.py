@@ -4,6 +4,7 @@ from tkinter import messagebox
 class Client:
 
     server_connection = True
+    displayed_error = False
 
     # initialization method
     def __init__(self, address, port, debug_mode=False):
@@ -15,17 +16,20 @@ class Client:
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind(("", 7357))
         self.udp_socket.settimeout(2)
-        if not debug_mode:
-            self.check_connection()
 
     def check_connection(self):
-        threading.Timer(10.0, self.check_connection).start()
-        if(not self.ping() and self.server_connection):
+        threading.Timer(1.0, self.check_connection).start()
+        ping_cnt = 0
+        if(not self.ping()):
+            ping_cnt += 1
             print("Connection with server is lost")
             self.server_connection = False
-            messagebox.showerror("Connection Error", "Client has failed to establish a connection with the server, please connect before using the program")
+            if(self.displayed_error == False):
+                self.displayed_error = True
+                messagebox.showerror("Connection Error", "Client has failed to establish a connection with the server, please connect before using the program")
             self.server_connection = True
         elif(self.server_connection):
+            self.displayed_error = False
             print("Connection with server is present!")
         else:
             print("Currently no connection with the server")
@@ -41,7 +45,8 @@ class Client:
             data = self.udp_socket.recvfrom(4096)[0]
             return data.decode("utf-8") # return decoded data
         except: # if a timeout exception was thrown
-            return "_"
+            messagebox.showerror("There Was a Connection Issue", "Screw this piece of crap")
+            return ""
 
     # command method
     def command(self, cmd, args):
