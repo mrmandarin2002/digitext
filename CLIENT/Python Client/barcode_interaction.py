@@ -99,6 +99,7 @@ class scanner:
                 self.current_barcode = self.barcode_string
                 #reset the the temporary barcode string
                 self.barcode_string = ""
+                self.current_barcode = ''.join(i for i in self.current_barcode if i.isdigit())
                 #checks what the actual hell the barcode is
                 self.check_barcode(controller)
         else:

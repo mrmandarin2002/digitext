@@ -38,7 +38,7 @@ class Info(tk.Frame):
         self.textbook_selected = False
         if(controller.barcode_status == "Student"):
             self.clear()
-            self.student_name_label.config(text = "Student Name: " + controller.student_info[2])
+            self.student_name_label.config(text = "Student Name: " + controller.student_info[2].replace(' ', ', '))
             cnt = 1
             self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.MAROON)
             for textbook in controller.student_textbooks:
@@ -52,7 +52,7 @@ class Info(tk.Frame):
             self.clear()
             print(controller.textbook_info[4])
             if(controller.textbook_info[4] != "None"):
-                self.student_name_label["text"] = "Textbook Owner: " + controller.server.info_s(controller.textbook_info[4])[2]
+                self.student_name_label["text"] = "Textbook Owner: " + controller.server.info_s(controller.textbook_info[4])[2].replace(' ', ', ')
             else:
                 self.student_name_label["text"] = "Textbook Owner: N/A"
             self.display_textbook_info(controller)
