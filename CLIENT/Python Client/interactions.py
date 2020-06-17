@@ -130,7 +130,7 @@ class Client:
     # sets the requisite textbooks for a course
     def set_course_r(self, course_id, course_r):
         return self.command("set_course_r", [course_id, "~".join(course_r)])
-    
+
     # gets a list of teacher names
     def get_teachers(self):
         return self.command("get_teachers", []).split("|")
