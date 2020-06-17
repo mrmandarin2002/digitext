@@ -67,6 +67,14 @@ class scanner:
         self.textbook_list = self.server.get_textbook_titles()
         #sort the textbook_list alphabetically
         self.textbook_list = sorted(self.textbook_list)
+        self.textbook_nums = self.server.get_textbook_counts()
+        print("Textbook Count:")
+        print(self.textbook_nums)
+        self.total_textbooks = 0
+        if(len(self.textbook_nums) > 3):
+            for textbook in self.textbook_nums:
+                self.total_textbooks += int(textbook[1])
+            print("Total Amount of textbooks:" + str(self.total_textbooks))
 
         #starts the thread where program listens for input (if there is input call on_press function below)
         keyLis = Listener(on_press=lambda key : self.on_press(key, controller))
