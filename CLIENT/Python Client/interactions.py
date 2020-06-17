@@ -16,8 +16,6 @@ class Client:
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind(("", 7357))
         self.udp_socket.settimeout(2)
-        if not debug_mode:
-            self.check_connection()
 
     def check_connection(self):
         threading.Timer(1.0, self.check_connection).start()
@@ -47,7 +45,8 @@ class Client:
             data = self.udp_socket.recvfrom(4096)[0]
             return data.decode("utf-8") # return decoded data
         except: # if a timeout exception was thrown
-            return "_"
+            messagebox.showerror("There Was a Connection Issue", "Screw this piece of crap")
+            return ""
 
     # command method
     def command(self, cmd, args):
