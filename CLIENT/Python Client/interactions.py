@@ -135,7 +135,7 @@ class Client:
     # sets the requisite textbooks for a course
     def set_course_r(self, course_id, course_r):
         return self.command("set_course_r", [course_id, "~".join(course_r)])
-    
+
     # gets a list of teacher names
     def get_teachers(self):
         return self.command("get_teachers", []).split("|")
@@ -151,6 +151,10 @@ class Client:
     # get a list of textbook counts:
     def get_textbook_counts(self):
         return [i.split("|") for i in self.command("get_textbook_counts", []).split("~")]
+
+    # write textbook inventory to file
+    def get_textbook_inventory(self):
+        open("textbook_inventory.csv", "w").write("title,price,new,good,fair,poor,destroyed,total\n"+self.command("get_textbook_inv", []).replace("|", ",").replace("~", "\n"))
 
     # get a list of returned textbooks for a specified student
     def get_student_returned(self, student_id):
