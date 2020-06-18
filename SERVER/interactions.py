@@ -221,12 +221,34 @@ def get_textbook_counts(args):
         serialized.append(k+"|"+str(textbooks[k]))
     return "~".join(serialized)
 
+# gets textbook inventory
+def get_textbook_inventory(args):
+    print(get_time()+"Getting textbook inventory...")
+    conn = Database.create_connection("server.db")
+    textbooks = {}
+    for textbook in Database.get_textbooks(conn):
+        if textbook[2] not in textbooks.keys():
+            conditions = [0]*5
+            conditions[textbook[4]] += 1
+            textbooks[textbook[2]] = [textbook[3]]+conditions+[1]
+        else:
+            if textbook[3] > textbooks[textbook[2]][0]:
+                textbooks[textbook[2]][0] = textbook[3]
+            textbooks[textbook[2]][textbook[4]+1] += 1
+            textbooks[textbook[2]][-1] += 1
+    keys = list(textbooks.keys())
+    keys.sort()
+    output = []
+    for k in keys:
+        output.append(k+"|"+"|".join([str(i) for i in textbooks[k]]))
+    return "~".join(output)
+
 # ping (always return 1)
 def ping(args): # no arguments
     # print(get_time()+"Received ping...")
     return "1"
 
-# function dictionary
+# interactions function dictionary
 interact = {"valid_t": valid_textbook,
             "valid_s": valid_student,
             "info_t": information_textbook,
@@ -241,6 +263,7 @@ interact = {"valid_t": valid_textbook,
             "set_course_r": set_course_textbooks,
             "get_textbook_titles": get_textbook_names,
             "get_textbook_counts": get_textbook_counts,
+            "get_textbook_inv": get_textbook_inventory, 
             "add_t": add_textbook,
             "add_s": add_student,
             "courses_n": course_numbers,

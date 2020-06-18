@@ -152,6 +152,10 @@ class Client:
     def get_textbook_counts(self):
         return [i.split("|") for i in self.command("get_textbook_counts", []).split("~")]
 
+    # write textbook inventory to file
+    def get_textbook_inventory(self):
+        open("textbook_inventory.csv", "w").write("title,price,new,good,fair,poor,destroyed,total\n"+self.command("get_textbook_inv", []).replace("|", ",").replace("~", "\n"))
+
     # get a list of returned textbooks for a specified student
     def get_student_returned(self, student_id):
         return [textbook.split("|") for textbook in self.command("student_returned", [student_id]).split("~")]
