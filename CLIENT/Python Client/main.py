@@ -42,7 +42,7 @@ class client(tk.Tk):
         
         #this is the list of different windows ("frames as called in tkinter"). The basic idea between page switches...
         #is that I already pre-load all the windows and switch between them as necessary
-        self.scene_list = (textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
+        self.scene_list = (welcome_page.WelcomePage, textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
 
         self.MAIN_FONT = "Helvetica"
         self.MAROON = "#DFF9FB"
@@ -50,6 +50,7 @@ class client(tk.Tk):
 
         #different type of fonts used throughout the program
         self.TITLE_FONT = tkfont.Font(family=self.MAIN_FONT, size=22, weight="bold")
+        self.TITLE_FONT2 = tkfont.Font(family=self.MAIN_FONT, size=27, weight="bold")
         self.SUBTITLE_FONT = tkfont.Font(family = self.MAIN_FONT, size = 15, weight = "bold")
         self.FIELD_FONT = tkfont.Font(family = self.MAIN_FONT, size = 11)
         self.BUTTON_FONT = tkfont.Font(family= self.MAIN_FONT, size=10)

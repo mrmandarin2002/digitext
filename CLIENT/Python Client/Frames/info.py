@@ -117,4 +117,4 @@ class Info(tk.Frame):
             manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
             manual_entry.grid(row = 10, column = 0, padx = 10, pady = (20, 0), sticky = "W")
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 11, column = 0, padx = 10, pady = (15,0), sticky = "W")
+        back_button.grid(row = 11, column = 0, padx = 10, pady = (25,0), sticky = "W")

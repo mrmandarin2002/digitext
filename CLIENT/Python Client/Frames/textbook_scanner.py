@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 
+import window
+
 class TextbookScanner(tk.Frame): 
     values_set = False
     current_title = ""
@@ -42,15 +44,20 @@ class TextbookScanner(tk.Frame):
     def check_similarity(self, textbook_check, textbook_list):
         similar_list = []
         check_arr = [0] * 128
+        char_list = []
         for x in range(0, len(textbook_check)):
+            if(ord(textbook_check[x]) not in char_list):
+                char_list.append(ord(textbook_check[x]))
             check_arr[ord(textbook_check[x])] += 1
         for textbook in textbook_list:
             temp_check_arr = check_arr
             for x in range(0, len(textbook)):
                 temp_check_arr[ord(textbook[x])] -= 1
-            check_sum = sum(temp_check_arr)
-            if(abs(check_sum) < 1):
-                pass
+            tot_sum = 0
+            for num in char_list:
+                tot_sum += temp_check_arr[num]
+            if(abs(tot_sum + abs(len(textbook) - len(textbook_check))) < ((len(textbook) + len(textbook_check) / 2) * 0.15)):
+                similar_list.append(textbook)
         return similar_list
 
     def set_values(self, controller):
@@ -95,8 +102,10 @@ class TextbookScanner(tk.Frame):
         self.textbook_label.grid(row = 4, column = 0, padx = (290, 0), sticky = "W")
 
         #buttons
+        manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
+        manual_entry.grid(row = 8, column = 0, padx = 10, pady = (20, 0), sticky = "W")
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 8, column = 0, padx = 10, pady = (150,0), sticky = "W")
+        back_button.grid(row = 9, column = 0, padx = 10, pady = (100,0), sticky = "W")
         self.set_button = tk.Button(self, text = "Set Values", command = lambda : self.set_values(controller = controller), font = controller.BUTTON_FONT)
         self.set_button.grid(row = 7, column = 0, padx = 10, pady = 10, sticky = "W")
 

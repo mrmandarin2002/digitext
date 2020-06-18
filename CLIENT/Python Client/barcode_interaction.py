@@ -5,6 +5,7 @@ import interactions
 from datetime import datetime
 #pynput's library for enabling threading
 from pynput.keyboard import Key, Listener
+from tkinter import messagebox
 
 #####
 #the scanner class is how the program detects input from the barcode
@@ -54,6 +55,14 @@ class scanner:
     textbook_conditions = ["New", "Good", "Fair", "Poor", "Destroyed"]
     textbook_conditions_rev = {"New": 0, "Good": 1, "Fair": 2, "Poor": 3, "Destroyed": 4}
 
+    def get_textbook_nums(self):
+        self.textbook_nums = self.server.get_textbook_counts()
+        self.total_textbooks = 0
+        if(len(self.textbook_nums) > 3):
+            for textbook in self.textbook_nums:
+                self.total_textbooks += int(textbook[1])
+            print("Total Amount Of Textbooks " + str(self.total_textbooks))
+        return self.total_textbooks
 
     def __init__(self, controller):
         self.controller = controller
@@ -113,50 +122,52 @@ class scanner:
 
     #this function checks what the hell the barcode is
     def check_barcode(self, controller):
-        #checks if the barcode is a student's
-        if(self.server.valid_s(self.current_barcode)):
-            #gets the student's info from the server
-            self.student_info = self.server.info_s(self.current_barcode)
-            #for debugging I guess
-            print("STUDENT BARCODE!")
-            print("Barcode: " + self.current_barcode)
-            print("Student Info: ")
-            print(self.student_info)
-            #gets the textbooks the student has taken out
-            self.student_textbooks = self.server.student_t(self.current_barcode)
-            #clears a bunch of lists so that the relevant stuff can be added
-            self.student_needed_textbooks.clear()
-            self.student_textbooks_title.clear()
-            self.student_courses.clear()
-            #this creates a list of student's textbooks based on title instead of barcode ID
-            #useful for comparisons....
-            for textbook in self.student_textbooks:
-                self.student_textbooks_title.append(self.server.info_t(textbook)[1])
-            #this creates a list of a student's courses with the help of student_info
-            for x in range(4, len(self.student_info)):
-                #gets info of a student's courses
-                course_info = self.server.info_c(self.student_info[x])
-                #adds course to a student's course
-                self.student_courses.append(course_info)
-                #the textbooks needed in this course
-                course_textbooks = course_info[3].split('|')
-                #this loop is to find out which textbooks the student needs to take out that were assigned to him
-                for textbook in course_textbooks:
-                    #checks for duplicates and idek 
-                    if(len(textbook) > 0 and textbook not in self.student_needed_textbooks and textbook not in self.student_textbooks_title):
-                        self.student_needed_textbooks.append(textbook)
-            #allows other parts of the program know what type of barcode is scanned in
-            self.barcode_status = "Student"
-        #if the barcode is a textbook's
-        elif(self.server.valid_t(self.current_barcode)):
-            print("TEXTBOOK BARCODE!")
-            self.textbook_info = self.server.info_t(self.current_barcode)
-            self.barcode_status = "Textbook"
-        #for unknown barcodes
-        else:
-            print("UNKNOWN BARCODE!")
-            self.barcode_status = "Unknown"    
-        controller.frames[controller.current_frame_name].barcode_scanned(controller = self) 
+        try:
+            #check's if it's a textbook's barcode
+            if(self.server.valid_t(self.current_barcode)):
+                print("TEXTBOOK BARCODE!")
+                self.textbook_info = self.server.info_t(self.current_barcode)
+                self.barcode_status = "Textbook"
+            #checks if the barcode is a student's
+            elif(self.server.valid_s(self.current_barcode)):
+                #gets the student's info from the server
+                self.student_info = self.server.info_s(self.current_barcode)
+                #for debugging I guess
+                print("STUDENT BARCODE!")
+                print("Barcode: " + self.current_barcode)
+                print("Student Info: ")
+                print(self.student_info)
+                #gets the textbooks the student has taken out
+                self.student_textbooks = self.server.student_t(self.current_barcode)
+                #clears a bunch of lists so that the relevant stuff can be added
+                self.student_needed_textbooks.clear()
+                self.student_textbooks_title.clear()
+                self.student_courses.clear()
+                #this creates a list of student's textbooks based on title instead of barcode ID
+                #useful for comparisons....
+                for textbook in self.student_textbooks:
+                    self.student_textbooks_title.append(self.server.info_t(textbook)[1])
+                #this creates a list of a student's courses with the help of student_info
+                for x in range(4, len(self.student_info)):
+                    #gets info of a student's courses
+                    course_info = self.server.info_c(self.student_info[x])
+                    #adds course to a student's course
+                    self.student_courses.append(course_info)
+                    #the textbooks needed in this course
+                    course_textbooks = course_info[3].split('|')
+                    #this loop is to find out which textbooks the student needs to take out that were assigned to him
+                    for textbook in course_textbooks:
+                        #checks for duplicates and idek 
+                        if(len(textbook) > 0 and textbook not in self.student_needed_textbooks and textbook not in self.student_textbooks_title):
+                            self.student_needed_textbooks.append(textbook)
+                #allows other parts of the program know what type of barcode is scanned in
+                self.barcode_status = "Student"
+            else:
+                print("UNKNOWN BARCODE!")
+                self.barcode_status = "Unknown"    
+            controller.frames[controller.current_frame_name].barcode_scanned(controller = self) 
+        except:
+            messagebox.showerror("ERROR", "Don't Touch This Piece Of Garbage And Find Senpai Derek ASAP.")
     
     #updates the textbook_list to include the latest books
     def update_textbook_list(self):

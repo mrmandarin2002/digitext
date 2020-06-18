@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import threading
 
 #welcome screen, no need to explain
 class WelcomePage(tk.Frame):
@@ -12,13 +12,17 @@ class WelcomePage(tk.Frame):
 
     def can_enter(self, controller):
         controller.check_requisites = True
-    
+
+    def check_number(self):
+        threading.Timer(1.0, self.check_number).start()
+        self.welcome_title["text"] = "Number Of Textbooks: " + str(self.controller.scanner.get_textbook_nums())
+        
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
 
         WelcomePage.configure(self, background = controller.MAROON)
-        welcome_title = tk.Label(self, text = "Welcome to DigiText!!", font = controller.TITLE_FONT , bg = controller.MAROON)
-        welcome_title.pack(side = "top", pady = 150, padx = 50)
-        welcome_button = controller.make_button(controller = self, d_text = "Press to continue...", scene = "Menu", option = '')
-        welcome_button.pack()
+        self.welcome_title = tk.Label(self, text = "Number Of Textbooks", font = controller.TITLE_FONT2 , bg = controller.MAROON)
+        self.welcome_title.pack(side = "top", pady = 150, padx = 50)
+        controller.make_back_button(self).pack(pady = (100, 0))
+        self.check_number()
