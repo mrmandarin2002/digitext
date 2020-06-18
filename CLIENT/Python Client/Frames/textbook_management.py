@@ -20,6 +20,11 @@ class TextbookManagement(tk.Frame):
         self.textbook_price_label.config(text = "Textbook Price: ")
         self.student_tnum_label.config(text = "Number Of Textbooks Out: ")
         self.student_name_label["text"] = "Student Name:"
+        print(self.day)
+        if(self.day == 'R'):
+            self.mode_label["text"] = "Mode: Return"
+        else:
+            self.mode_label["text"] = "Mode: Distribution"
         self.textbook_listbox.delete(0, tk.END)
  
     #Whenever a barcode is scanned
@@ -121,20 +126,6 @@ class TextbookManagement(tk.Frame):
         else:
             messagebox.showerror("Error", "I don't know what you scanned in my dude")
 
-    #switches from distribution to return or vice-versa
-    def switch_mode(self):
-        self.clear()
-        if(self.day == 'D'):
-            self.day = 'R'
-            self.mode_label["text"] = "Mode: Return"
-            self.student_textbooks_label["text"] = "Student's Textbooks: "
-            messagebox.showwarning("Mode Switched!", "Mode has been changed to return mode!")
-        else:
-            self.day = 'D'
-            self.mode_label["text"] = "Mode: Distribution"
-            self.student_textbooks_label["text"] = "Needed Textbooks: "
-            messagebox.showwarning("Mode Switched!", "Mode has been changed to distribution mode")
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controlller = controller
@@ -163,14 +154,12 @@ class TextbookManagement(tk.Frame):
         self.student_tnum_label = tk.Label(self, text = "Number Of Textbooks Out: ", font = controller.MENU_FONT, bg = controller.MAROON)
         self.student_tnum_label.grid(row = 8, column = 0, padx = 10, sticky = "W")
 
-        selection_button = tk.Button(self, text = "Switch Mode", font = controller.MENU_FONT, command = lambda : self.switch_mode())
-        selection_button.grid(row = 9, column = 0, padx = 10, pady = (20,0), sticky = "W")
         self.mode_label = tk.Label(self, text = "Mode: Distribution", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         self.mode_label.grid(row = 10, column = 0, padx = 10, sticky = "W")
         self.student_textbooks_label = tk.Label(self, text = "Needed Textbooks: ", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         self.student_textbooks_label.grid(row = 0, column = 1, sticky = "W", pady = (30, 0))
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 11, column = 0, padx = 10, pady = (60,0), sticky = "W")
+        back_button.grid(row = 11, column = 0, padx = 10, pady = (108,0), sticky = "W")
         invisible_label = tk.Label(self, text = "", bg = controller.MAROON)
         invisible_label.grid(row = 12, padx = 150)
         self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON)
