@@ -41,34 +41,16 @@ class TextbookScanner(tk.Frame):
 
     def check_similarity(self, textbook_check, textbook_list):
         similar_list = []
-        og_tc = textbook_check
+        check_arr = [0] * 128
+        for x in range(0, len(textbook_check)):
+            check_arr[ord(textbook_check[x])] += 1
         for textbook in textbook_list:
-            og_t = textbook
-            textbook_check = og_tc
-            if(textbook != textbook_check):
-                if(textbook.lower() == textbook_check.lower()):
-                    similar_list.append(textbook)
-                else:
-                    textbook = textbook.lower()
-                    textbook_check = textbook_check.lower()
-                    textbook.replace('-',' ')
-                    textbook.replace('.',' ')
-                    textbook.replace('_',' ')
-                    textbook_check.replace('-',' ')
-                    textbook_check.replace('.',' ')
-                    textbook_check.replace('_',' ')
-                    t_list = textbook.split()
-                    t_list2 = textbook_check.split()
-                    length1 = len(t_list)
-                    length2 = len(t_list2)
-                    cnt = 0.0
-                    for x in range(0, min(length1, length2)):
-                        if(t_list[x] == t_list2[x]):
-                            cnt += 1.0
-                        elif(''.join(sorted(t_list[x])) == ''.join(sorted(t_list2[x]))):
-                            cnt += 1.0
-                    if((float(cnt / max(length1, length2))) > 0.5):
-                        similar_list.append(og_t)
+            temp_check_arr = check_arr
+            for x in range(0, len(textbook)):
+                temp_check_arr[ord(textbook[x])] -= 1
+            check_sum = sum(temp_check_arr)
+            if(check_sum):
+                
         return similar_list
 
     def set_values(self, controller):
