@@ -49,8 +49,8 @@ class TextbookScanner(tk.Frame):
             for x in range(0, len(textbook)):
                 temp_check_arr[ord(textbook[x])] -= 1
             check_sum = sum(temp_check_arr)
-            if(check_sum):
-                
+            if(abs(check_sum) < 1):
+                pass
         return similar_list
 
     def set_values(self, controller):
