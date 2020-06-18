@@ -18,7 +18,7 @@ class TextbookScanner(tk.Frame):
             if(controller.barcode_status == "Textbook"):
                 print(controller.textbook_info)
                 if(controller.textbook_info[1] == self.current_title and float(controller.textbook_info[2]) == self.current_price):
-                    messagebox.showerror("Error", "This textbook has the same values as the set values")                        
+                    messagebox.showerror("Error", "This Textbook Is Already In The Database, Fool!")                        
                 else: 
                     MsgOption = messagebox.askyesno("Textbook already in database!", "Would you like to replace the original values?")
                     if(MsgOption):
