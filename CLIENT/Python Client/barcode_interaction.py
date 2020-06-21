@@ -122,21 +122,25 @@ class scanner:
 
     #this function checks what the hell the barcode is
     def check_barcode(self, controller):
-        try:
-            #check's if it's a textbook's barcode
-            if(self.server.valid_t(self.current_barcode)):
-                print("TEXTBOOK BARCODE!")
-                self.textbook_info = self.server.info_t(self.current_barcode)
+        error = False
+        print("Barcode: " + self.current_barcode)
+        #check's if it's a textbook's barcode
+        if(self.server.valid_t(self.current_barcode)):
+            print("TEXTBOOK BARCODE!")
+            self.textbook_info = self.server.info_t(self.current_barcode)
+            if(len(self.textbook_info) > 2):
                 self.barcode_status = "Textbook"
-            #checks if the barcode is a student's
-            elif(self.server.valid_s(self.current_barcode)):
-                #gets the student's info from the server
-                self.student_info = self.server.info_s(self.current_barcode)
-                #for debugging I guess
-                print("STUDENT BARCODE!")
-                print("Barcode: " + self.current_barcode)
-                print("Student Info: ")
-                print(self.student_info)
+            else:
+                error = True
+        #checks if the barcode is a student's
+        elif(self.server.valid_s(self.current_barcode)):
+            #gets the student's info from the server
+            self.student_info = self.server.info_s(self.current_barcode)
+            #for debugging I guess
+            print("STUDENT BARCODE!")
+            print("Student Info: ")
+            print(self.student_info)
+            if(len(self.student_info) > 2):
                 #gets the textbooks the student has taken out
                 self.student_textbooks = self.server.student_t(self.current_barcode)
                 #clears a bunch of lists so that the relevant stuff can be added
@@ -163,10 +167,13 @@ class scanner:
                 #allows other parts of the program know what type of barcode is scanned in
                 self.barcode_status = "Student"
             else:
-                print("UNKNOWN BARCODE!")
-                self.barcode_status = "Unknown"    
+                error = True
+        else:
+            print("UNKNOWN BARCODE!")
+            self.barcode_status = "Unknown"   
+        if(not error):
             controller.frames[controller.current_frame_name].barcode_scanned(controller = self) 
-        except:
+        else:
             messagebox.showerror("ERROR", "Don't Touch This Piece Of Garbage And Find Senpai Derek ASAP.")
     
     #updates the textbook_list to include the latest books

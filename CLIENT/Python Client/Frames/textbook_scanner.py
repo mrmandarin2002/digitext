@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
+from playsound import playsound
 
-import window
+import window, time
 
 class TextbookScanner(tk.Frame): 
     values_set = False
@@ -10,37 +11,49 @@ class TextbookScanner(tk.Frame):
     current_price = 0
     current_condition = 0
     num_scanned = 0
+    textbook_deletion_mode = False
+    num_of_deleted_textbooks = 0
 
     def clear(self):
         pass
 
     def barcode_scanned(self, controller):
         self.barcode_label["text"] = "Current Barcode :" + controller.current_barcode
-        if(self.values_set):
-            if(controller.barcode_status == "Textbook"):
-                print(controller.textbook_info)
-                if(controller.textbook_info[1] == self.current_title and float(controller.textbook_info[2]) == self.current_price):
-                    messagebox.showerror("Error", "This Textbook Is Already In The Database, Fool!")                        
-                else: 
-                    MsgOption = messagebox.askyesno("Textbook already in database!", "Would you like to replace the original values?")
-                    if(MsgOption):
-                        self.num_scanned += 1
-                        self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
-                        controller.server.delete_t(controller.current_barcode)
-                        controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
-                        controller.update_textbook_list()
-            elif(controller.barcode_status == "Student"):
-                messagebox.showwarning("Warning!", "You are scanning in a student's barcode ID!")
+        self.barcode_label.config(text = "Current Barcode: " + controller.current_barcode)
+        if(not self.textbook_deletion_mode):
+            if(self.values_set):
+                if(controller.barcode_status == "Textbook"):
+                    print(controller.textbook_info)
+                    if(controller.textbook_info[1] == self.current_title and float(controller.textbook_info[2]) == self.current_price):
+                        messagebox.showerror("Error", "This Textbook Is Already In The Database, Fool!")                        
+                    else: 
+                        if(messagebox.askyesno("Textbook Already In Database!", "Would You Like To Replace: " + controller.textbook_info[1] + "?")):
+                            self.num_scanned += 1
+                            self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
+                            controller.server.delete_t(controller.current_barcode)
+                            controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
+                            controller.update_textbook_list()
+                elif(controller.barcode_status == "Student"):
+                    messagebox.showwarning("Warning!", "You Are Scanning In " + controller.student_info[2] + "'s barcode ID! Please Add Textbooks, We Have Enough Students At This School")
+                else:
+                    start_time = time.time()
+                    self.current_condition = controller.textbook_conditions_rev[self.condition_entry.get()]
+                    controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
+                    controller.update_textbook_list()
+                    print("--- %s seconds ---" % (time.time() - start_time))
+                    playsound("Textbook_Scan_In_Sound.mp3", block = False)
+                    self.num_scanned += 1
+                    self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
             else:
-                self.num_scanned += 1
-                self.barcode_label.config(text = "Current Barcode: " + controller.current_barcode)
-                self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
-                self.current_condition = controller.textbook_conditions_rev[self.condition_entry.get()]
-                controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
-                controller.update_textbook_list()
+                messagebox.showerror("Error", "Please Set The Values Before Scanning In A Barcode")
         else:
-            messagebox.showerror("Error", "Please set the values before scanning in a barcode")
-
+            if(controller.barcode_status == "Textbook"):
+                controller.server.delete_t(controller.current_barcode)
+                self.num_of_deleted_textbooks += 1
+                self.textbook_label["text"] = "Number Of Textbooks Deleted: " + str(self.num_of_deleted_textbooks)
+            else:
+                print("Cannot Delete This As It Is Not In The Database, Baka")
+ 
     def check_similarity(self, textbook_check, textbook_list):
         similar_list = []
         check_arr = [0] * 128
@@ -76,12 +89,29 @@ class TextbookScanner(tk.Frame):
                 self.current_price = float(price_string)
                 self.current_title = self.title_entry.get()
                 self.set_button.config(text = "RESET")
-                self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
+                self.textbook_label.config(text = "Number Of Textbooks Scanned: " + str(self.num_scanned))
                 self.title_entry.config(state = "disabled")
                 self.price_entry.config(state = "disabled")
                 self.values_set = True
             except ValueError:
                 messagebox.showerror("Error", "Please Make Sure That The Price Is Actually A Number, Idiot.")
+
+
+    def switch_textbook_deletion_mode(self):
+        if(self.textbook_deletion_mode):
+            self.textbook_label["text"] = "Number Of Textbooks Scanned: "
+            self.num_of_deleted_textbooks = 0
+            self.title_entry.config(state = "normal")
+            self.price_entry.config(state = "normal")
+            self.condition_entry.config(state = "normal")
+        else:
+            self.textbook_label["text"] = "Number Of Textbooks Deleted: " + str(self.num_of_deleted_textbooks)
+            playsound("Delete_Textbook_Warning.mp3", block = False)
+            messagebox.showwarning("DANGER DANGER!", "YOU ARE ENTERING TEXTBOOK DELETION MODE. BE CAREFUL WITH YOUR POWER!")
+            self.title_entry.config(state = "disabled")
+            self.price_entry.config(state = "disabled")
+            self.condition_entry.config(state = "disabled")
+        self.textbook_deletion_mode = not self.textbook_deletion_mode
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -104,8 +134,11 @@ class TextbookScanner(tk.Frame):
         #buttons
         manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
         manual_entry.grid(row = 8, column = 0, padx = 10, pady = (20, 0), sticky = "W")
+        delete_textbook_button = tk.Button(self, text = "Delete Textbook Button", font = controller.MENU_FONT, command = self.switch_textbook_deletion_mode)
+        delete_textbook_button.grid(row = 9, column = 0, padx = 10, pady = (10, 0), sticky = "W")
+
         back_button = controller.make_back_button(controller = self)
-        back_button.grid(row = 9, column = 0, padx = 10, pady = (100,0), sticky = "W")
+        back_button.grid(row = 10, column = 0, padx = 10, pady = (50,0), sticky = "W")
         self.set_button = tk.Button(self, text = "Set Values", command = lambda : self.set_values(controller = controller), font = controller.BUTTON_FONT)
         self.set_button.grid(row = 7, column = 0, padx = 10, pady = 10, sticky = "W")
 

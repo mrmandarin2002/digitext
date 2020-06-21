@@ -58,7 +58,7 @@ class Info(tk.Frame):
             self.display_textbook_info(controller)
         else:
             self.clear()
-            messagebox.showerror("Fatal Error", "WTF DID YOU SCAN IN BOI????")
+            messagebox.showerror("Fatal Error", "This Barcode Does Not Exist On Our System")
         self.barcode_label.config(text = "Current Barcode: " + str(controller.current_barcode))
         self.barcode_status_label["text"] = "Barcode Type: " + controller.barcode_status
 
@@ -109,7 +109,6 @@ class Info(tk.Frame):
         student_textbooks_label = tk.Label(self, text = "Student Textbooks: ", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         student_textbooks_label.grid(row = 0, column = 1, sticky = "W", pady = (30, 0))
         
-        pady_dif_back = 0
         if(controller.settings["version"] == "teacher"):
             delete_button = tk.Button(self, text = "Delete Textbook", font = controller.MENU_FONT, command = lambda: self.delete_textbook(controller = controller))
             delete_button.grid(row = 9, column = 0, padx = 10, pady = (20, 0), sticky = "W")    

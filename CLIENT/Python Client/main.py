@@ -4,7 +4,7 @@ from tkinter import font  as tkfont # python 3
 from tkinter import ttk
 from tkinter import messagebox
 
-from Frames import welcome_page
+from Frames import stats
 from Frames import menu
 from Frames import textbook_management
 from Frames import info
@@ -17,19 +17,10 @@ from urllib import request, parse
 #import own files
 import interactions, barcode_interaction
 
-def slack_message(text):
-    post = {"text": "{0}".format(text)}
-    try:
-        json_data = json.dumps(post)
-        req = request.Request("https://hooks.slack.com/services/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",
-                              data=json_data.encode('ascii'),
-                              headers={'Content-Type': 'application/json'})
-        resp = request.urlopen(req)
-    except Exception as em:
-        print("EXCEPTION: " + str(em))
-
 #the center of the universe (digitext really)
 class client(tk.Tk):
+
+    current_frame_name = ''
 
     #some initialization stuff I found on the internet. Don't know how but it works!
     def __init__(self, *args, **kwargs):
@@ -42,7 +33,7 @@ class client(tk.Tk):
         
         #this is the list of different windows ("frames as called in tkinter"). The basic idea between page switches...
         #is that I already pre-load all the windows and switch between them as necessary
-        self.scene_list = (welcome_page.WelcomePage, textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
+        self.scene_list = (stats.Stats, textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
 
         self.MAIN_FONT = "Helvetica"
         self.MAROON = "#DFF9FB"
@@ -108,6 +99,5 @@ if __name__ == '__main__':
     root.mainloop()
 
             
-
 
 
