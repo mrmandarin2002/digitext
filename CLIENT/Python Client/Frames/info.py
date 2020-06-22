@@ -35,6 +35,7 @@ class Info(tk.Frame):
         self.textbook_barcode_label["text"] = "Textbook Barcode " + controller.textbook_info[0]
 
     def barcode_scanned(self, controller):
+        print("INFO BARCODE")
         self.textbook_selected = False
         if(controller.barcode_status == "Student"):
             self.clear()

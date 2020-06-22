@@ -28,5 +28,7 @@ class Stats(tk.Frame):
         Stats.configure(self, background = controller.MAROON)
         self.welcome_title = tk.Label(self, text = "Number Of Textbooks", font = controller.TITLE_FONT2 , bg = controller.MAROON)
         self.welcome_title.pack(side = "top", pady = 150, padx = 50)
-        controller.make_back_button(self).pack(pady = (100, 0))
+        export_textbook_info_button = tk.Button(self, text = "Export Textbook Info", font = controller.MENU_FONT, command = controller.scanner.server.get_textbook_inventory)
+        export_textbook_info_button.pack(pady = (50, 0))
+        controller.make_back_button(self).pack(pady = (20, 0))
         self.check_number()

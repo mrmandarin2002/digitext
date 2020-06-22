@@ -18,6 +18,7 @@ class TextbookScanner(tk.Frame):
         pass
 
     def barcode_scanned(self, controller):
+        print("TEXTBOOKSCANNER BARCODE")
         self.barcode_label["text"] = "Current Barcode :" + controller.current_barcode
         self.barcode_label.config(text = "Current Barcode: " + controller.current_barcode)
         if(not self.textbook_deletion_mode):
@@ -96,14 +97,15 @@ class TextbookScanner(tk.Frame):
             except ValueError:
                 messagebox.showerror("Error", "Please Make Sure That The Price Is Actually A Number, Idiot.")
 
-
     def switch_textbook_deletion_mode(self):
         if(self.textbook_deletion_mode):
             self.textbook_label["text"] = "Number Of Textbooks Scanned: "
             self.num_of_deleted_textbooks = 0
             self.title_entry.config(state = "normal")
             self.price_entry.config(state = "normal")
-            self.condition_entry.config(state = "normal")
+            self.condition_entry.config(state = "readonly")
+            self.main_label["text"] = "Add Textbooks"
+            self.delete_textbook_button["text"] = "Delete Textbook Button"
         else:
             self.textbook_label["text"] = "Number Of Textbooks Deleted: " + str(self.num_of_deleted_textbooks)
             playsound("Delete_Textbook_Warning.mp3", block = False)
@@ -111,6 +113,8 @@ class TextbookScanner(tk.Frame):
             self.title_entry.config(state = "disabled")
             self.price_entry.config(state = "disabled")
             self.condition_entry.config(state = "disabled")
+            self.delete_textbook_button["text"] = "Revert Back To Add Textbook Mode"
+            self.main_label["text"] = "TEXTBOOK DELETION MODE"
         self.textbook_deletion_mode = not self.textbook_deletion_mode
 
     def __init__(self, parent, controller):
@@ -118,8 +122,8 @@ class TextbookScanner(tk.Frame):
         TextbookScanner.configure(self, background = controller.MAROON)
         
         #labels
-        main_label = tk.Label(self, text="Add Textbooks", font = controller.TITLE_FONT, bg = controller.MAROON)
-        main_label.grid(row = 0, column = 0, padx = (95,0))
+        self.main_label = tk.Label(self, text="Add Textbooks", font = controller.TITLE_FONT, bg = controller.MAROON)
+        self.main_label.grid(row = 0, column = 0, padx = (95,0))
         title_label = tk.Label(self, text = "Title:", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         title_label.grid(row = 1, column = 0, padx = 10, pady = (20, 0), sticky = "W")
         condition_label = tk.Label(self, text = "Condition:", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
@@ -134,8 +138,8 @@ class TextbookScanner(tk.Frame):
         #buttons
         manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
         manual_entry.grid(row = 8, column = 0, padx = 10, pady = (20, 0), sticky = "W")
-        delete_textbook_button = tk.Button(self, text = "Delete Textbook Button", font = controller.MENU_FONT, command = self.switch_textbook_deletion_mode)
-        delete_textbook_button.grid(row = 9, column = 0, padx = 10, pady = (10, 0), sticky = "W")
+        self.delete_textbook_button = tk.Button(self, text = "Delete Textbook Button", font = controller.MENU_FONT, command = self.switch_textbook_deletion_mode)
+        self.delete_textbook_button.grid(row = 9, column = 0, padx = 10, pady = (10, 0), sticky = "W")
 
         back_button = controller.make_back_button(controller = self)
         back_button.grid(row = 10, column = 0, padx = 10, pady = (50,0), sticky = "W")
