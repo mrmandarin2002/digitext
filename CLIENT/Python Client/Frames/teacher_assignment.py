@@ -53,9 +53,7 @@ class TeacherAssignment(tk.Frame):
     def select_course(self, event, controller):
         if(self.course_list.curselection()):
             check = True
-            if(self.changes_made and self.course_list.curselection()[0] != self.cidx):
-                check = messagebox.askyesno("Changes", "You've made changes to this course's textbooks, are you sure you want to discard them?")
-            elif(check and self.course_list.curselection()[0] != self.cidx or self.new_course):
+            if(check and self.course_list.curselection()[0] != self.cidx or self.new_course):
                 self.new_course = False
                 self.changes_made = False
                 self.course_selected = True
@@ -72,7 +70,6 @@ class TeacherAssignment(tk.Frame):
                         self.textbook_nums += 1
                         self.current_textbook_list.append(textbook)
 
-
     def select_textbook(self, event, controller):
         if(self.course_textbooks.curselection()):
             self.idx = (self.course_textbooks.curselection()[0])
@@ -83,6 +80,12 @@ class TeacherAssignment(tk.Frame):
             self.course_textbooks.delete(self.idx)
             self.textbook_nums -= 1
             self.changes_made = True
+            if(self.identical_courses):
+                controller.scanner.server.set_course_r(self.teacher_courses[self.cidx], self.current_textbook_list)
+            else:
+                for course in self.full_courses_info:
+                    if(course[1] == self.courses_info[self.cidx][1]):
+                        controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
         else:
             messagebox.showerror("ERROR", "Please select a textbook you would like to delete")
 
@@ -99,6 +102,12 @@ class TeacherAssignment(tk.Frame):
                 self.changes_made = True
                 self.course_textbooks.insert(self.textbook_nums, current_textbook_name)
                 self.current_textbook_list.append(current_textbook_name)
+                if(self.identical_courses):
+                    controller.scanner.server.set_course_r(self.teacher_courses[self.cidx], self.current_textbook_list)
+                else:
+                    for course in self.full_courses_info:
+                        if(course[1] == self.courses_info[self.cidx][1]):
+                            controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
 
     def confirm_changes(self, controller):
         self.changes_made = False
@@ -178,5 +187,5 @@ class TeacherAssignment(tk.Frame):
         self.remove_textbook_button.grid(row = 1, column = 0, padx = 6, sticky = "N")
         self.add_textbook_button = tk.Button(self.button_container, text = "Add Textbook", font = controller.BUTTON_FONT, command = lambda : self.add_textbook(controller))
         self.add_textbook_button.grid(row = 0, column = 0,  padx = 6, sticky = "W")
-        self.confirm_button = tk.Button(self, text = "Confirm Changes", font = controller.BUTTON_FONT, command = lambda : self.confirm_changes(controller))
-        self.confirm_button.grid(row = 6, column = 5, sticky = "W")
+        #self.confirm_button = tk.Button(self, text = "Confirm Changes", font = controller.BUTTON_FONT, command = lambda : self.confirm_changes(controller))
+        #self.confirm_button.grid(row = 6, column = 5, sticky = "W")

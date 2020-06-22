@@ -95,7 +95,7 @@ if __name__ == '__main__':
     root = client()
     root.title("DigiText")
     root.geometry("600x500")
-    root.resizable(False, False)
+    #root.resizable(False, False)
     root.mainloop()
 
             

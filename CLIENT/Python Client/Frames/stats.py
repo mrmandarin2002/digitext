@@ -17,6 +17,9 @@ class Stats(tk.Frame):
         threading.Timer(1.0, self.check_number).start()
         if(self.controller.current_frame_name == "Stats"):
             self.welcome_title["text"] = "Number Of Textbooks: " + str(self.controller.scanner.get_textbook_nums())
+            screen_width = self.controller.winfo_screenwidth()
+            screen_height = self.controller.winfo_screenheight()
+            print(screen_width, screen_height)
         
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
