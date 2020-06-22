@@ -744,11 +744,11 @@
   ('stat',
    'c:\\users\\derek\\appdata\\local\\programs\\python\\python38\\lib\\stat.py',
    'PYMODULE'),
-  ('stringprep',
-   'c:\\users\\derek\\appdata\\local\\programs\\python\\python38\\lib\\stringprep.py',
-   'PYMODULE'),
   ('_py_abc',
    'c:\\users\\derek\\appdata\\local\\programs\\python\\python38\\lib\\_py_abc.py',
+   'PYMODULE'),
+  ('stringprep',
+   'c:\\users\\derek\\appdata\\local\\programs\\python\\python38\\lib\\stringprep.py',
    'PYMODULE'),
   ('barcode_interaction',
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
@@ -857,6 +857,9 @@
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
    'Client\\Frames\\textbook_scanner.py',
    'PYMODULE'),
+  ('playsound',
+   'c:\\users\\derek\\appdata\\local\\programs\\python\\python38\\lib\\site-packages\\playsound.py',
+   'PYMODULE'),
   ('Frames.info',
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
    'Client\\Frames\\info.py',
@@ -869,9 +872,9 @@
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
    'Client\\Frames\\menu.py',
    'PYMODULE'),
-  ('Frames.welcome_page',
+  ('Frames.stats',
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
-   'Client\\Frames\\welcome_page.py',
+   'Client\\Frames\\stats.py',
    'PYMODULE'),
   ('Frames',
    'C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python '
