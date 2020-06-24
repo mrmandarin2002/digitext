@@ -40,3 +40,4 @@ while True:
         # process the command request
         decoded_data = data.decode("utf-8")
         udp_socket.sendto(str(interact[decoded_data.split(";")[0]](decoded_data.split(";")[1].split("|"))).encode("utf-8"), address)
+ 

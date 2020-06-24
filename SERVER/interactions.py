@@ -14,9 +14,11 @@ def valid_student(args): # student number
     for student in students:
         if student[1] == str(args[0]):
             conn.close()
+            print(get_time() + "Student ID is valid")
             return "1"
     conn.close()
-    return "0"
+    print(get_time() + "Student ID is invalid")
+    return "0" 
 
 # adds a student to the database
 def add_student(args):
@@ -82,8 +84,10 @@ def valid_textbook(args): # textbook number
     for textbook in textbooks:
         if textbook[1] == str(args[0]):
             conn.close()
+            print(get_time() + "Textbook ID is valid")
             return "1"
     conn.close()
+    print(get_time() + "Textbook ID is invalid")
     return "0"
 
 # gets textbook information from the database

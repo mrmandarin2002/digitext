@@ -15,7 +15,7 @@ class Client:
         # initialize udp socket
         self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.udp_socket.bind(("", 7357))
-        self.udp_socket.settimeout(2.5)
+        self.udp_socket.settimeout(7)
 
     def check_connection(self):
         threading.Timer(1.0, self.check_connection).start()

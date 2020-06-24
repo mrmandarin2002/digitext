@@ -29,6 +29,7 @@ class TextbookManagement(tk.Frame):
  
     #Whenever a barcode is scanned
     def barcode_scanned(self, controller):
+        print("TEXTBOOKMANAGEMENT BARCODE")
         #If a student'sd barcode is scanned
         if(controller.barcode_status == "Student"):
             #this tells the program that a student's barcode is scanned and that it's ready to take in textbooks now
