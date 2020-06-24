@@ -159,3 +159,7 @@ class Client:
     # get a list of returned textbooks for a specified student
     def get_student_returned(self, student_id):
         return [textbook.split("|") for textbook in self.command("student_returned", [student_id]).split("~")]
+
+    # merge two textbooks in the database
+    def merge_textbooks(self, original, new):
+        return self.command("merge_t", [original, new])

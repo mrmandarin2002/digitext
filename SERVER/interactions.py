@@ -219,6 +219,7 @@ def get_textbook_counts(args):
     serialized = []
     for k in textbooks.keys():
         serialized.append(k+"|"+str(textbooks[k]))
+    conn.close()
     return "~".join(serialized)
 
 # gets textbook inventory
@@ -241,7 +242,19 @@ def get_textbook_inventory(args):
     output = []
     for k in keys:
         output.append(k+"|"+"|".join([str(i) for i in textbooks[k]]))
+    conn.close()
     return "~".join(output)
+
+# merges textbooks
+def merge_database_textbooks(args):
+    conn = Database.create_connection("server.db")
+    sql_cmd = """UPDATE Textbooks
+                 SET TextbookTitle = ?
+                 WHERE TextbookTitle = ?"""
+    cur = conn.cursor()
+    cur.execute(sql_cmd, (args[1], args[0]))
+    conn.commit()
+    return "1"
 
 # ping (always return 1)
 def ping(args): # no arguments
@@ -265,6 +278,7 @@ interact = {"valid_t": valid_textbook,
             "get_textbook_counts": get_textbook_counts,
             "get_textbook_inv": get_textbook_inventory, 
             "add_t": add_textbook,
+            "merge_t": merge_database_textbooks,
             "add_s": add_student,
             "courses_n": course_numbers,
             "course_r": course_requisites,
