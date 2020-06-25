@@ -119,3 +119,81 @@ class manual_barcode_entry_window(tk.Toplevel):
         controller.scanner.check_barcode(controller)
         print(controller.scanner.current_barcode)
 
+class merge_textbook_window(tk.Toplevel):
+
+    current_textbook_list = []
+    selected_textbook_name = ""
+    textbook_selected = False
+
+    def search_textbook(self, controller):
+        self.entered_textbook = self.textbook_entry.get()
+        self.entered_textbook.replace("-", " ")
+        self.entered_textbook.replace(",", " ")
+        textbook_words = self.entered_textbook.split()
+        self.current_textbook_list.clear()
+        self.textbook_list.delete(0, tk.END)
+        cnt = 0 
+        print(textbook_words)
+        for textbook in controller.scanner.textbook_list:
+            print("TEXTBOOK:", textbook)
+            check = True
+            for keyword in textbook_words:
+                if(keyword.lower() not in textbook.lower()):
+                    check = False
+                    break
+            if(check and textbook != self.selected_textbook_name):
+                self.current_textbook_list.append(textbook)
+                self.textbook_list.insert(cnt, textbook)
+                cnt += 1
+
+    def select_textbook(self,event, controller):
+        self.textbook_name.set(self.textbook_list.get(self.textbook_list.curselection()))
+        if(self.textbook_selected):
+            self.confirm_button["text"] = "Confirm That You Would Like To Replace " + self.selected_textbook_name + " with " + self.textbook_name.get()
+
+    def merge_textbook(self):
+        if(self.textbook_name.get()):
+            if(not self.textbook_selected):
+                self.selected_textbook_name = self.textbook_name.get()
+                self.textbook_list.delete(0, END)
+                self.confirm_button["text"] = "Confirm That You Would Like To Replace " + self.selected_textbook_name + " with " + " "
+                self.textbook_name.set('')
+            else:
+                if(self.textbook_name.get()):
+                    self.controller.scanner.server.merge_textbooks(self.selected_textbook_name, self.textbook_name.get())
+                    self.textbook_list.delete(0, END)
+                    print("Replaced " + self.selected_textbook_name + " with + " + self.textbook_name.get())
+                    self.confirm_button["text"] = "Replace Values With"
+        else:
+            print("ERROR: Please Select A Textbook First")
+        self.textbook_selected = not self.textbook_selected
+
+    def __init__(self, parent, controller):
+        tk.Toplevel.__init__(self, parent)
+        self.controller = controller
+        self.configure(background = MAROON)
+        self.title("Add Textbook")
+        self.iconbitmap("sphs_icon.ico")
+        self.textbook_name = tk.StringVar()
+        self.title_label = tk.Label(self, text = "Enter Textbook Name:", font = controller.MENU_FONT, bg = MAROON)
+        self.title_label.grid(row = 0, column = 0,padx = 5, pady = 5)
+        self.textbook_entry = tk.Entry(self)
+        self.textbook_entry.grid(row = 1, column = 0, padx = 5, pady = 5)
+        self.textbook_button = tk.Button(self, text = "Search Textbook", font = controller.BUTTON_FONT, command = lambda : self.search_textbook(controller))
+        self.textbook_button.grid(row = 2, column = 0, padx = 5, pady = 5)
+        self.pot_textbook_label = tk.Label(self, text = "Potential Textbooks:", font = controller.MENU_FONT, bg = MAROON)
+        self.pot_textbook_label.grid(row = 3, column = 0, padx = 5, pady = (10, 0))
+        self.textbook_list = tk.Listbox(self, bd = 0, bg = MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = MAROON)
+        self.textbook_list.grid(row = 4, column = 0, padx = 5, pady = (0, 10))
+        self.textbook_list["width"] = 50
+        self.textbook_list.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller))
+        self.confirm_button = tk.Button(self, text = "Replace Values With", font = controller.BUTTON_FONT, command = self.merge_textbook)
+        self.confirm_button.grid(row = 5, column = 0, padx = 5, pady = (0, 10))
+
+    def death(self, event=None):
+        self.destroy()    
+
+    def show(self, controller):
+        self.wait_window()
+        return self.textbook_name.get()
+

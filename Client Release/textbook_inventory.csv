@@ -1,0 +1,102 @@
+title,price,new,good,fair,poor,destroyed,total
+12 Years A Slave,15.0,0,14,11,0,0,25
+1984,15.0,0,20,9,0,0,29
+A Long Way Gone,21.0,0,0,2,0,0,2
+A Tale of Two Cities,10.0,0,0,23,0,0,23
+A Thousand Splendid Suns,25.0,0,0,5,0,0,5
+A Walk In The Woods,25.0,0,0,27,0,0,27
+Algebra And Trigonometry,80.0,0,0,0,3,0,3
+Algebra and Trig,80.0,0,1,17,0,0,18
+All About Law,86.0,0,52,0,0,0,52
+All Quiet on the Western Front,10.0,0,0,0,41,0,41
+All Quiet on the Western Front ,10.0,0,19,53,8,0,80
+American History,77.0,0,0,36,0,0,36
+Animal Farm,18.0,0,0,118,0,0,118
+Brave New World,20.0,0,103,31,0,0,134
+Calculus FC,47.0,0,0,65,0,0,65
+Calculus Graphical,185.0,12,0,64,0,0,76
+Canada In The Contemporary World ,100.0,0,0,140,0,0,140
+Chemistry,132.0,0,44,123,0,0,167
+Computer Science Using C++,127.0,0,0,33,4,0,37
+Death of a Salesman,20.0,0,117,1,1,0,119
+Dr. Jekyll and Mr. Hyde,10.0,0,0,9,8,0,17
+Dracula,15.0,0,48,0,0,0,48
+Fetal Pig,63.0,0,0,80,0,0,80
+Fifth Business,15.0,0,9,25,14,0,48
+First Nation, Inuit, and Metis Peoples,50.0,0,0,23,0,0,23
+Foundations of Mathematics 11,80.0,0,0,45,0,0,45
+Foundations of Mathematics 12,79.0,0,0,48,0,0,48
+Frankenstein,13.0,0,41,1,0,0,42
+French Vocabulary,26.0,0,20,27,0,0,47
+Generals die in bed,15.0,1,0,42,0,0,43
+Geographic Issues,115.0,28,29,8,139,0,204
+Great Expectations,12.0,0,0,0,8,0,8
+Hamlet,25.0,0,0,101,0,0,101
+Heart of Darkness,13.0,0,0,1,27,0,28
+In Cold Blood,16.0,0,0,28,0,0,28
+Inquiry Into Life,200.0,78,44,40,0,0,162
+Into The Wild,25.0,20,80,9,0,0,109
+Into The Wild ,20.0,0,2,4,0,0,6
+Intro Data Structures,50.0,1,0,0,31,0,32
+Language And Writing,40.0,0,0,136,0,0,136
+Language And Writing ,40.0,0,0,2,0,0,2
+Language and Writing,40.0,0,0,32,0,0,32
+Literature and Media,40.0,0,0,197,1,0,198
+Literature and Media 10,35.0,0,20,96,28,1,145
+Lord Of The Flies ,10.0,0,0,116,0,0,116
+Lord of the Flies,10.0,0,2,6,0,0,8
+Macbeth,25.0,0,4,32,52,0,88
+MathWorks 10,68.0,0,0,8,18,0,26
+MathWorks 10 WB,10.0,0,14,0,0,0,14
+MathWorks 11,67.0,0,13,15,0,0,28
+MathWorks 12,68.0,0,0,13,0,0,13
+Mathematics 10 WB,10.0,1,59,85,46,0,191
+Mathlinks 9,63.0,0,27,53,71,0,151
+Mr Nice,25.0,0,0,23,0,0,23
+Night,11.0,0,1,23,0,0,24
+No Fear Shakespeare: The Tempest,10.0,0,50,0,0,0,50
+Of Mice and Men,13.0,0,2,75,0,0,77
+On Writing Well,25.0,0,0,30,0,0,30
+One Day in the Life of Ivan Denisovi1002629ch,13.0,0,0,3,0,0,3
+One Day in the Life of Ivan Denisovich,20.0,0,75,32,21,0,128
+Outliers,25.0,0,0,86,0,0,86
+People of the Lie,20.0,0,0,15,0,0,15
+Physics,76.0,0,51,0,0,0,51
+Pre-Calculus,87.0,0,91,0,0,0,91
+Pre-Calculus 11,87.0,0,3,125,0,0,128
+Pre-Calculus 11 WB,10.0,0,33,46,0,0,79
+Pre-Calculus 12,87.0,0,0,6,0,0,6
+Pre-Calculus 12 SW,10.0,0,31,0,0,0,31
+Pre-Calculus 12 WB,10.0,0,29,0,0,0,29
+Pre-Calculus SW,10.0,0,6,0,0,0,6
+Pride and Prejudice,17.0,0,11,4,3,0,18
+Psychology And You,115.0,0,21,9,11,0,41
+Romeo and Juliet,15.0,0,28,0,0,0,28
+Science 10,91.0,0,170,0,0,0,170
+SciencePower 9,87.0,0,0,0,132,0,132
+Shaping Canada,92.0,0,0,156,0,0,156
+Sound And Sense,25.0,0,0,0,94,0,94
+Station Eleven,25.0,22,0,0,0,0,22
+Summer of my Amazing Luck,15.0,0,22,6,0,0,28
+The Adventures of Huckleberry Finn,12.0,0,98,39,0,0,137
+The Apprenticeship of Duddy Kravitz,37.0,0,40,0,4,0,44
+The Bridge of San Luis Rey,16.0,0,35,0,0,0,35
+The Broadview Anthology of Poetry,55.0,8,0,0,0,0,8
+The Cellist of Sarajevo,15.0,0,21,25,0,0,46
+The Glass Menagerie,10.0,0,0,32,1,0,33
+The Great Gatsby,21.0,0,19,71,12,0,102
+The Importance of Being Earnest,10.0,26,0,0,23,0,49
+The Norton Anthology of Short Fiction,95.0,0,0,0,18,0,18
+The Norton Reader,120.0,1,33,0,0,0,34
+The Old Man and the Sea,16.0,0,1,0,0,0,1
+The Power and the Glory,18.0,36,92,46,0,0,174
+The Remains of the Day,15.0,0,2,0,0,0,2
+The Yellow Birds,20.0,0,98,0,0,0,98
+Things Fall Apart,15.0,0,0,92,0,0,92
+Tuesdays With Morrie,23.0,0,8,15,0,0,23
+Tuesdays with Morrie,23.0,0,6,17,0,0,23
+Understanding Economics,120.0,0,0,31,0,0,31
+Une fois pour toutes,57.0,0,43,0,0,0,43
+Watchmen,20.0,0,38,2,0,0,40
+Western Civilizations,90.0,20,0,0,0,0,20
+Writing English,17.0,0,32,0,0,0,32
