@@ -126,6 +126,7 @@ class merge_textbook_window(tk.Toplevel):
     textbook_selected = False
 
     def search_textbook(self, controller):
+        self.controller.scanner.update_textbook_list()
         self.entered_textbook = self.textbook_entry.get()
         self.entered_textbook.replace("-", " ")
         self.entered_textbook.replace(",", " ")

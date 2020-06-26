@@ -64,6 +64,9 @@ class scanner:
             print("Total Amount Of Textbooks " + str(self.total_textbooks))
         return self.total_textbooks
 
+    def update_textbook_list(self):
+        self.textbook_list = self.server.get_textbook_titles()
+
     def __init__(self, controller):
         self.controller = controller
         #where the interaction with server happens
