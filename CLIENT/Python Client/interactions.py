@@ -45,7 +45,7 @@ class Client:
             data = self.udp_socket.recvfrom(4096)[0]
             return data.decode("utf-8") # return decoded data
         except: # if a timeout exception was thrown
-            messagebox.showerror("There Was a Connection Issue", "Screw this piece of crap")
+            #messagebox.showerror("There Was a Connection Issue", "Screw this piece of crap")
             return ""
 
     # command method
