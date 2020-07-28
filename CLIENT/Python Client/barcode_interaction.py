@@ -179,6 +179,3 @@ class scanner:
         else:
             messagebox.showerror("ERROR", "Don't Touch This Piece Of Garbage And Find Senpai Derek ASAP.")
     
-    #updates the textbook_list to include the latest books
-    def update_textbook_list(self):
-        self.textbook_list = self.server.get_textbook_titles()

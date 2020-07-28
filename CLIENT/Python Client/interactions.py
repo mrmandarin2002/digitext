@@ -41,12 +41,8 @@ class Client:
     # basic data echo method
     def echo(self, msg):
         self.udp_socket.sendto(msg.encode("utf-8"), self.server_address)
-        try: # try to receive data back from the server
-            data = self.udp_socket.recvfrom(4096)[0]
-            return data.decode("utf-8") # return decoded data
-        except: # if a timeout exception was thrown
-            #messagebox.showerror("There Was a Connection Issue", "Screw this piece of crap")
-            return ""
+        data = self.udp_socket.recvfrom(64000)[0]
+        return data.decode("utf-8") # return decoded data
 
     # command method
     def command(self, cmd, args):
@@ -150,7 +146,11 @@ class Client:
     
     # get a list of textbook counts:
     def get_textbook_counts(self):
-        return [i.split("|") for i in self.command("get_textbook_counts", []).split("~")]
+        #test_data = self.command("get_textbook_counts", [])
+        #print("Test Data: " + str(test_data))
+        data = [i.split("|") for i in self.command("get_textbook_counts", []).split("~")]
+        #print("Interaction Test: " + str(data))
+        return data
 
     # write textbook inventory to file
     def get_textbook_inventory(self):

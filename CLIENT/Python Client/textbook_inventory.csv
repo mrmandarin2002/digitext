@@ -1,1 +1,150 @@
 title,price,new,good,fair,poor,destroyed,total
+12 Years A Slave,15.0,0,14,11,0,0,25
+1984,15.0,0,20,9,0,0,29
+A Long Way Gone,21.0,0,0,2,0,0,2
+A Tale of Two Cities,10.0,0,0,23,0,0,23
+A Thousand Splendid Suns,25.0,0,0,5,0,0,5
+A Walk in the Woods,25.0,0,0,29,0,0,29
+Algebra And Trigonometry,80.0,0,0,0,3,0,3
+Algebra and Trig,80.0,0,1,18,0,0,19
+All About Law,86.0,0,52,7,0,0,59
+All Quiet on the Western Front ,10.0,0,19,62,50,0,131
+American History,77.0,0,0,37,0,0,37
+Animal Farm,18.0,0,0,144,0,0,144
+Applied Mathematics 11,80.0,0,0,1,0,0,1
+Brave New World,20.0,0,103,31,0,0,134
+Calculus FC,47.0,0,0,66,0,0,66
+Calculus Graphical,185.0,12,1,64,0,0,77
+Canada In The Contemporary World ,100.0,0,34,131,34,0,199
+Catholic Faith Handbook for Youth,30.0,29,0,0,0,0,29
+Catholic Youth Bible,20.0,0,0,1,0,0,1
+Chemistry,132.0,0,48,127,0,0,175
+Complete C.S. Lewis Signature Classics,35.0,13,0,24,0,0,37
+Computer Science Using C++,127.0,0,2,35,4,0,41
+Death of a Salesman,20.0,0,117,13,1,0,131
+Dr. Jekyll and Mr. Hyde,13.0,0,0,11,9,0,20
+Dracula,15.0,0,51,4,1,0,56
+Economics,119.0,0,0,3,0,0,3
+Essential Elements - Baritone B.C. Book 1,15.0,0,0,0,9,0,9
+Essential Elements - Bb Clarinet Book 1,15.0,0,0,0,11,0,11
+Essential Elements - Bb Trumpet Book 1,15.0,0,0,0,15,0,15
+Essential Elements - Eb Alto Saxophone Book 1,15.0,0,0,0,1,0,1
+Essential Elements - F Horn Book 1,15.0,0,0,0,6,0,6
+Essential Elements - Flute Book 1,15.0,0,0,0,13,0,13
+Essential Elements - Oboe Book 1,15.0,0,0,0,1,0,1
+Essential Elements - Trombone Book 1,15.0,0,0,0,15,0,15
+Essential Elements - Tuba Book 1,15.0,0,0,0,8,0,8
+Exploring Ethics,55.0,9,0,23,0,0,32
+Fetal Pig,63.0,0,0,79,0,0,79
+Fifth Business,15.0,0,9,28,15,0,52
+First Nations, Inuit and Metis Peoples,50.0,0,1,23,2,0,26
+Foundations of Mathematics 11,80.0,0,1,45,0,0,46
+Foundations of Mathematics 12,79.0,0,0,49,0,0,49
+Frankenstein,13.0,0,41,1,0,0,42
+French Vocabulary,26.0,0,20,28,0,0,48
+Generals Die in Bed,15.0,1,0,46,0,0,47
+Geographic Issues,115.0,28,31,16,139,0,214
+Great Expectations,13.0,0,0,1,9,0,10
+Hamlet,25.0,0,0,113,0,0,113
+Heart of Darkness,13.0,0,0,5,27,0,32
+Henry IV,12.0,0,6,3,7,0,16
+In Cold Blood,16.0,0,0,28,0,0,28
+Inquiry Into Life,200.0,79,51,40,0,0,170
+Into The Wild ,25.0,20,89,13,0,0,122
+Intro Data Structures,50.0,1,0,1,31,0,33
+Julius Caesar,13.0,0,11,26,14,0,51
+Language and Writing,40.0,0,0,170,0,0,170
+Language and Writing 10,35.0,0,0,2,0,0,2
+Literature and Media,40.0,0,0,197,7,0,204
+Literature and Media 10,35.0,1,20,113,28,1,163
+Living Justice and Peace,25.0,0,0,136,0,0,136
+Lord of the Flies,10.0,0,2,141,1,0,144
+Macbeth,25.0,0,9,35,52,0,96
+MathLinks 9,63.0,0,1,2,7,0,10
+MathWorks 10,68.0,0,0,8,18,0,26
+MathWorks 10 WB,10.0,0,14,0,0,0,14
+MathWorks 11,67.0,0,13,15,0,0,28
+MathWorks 12,68.0,0,3,14,0,0,17
+Mathematics 10,68.0,0,0,2,2,0,4
+Mathematics 10 WB,10.0,1,59,85,46,0,191
+Mathlinks 9,63.0,0,27,53,71,0,151
+Mr. Nice,25.0,0,0,26,0,0,26
+Mythology,15.0,25,0,11,10,0,46
+Night,11.0,0,1,24,0,0,25
+No Fear Shakespeare: The Tempest,10.0,0,50,0,0,0,50
+Of Mice and Men,13.0,0,2,92,12,0,106
+On Writing Well,25.0,0,2,32,0,0,34
+One Day in the Life of Ivan Denisovich,20.0,0,75,35,21,0,131
+Our Canada,100.0,0,0,2,0,0,2
+Outliers,25.0,0,0,91,0,0,91
+People of the Lie,20.0,0,0,48,0,0,48
+Physics,76.0,0,54,1,0,0,55
+Pre-Calculus,87.0,0,91,0,0,0,91
+Pre-Calculus 11,87.0,0,5,129,0,0,134
+Pre-Calculus 11 WB,10.0,0,34,47,0,0,81
+Pre-Calculus 12,87.0,0,2,11,0,0,13
+Pre-Calculus 12 WB,10.0,0,59,0,0,0,59
+Pre-Calculus SW,10.0,0,6,0,0,0,6
+Pride and Prejudice,17.0,0,11,6,3,0,20
+Psychology And You,115.0,0,21,9,11,0,41
+Romans,20.0,0,0,37,9,0,46
+Romeo and Juliet,15.0,0,28,127,0,0,155
+Sacred Scriptures,40.0,0,4,157,1,0,162
+Saint Ignatius of Loyola: For the Greater Glory of God,12.0,0,0,0,152,0,152
+Science 10,91.0,0,177,0,0,0,177
+SciencePower 9,87.0,0,0,5,137,0,142
+Shaping Canada,92.0,0,0,165,0,0,165
+Sound and Sense,30.0,0,0,0,102,0,102
+Station Eleven,25.0,24,0,0,0,0,24
+Summer of my Amazing Luck,15.0,0,22,6,0,0,28
+Symphonic Band Technique -  Bb Bass Clarinet,15.0,0,0,12,0,0,12
+Symphonic Band Technique - Alto Saxophone,15.0,0,0,18,0,0,18
+Symphonic Band Technique - Baritone B.C.,15.0,0,0,20,0,0,20
+Symphonic Band Technique - Bassoon,15.0,0,0,3,0,0,3
+Symphonic Band Technique - Bb Clarinet,15.0,4,0,34,0,0,38
+Symphonic Band Technique - Bb Tenor Saxophone,15.0,0,0,14,0,0,14
+Symphonic Band Technique - Clarinet,15.0,0,0,2,0,0,2
+Symphonic Band Technique - Cornet/Trumpet,15.0,0,0,0,17,0,17
+Symphonic Band Technique - Eb Alto Saxophone,15.0,0,0,3,0,0,3
+Symphonic Band Technique - Eb Baritone Saxophone,15.0,0,0,5,0,0,5
+Symphonic Band Technique - Flute/Piccolo,15.0,0,0,25,0,0,25
+Symphonic Band Technique - Horn in F,15.0,0,0,0,8,0,8
+Symphonic Band Technique - Mallet,15.0,0,0,4,0,0,4
+Symphonic Band Technique - Mallet Percussion,15.0,0,0,19,0,0,19
+Symphonic Band Technique - Oboe,15.0,0,0,7,0,0,7
+Symphonic Band Technique - Percussion,15.0,0,0,1,0,0,1
+Symphonic Band Technique - Trombone,15.0,0,0,36,0,0,36
+Symphonic Band Technique - Trumpet/ Cornet in Bb,15.0,0,0,0,27,0,27
+Symphonic Band Technique - Tuba,15.0,0,0,12,0,0,12
+Tale of Two Cities,18.0,0,0,3,0,0,3
+The Adventures of Huckleberry Finn,12.0,0,98,39,0,0,137
+The Ancient Greeks,45.0,0,0,24,17,0,41
+The Ancient Romans,45.0,0,18,22,5,0,45
+The Apprenticeship of Duddy Kravitz,37.0,0,40,0,4,0,44
+The Bridge of San Luis Rey,16.0,0,38,0,0,0,38
+The Broadview Anthology of Poetry,55.0,8,0,0,0,0,8
+The Cellist of Sarajevo,15.0,0,21,26,0,0,47
+The Fifth Week,20.0,0,0,32,0,0,32
+The Glass Menagerie,10.0,0,0,32,1,0,33
+The Great Gatsby,21.0,0,26,75,12,0,113
+The Importance of Being Earnest,10.0,26,0,3,23,0,52
+The Merchant of Venice,25.0,37,0,8,77,0,122
+The Norton Anthology of Short Fiction,95.0,0,0,0,18,0,18
+The Norton Reader,120.0,1,35,0,0,0,36
+The Old Man and the Sea,16.0,0,1,0,0,0,1
+The Power and the Glory,18.0,31,101,42,0,0,174
+The Remains of the Day,15.0,0,2,0,0,0,2
+The Tale of Troy,10.0,0,13,4,26,0,43
+The Tempest,10.0,0,7,0,0,0,7
+The Yellow Birds,20.0,0,98,3,0,0,101
+Things Fall Apart,15.0,0,0,146,0,0,146
+To Kill Mockingbird,20.0,0,6,95,0,0,101
+Tuesdays with Morrie,23.0,0,14,35,0,0,49
+Twelfth Night,10.0,0,10,40,18,0,68
+Understanding Economics,120.0,0,0,28,3,0,31
+Une fois pour toutes,57.0,0,44,0,0,0,44
+Watchmen,20.0,0,39,3,0,0,42
+Western Civilizations,90.0,20,4,0,0,0,24
+When Bad Things Happen to Good People,15.0,0,0,30,2,0,32
+World Religions: A Voyage of Discovery,25.0,0,0,167,0,0,167
+Writing English,17.0,0,34,1,0,0,35

@@ -73,7 +73,7 @@ def student_requisites(args): # student number
     textbooks = []
     for c in Database.get_courses(conn):
         if c[1] in courses:
-            textboks.append(c[4].split("|"))
+            textbooks.append(c[4].split("|"))
     return "|".join(textbooks)
 
 # checks if a textbook is valid in the database

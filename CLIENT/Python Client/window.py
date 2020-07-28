@@ -133,7 +133,6 @@ class merge_textbook_window(tk.Toplevel):
         textbook_words = self.entered_textbook.split()
         self.current_textbook_list.clear()
         self.textbook_list.delete(0, tk.END)
-        cnt = 0 
         print(textbook_words)
         for textbook in controller.scanner.textbook_list:
             print("TEXTBOOK:", textbook)
@@ -144,8 +143,12 @@ class merge_textbook_window(tk.Toplevel):
                     break
             if(check and textbook != self.selected_textbook_name):
                 self.current_textbook_list.append(textbook)
-                self.textbook_list.insert(cnt, textbook)
-                cnt += 1
+        self.current_textbook_list.sort()
+        cnt = 0 
+        for textbook in self.current_textbook_list:
+            self.textbook_list.insert(cnt, textbook)
+            cnt += 1
+                
 
     def select_textbook(self,event, controller):
         self.textbook_name.set(self.textbook_list.get(self.textbook_list.curselection()))

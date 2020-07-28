@@ -1,6 +1,6 @@
 # import neccessary functions and classes
 from datetime import datetime
-import socket
+import socket, sys
 
 get_time = None
 interact = None
@@ -39,5 +39,12 @@ while True:
             clients.append(address)
         # process the command request
         decoded_data = data.decode("utf-8")
-        udp_socket.sendto(str(interact[decoded_data.split(";")[0]](decoded_data.split(";")[1].split("|"))).encode("utf-8"), address)
+        function_selection = decoded_data.split(';')[0]
+        send_data = decoded_data.split(";")[1].split("|")
+        received_data = str(interact[function_selection](send_data)).encode("utf-8")
+        #print("Function: " + str(function_selection))
+        #print("Data Sent: " + str(send_data))
+        #print("Length of data: " + str(sys.getsizeof(received_data)))
+        #print("Returned Data: " + str(received_data))
+        udp_socket.sendto(received_data, address)
  
