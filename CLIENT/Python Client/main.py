@@ -2,7 +2,6 @@
 import tkinter as tk                # python 3
 from tkinter import font  as tkfont # python 3
 from tkinter import ttk
-from tkinter import messagebox
 
 from Frames import stats
 from Frames import menu
@@ -12,6 +11,7 @@ from Frames import textbook_scanner
 from Frames import teacher_assignment
 
 import json, traceback
+
 from urllib import request, parse
 
 #import own files

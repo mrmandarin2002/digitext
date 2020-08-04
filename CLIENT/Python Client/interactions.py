@@ -1,6 +1,11 @@
 import socket, threading
 from tkinter import messagebox
 
+HEADER = 16
+PORT = 5050
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE = "!DISCONNECT"
+
 class Client:
 
     server_connection = True
@@ -13,36 +18,23 @@ class Client:
         self.server_address = (address, port)
 
         # initialize udp socket
-        self.udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.udp_socket.bind(("", 7357))
-        self.udp_socket.settimeout(7)
-
-    def check_connection(self):
-        threading.Timer(1.0, self.check_connection).start()
-        ping_cnt = 0
-        if(not self.ping()):
-            ping_cnt += 1
-            print("Connection with server is lost")
-            self.server_connection = False
-            if(self.displayed_error == False):
-                self.displayed_error = True
-                messagebox.showerror("Connection Error", "Client has failed to establish a connection with the server, please connect before using the program")
-            self.server_connection = True
-        elif(self.server_connection):
-            self.displayed_error = False
-            print("Connection with server is present!")
-        else:
-            print("Currently no connection with the server")
-
-    # method to close the udp socket
-    def close(self):
-        self.udp_socket.close()
+        self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.tcp_socket.connect(self.server_address)
+        self.tcp_socket.settimeout(5)
 
     # basic data echo method
     def echo(self, msg):
-        self.udp_socket.sendto(msg.encode("utf-8"), self.server_address)
-        data = self.udp_socket.recvfrom(64000)[0]
-        return data.decode("utf-8") # return decoded data
+        try:
+            msg_length = len(msg)
+            send_length = str(msg_length).encode(FORMAT)
+            send_length += b' ' * (HEADER - len(send_length))
+            self.tcp_socket.send(send_length)
+            self.tcp_socket.send(msg.encode("utf-8"))
+            data = self.tcp_socket.recv(64000)
+            print(data)
+            return data.decode("utf-8") # return decoded data
+        except Exception as e:
+            print("An error has occured! " + str(e))
 
     # command method
     def command(self, cmd, args):
