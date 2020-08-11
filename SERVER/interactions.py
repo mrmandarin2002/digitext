@@ -142,6 +142,7 @@ def return_textbook(args):
 def course_requisites(args):
     print(get_time()+"Getting course requisites for course: "+args[0])
     conn = Database.create_connection("server.db")
+    courses = Database.get_courses(conn)
     for c in Database.get_courses(conn):
         if c[1] == args[0]:
             return c[4]

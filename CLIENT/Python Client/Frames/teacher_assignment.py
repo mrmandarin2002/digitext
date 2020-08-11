@@ -60,6 +60,7 @@ class TeacherAssignment(tk.Frame):
                 self.cidx = (self.course_list.curselection()[0])
                 self.course_name_label["text"] = "Course Name: " + self.course_list.get(self.cidx)
                 self.course_textbooks.delete(0, tk.END)
+                print("COURSE NUMBER: " + str(self.courses_info[self.cidx][0]))
                 self.current_course_textbooks = controller.scanner.server.course_r(self.courses_info[self.cidx][0])
                 print(self.current_course_textbooks)
                 self.textbook_nums = 0

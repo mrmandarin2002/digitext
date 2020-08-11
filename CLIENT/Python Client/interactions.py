@@ -24,17 +24,19 @@ class Client:
 
     # basic data echo method
     def echo(self, msg):
-        try:
-            msg_length = len(msg)
-            send_length = str(msg_length).encode(FORMAT)
-            send_length += b' ' * (HEADER - len(send_length))
-            self.tcp_socket.send(send_length)
-            self.tcp_socket.send(msg.encode("utf-8"))
-            data = self.tcp_socket.recv(64000)
+        msg_length = len(msg)
+        send_length = str(msg_length).encode(FORMAT)
+        send_length += b' ' * (HEADER - len(send_length))
+        self.tcp_socket.send(send_length)
+        self.tcp_socket.send(msg.encode("utf-8"))
+        data_length = self.tcp_socket.recv(HEADER).decode(FORMAT)
+        print("RECEIVED DATA LENGTH " + data_length)
+        if(int(data_length)):
+            data = self.tcp_socket.recv(int(data_length))
             print(data)
             return data.decode("utf-8") # return decoded data
-        except Exception as e:
-            print("An error has occured! " + str(e))
+        else:
+            return ""
 
     # command method
     def command(self, cmd, args):
