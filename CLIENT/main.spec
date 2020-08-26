@@ -4,10 +4,10 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT\\Python Client'],
+             pathex=['/Users/derekma/Documents/GitHub/digitext/CLIENT'],
              binaries=[],
              datas=[],
-             hiddenimports=['tkinter'],
+             hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -30,4 +30,8 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True )
+          console=False )
+app = BUNDLE(exe,
+             name='main.app',
+             icon=None,
+             bundle_identifier=None)

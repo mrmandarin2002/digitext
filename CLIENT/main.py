@@ -10,7 +10,7 @@ from Frames import info
 from Frames import textbook_scanner
 from Frames import teacher_assignment
 
-import json, traceback
+import json, traceback, playsound, pynput
 
 from urllib import request, parse
 from os import path
