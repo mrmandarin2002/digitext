@@ -32,18 +32,15 @@ class Client:
         data_length = ""
         while (len(data_length) < HEADER):
             data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
-            try:
-                print("DATA LENGTH: " + str(int(data_length)))
-            except:
-                print("SLIGHT ERROR: " + data_length)
+        print(data_length)
         if(int(data_length)):
             data = ""
             cnt = 0
-            while(len(data) != int(data_length)):
+            while(len(data) < int(data_length)):
                 data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
                 cnt += 1
                 print("LOOP COUNT: " + str(cnt))
-                print(data[:200])
+                print(data)
             return data # return decoded data
         else:
             return ""
