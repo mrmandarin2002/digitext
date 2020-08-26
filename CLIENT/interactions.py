@@ -29,12 +29,22 @@ class Client:
         send_length += b' ' * (HEADER - len(send_length))
         self.tcp_socket.send(send_length)
         self.tcp_socket.send(msg.encode("utf-8"))
-        data_length = self.tcp_socket.recv(HEADER).decode(FORMAT)
-        print("RECEIVED DATA LENGTH " + data_length)
+        data_length = ""
+        while (len(data_length) < HEADER):
+            data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
+            try:
+                print("DATA LENGTH: " + str(int(data_length)))
+            except:
+                print("SLIGHT ERROR: " + data_length)
         if(int(data_length)):
-            data = self.tcp_socket.recv(int(data_length))
-            print(data)
-            return data.decode("utf-8") # return decoded data
+            data = ""
+            cnt = 0
+            while(len(data) != int(data_length)):
+                data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
+                cnt += 1
+                print("LOOP COUNT: " + str(cnt))
+                print(data[:200])
+            return data # return decoded data
         else:
             return ""
 

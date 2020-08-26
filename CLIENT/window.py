@@ -119,6 +119,29 @@ class manual_barcode_entry_window(tk.Toplevel):
         controller.scanner.check_barcode(controller)
         print(controller.scanner.current_barcode)
 
+class ip_config_window(tk.Toplevel):
+    
+    def __init__(self,  controller):
+        tk.Toplevel.__init__(self, controller)
+        self.configure(background = MAROON)
+        self.title("IP Config")
+        self.ip = tk.StringVar()
+        title_label = tk.Label(self, text = "Enter Server's IP Address:", font = controller.MENU_FONT, bg = MAROON)
+        title_label.grid(row = 0, column = 0,padx = (15,15), pady = 5)
+        self.textbook_entry = tk.Entry(self)
+        self.textbook_entry.grid(row = 1, column = 0, padx = (15,15), pady = 5)
+        confirm_button = tk.Button(self, text = "Confirm IP Address", font = controller.BUTTON_FONT, command = self.death)
+        confirm_button.grid(row = 2, column = 0, padx = 5, pady = (0, 10))
+
+    def death(self, event=None):
+        self.ip.set(self.textbook_entry.get())
+        self.destroy()    
+
+    def show(self, controller):
+        self.wait_window()
+        controller.ip_address = str(self.ip.get())
+
+
 class merge_textbook_window(tk.Toplevel):
 
     current_textbook_list = []

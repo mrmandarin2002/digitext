@@ -80,8 +80,8 @@ class scanner:
         #sort the textbook_list alphabetically
         self.textbook_list = sorted(self.textbook_list)
         self.textbook_nums = self.server.get_textbook_counts()
-        print("Textbook Count:")
-        print(self.textbook_nums)
+        #print("Textbook Count:")
+        #print(self.textbook_nums)
         self.total_textbooks = 0
         if(len(self.textbook_nums) > 3):
             for textbook in self.textbook_nums:

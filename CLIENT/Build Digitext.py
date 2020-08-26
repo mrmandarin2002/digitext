@@ -22,7 +22,6 @@ for file in glob.glob(mac_directory + '\\*'):
     os.remove(file)
 
 PyInstaller.__main__.run([
-    '--noconsole',
     '--name=%s' % "DigiText",
     '--onefile',
     '--icon=%s' % 'sphs_icon.ico',

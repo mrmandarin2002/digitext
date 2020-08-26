@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False , icon='sphs_icon.ico')
+          console=True , icon='sphs_icon.ico')

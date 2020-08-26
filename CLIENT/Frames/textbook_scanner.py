@@ -42,7 +42,10 @@ class TextbookScanner(tk.Frame):
                     controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
                     controller.update_textbook_list()
                     print("--- %s seconds ---" % (time.time() - start_time))
-                    playsound("Textbook_Scan_In_Sound.mp3", block = False)
+                    try:
+                        playsound("Textbook_Scan_In_Sound.mp3", block = False)
+                    except:
+                        print("no sound :(")
                     self.num_scanned += 1
                     self.textbook_label.config(text = "Number of Textbooks Scanned: " + str(self.num_scanned))
             else:
@@ -108,7 +111,10 @@ class TextbookScanner(tk.Frame):
             self.delete_textbook_button["text"] = "Delete Textbook Button"
         else:
             self.textbook_label["text"] = "Number Of Textbooks Deleted: " + str(self.num_of_deleted_textbooks)
-            playsound("Delete_Textbook_Warning.mp3", block = False)
+            try:
+                playsound("Delete_Textbook_Warning.mp3", block = False)
+            except:
+                print("no sound :(")
             messagebox.showwarning("DANGER DANGER!", "YOU ARE ENTERING TEXTBOOK DELETION MODE. BE CAREFUL WITH YOUR POWER!")
             self.title_entry.config(state = "disabled")
             self.price_entry.config(state = "disabled")

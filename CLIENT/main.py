@@ -13,24 +13,22 @@ from Frames import teacher_assignment
 import json, traceback
 
 from urllib import request, parse
+from os import path
 
 #import own files
-import interactions, barcode_interaction
+import interactions, barcode_interaction, window
+
+version = "teacher"
 
 #the center of the universe (digitext really)
 class client(tk.Tk):
 
     current_frame_name = ''
+    ip_address = ""
 
     #some initialization stuff I found on the internet. Don't know how but it works!
     def __init__(self, *args, **kwargs):
-        with open('settings.json') as settings_file:
-            self.settings = json.load(settings_file)
-
-        print("IP ADDRESS: " + self.settings["ip_address"])
-        print("CLIENT VERSION: " + self.settings["version"])
         tk.Tk.__init__(self, *args, **kwargs)
-        
         #this is the list of different windows ("frames as called in tkinter"). The basic idea between page switches...
         #is that I already pre-load all the windows and switch between them as necessary
         self.scene_list = (stats.Stats, textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)
@@ -47,6 +45,24 @@ class client(tk.Tk):
         self.BUTTON_FONT = tkfont.Font(family= self.MAIN_FONT, size=10)
         self.BACK_BUTTON_FONT = tkfont.Font(family = self.MAIN_FONT, size = 8)
         self.MENU_FONT = tkfont.Font(family= self.MAIN_FONT, size=13)
+
+        if(path.exists("settings.json")):
+            with open('settings.json') as settings_file:
+                self.settings = json.load(settings_file)
+        else:
+            window.ip_config_window(self).show(self)
+            print("Current IP ADRESS: " + self.ip_address)
+            self.settings = {}
+            self.settings["ip_address"] = self.ip_address
+            self.settings["version"] = version
+            try:
+                with open("settings.json", 'w') as outfile:
+                    json.dump(self.settings, outfile)
+            except:
+                print("Unable to create settings file")
+
+        print("IP ADDRESS: " + self.settings["ip_address"])
+        print("CLIENT VERSION: " + self.settings["version"])
 
         #self.scanner allows for barcode input and server communication
         #the relevant code is in barcode_interactions.py
