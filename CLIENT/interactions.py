@@ -1,6 +1,8 @@
 import socket, threading
 from tkinter import messagebox
 
+import window
+
 HEADER = 16
 PORT = 5050
 FORMAT = 'utf-8'
@@ -11,16 +13,30 @@ class Client:
     server_connection = True
     displayed_error = False
 
+    def find_connection(self):
+        # initialize socket
+        self.connection_established = False
+        while(not self.connection_established):
+            try:
+                # define server address
+                self.server_address = (self.address, self.port)
+                self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.tcp_socket.connect(self.server_address)
+                self.tcp_socket.settimeout(5)
+                self.connection_established = True
+            except:
+                messagebox.showerror("Connection Error!", "Please enter the IP Address of the server. Merci.")
+                window.ip_config_window(self.controller).show(self.controller)
+                self.address = self.controller.ip_address
+                self.controller.update_settings()
+
+
     # initialization method
-    def __init__(self, address, port, debug_mode=False):
-
-        # define server address
-        self.server_address = (address, port)
-
-        # initialize udp socket
-        self.tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.tcp_socket.connect(self.server_address)
-        self.tcp_socket.settimeout(5)
+    def __init__(self, controller, address, port, debug_mode=False):
+        self.controller = controller
+        self.address = address
+        self.port = port
+        self.find_connection()
 
     # basic data echo method
     def echo(self, msg):
@@ -28,28 +44,36 @@ class Client:
         msg_length = len(msg)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' ' * (HEADER - len(send_length))
-        self.tcp_socket.send(send_length)
-        self.tcp_socket.send(msg.encode("utf-8"))
-        data_length = ""
-        cnt = 0
-        while (len(data_length) < HEADER):
-            cnt += 1
-            print("DATA LOOP COUNT: " + str(cnt))
-            data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
-        print("DATA LENGTH: " + data_length)
-        print ("LEN: " + str(len(data_length)))
-        if(int(data_length)):
-            print("IN IF")
-            data = ""
+        success = False
+        try:
+            self.tcp_socket.send(send_length)
+            success = True
+        except:
+            self.find_connection()
+        if(success):
+            self.tcp_socket.send(msg.encode("utf-8"))
+            data_length = ""
             cnt = 0
-            while(len(data) < int(data_length)):
-                data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
+            while (len(data_length) < HEADER):
                 cnt += 1
-                print("LOOP COUNT: " + str(cnt))
-                print(data)
-            return data # return decoded data
+                print("DATA LOOP COUNT: " + str(cnt))
+                data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
+            print("DATA LENGTH: " + data_length)
+            print ("LEN: " + str(len(data_length)))
+            if(int(data_length)):
+                print("IN IF")
+                data = ""
+                cnt = 0
+                while(len(data) < int(data_length)):
+                    data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
+                    cnt += 1
+                    print("LOOP COUNT: " + str(cnt))
+                    print(data)
+                return data # return decoded data
+            else:
+                print("IN ELSE")
+                return ""
         else:
-            print("IN ELSE")
             return ""
 
     # command method

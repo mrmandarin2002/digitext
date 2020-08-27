@@ -70,7 +70,7 @@ class scanner:
     def __init__(self, controller):
         self.controller = controller
         #where the interaction with server happens
-        self.server = interactions.Client(address = controller.settings["ip_address"], port = 5050)
+        self.server = interactions.Client(address = controller.settings["ip_address"], port = 5050, controller = self.controller)
         #all the courses available
         self.courses = self.server.courses_n()
         #all the teachers at the school

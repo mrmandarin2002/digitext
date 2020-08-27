@@ -26,6 +26,16 @@ class client(tk.Tk):
     current_frame_name = ''
     ip_address = ""
 
+    def update_settings(self):
+        self.settings = {}
+        self.settings["ip_address"] = self.ip_address
+        self.settings["version"] = version
+        try:
+            with open("settings.json", 'w') as outfile:
+                json.dump(self.settings, outfile)
+        except:
+            print("Unable to create settings file")
+
     #some initialization stuff I found on the internet. Don't know how but it works!
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
@@ -51,15 +61,7 @@ class client(tk.Tk):
                 self.settings = json.load(settings_file)
         else:
             window.ip_config_window(self).show(self)
-            print("Current IP ADRESS: " + self.ip_address)
-            self.settings = {}
-            self.settings["ip_address"] = self.ip_address
-            self.settings["version"] = version
-            try:
-                with open("settings.json", 'w') as outfile:
-                    json.dump(self.settings, outfile)
-            except:
-                print("Unable to create settings file")
+            self.update_settings()
 
         print("IP ADDRESS: " + self.settings["ip_address"])
         print("CLIENT VERSION: " + self.settings["version"])
