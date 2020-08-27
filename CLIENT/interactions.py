@@ -24,16 +24,22 @@ class Client:
 
     # basic data echo method
     def echo(self, msg):
+        print("IN ECHO")
         msg_length = len(msg)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' ' * (HEADER - len(send_length))
         self.tcp_socket.send(send_length)
         self.tcp_socket.send(msg.encode("utf-8"))
         data_length = ""
+        cnt = 0
         while (len(data_length) < HEADER):
+            cnt += 1
+            print("DATA LOOP COUNT: " + str(cnt))
             data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
-        print(data_length)
+        print("DATA LENGTH: " + data_length)
+        print ("LEN: " + str(len(data_length)))
         if(int(data_length)):
+            print("IN IF")
             data = ""
             cnt = 0
             while(len(data) < int(data_length)):
@@ -43,6 +49,7 @@ class Client:
                 print(data)
             return data # return decoded data
         else:
+            print("IN ELSE")
             return ""
 
     # command method

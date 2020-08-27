@@ -4,6 +4,8 @@ import threading
 #welcome screen, no need to explain
 class Stats(tk.Frame):
 
+    in_thread = False
+
     def clear(self):
         pass
 
@@ -14,12 +16,14 @@ class Stats(tk.Frame):
         controller.check_requisites = True
 
     def check_number(self):
-        threading.Timer(1.0, self.check_number).start()
-        if(self.controller.current_frame_name == "Stats"):
+        threading.Timer(1, self.check_number).start()
+        if(self.controller.current_frame_name == "Stats" and not self.in_thread):
+            self.in_thread = True
             self.welcome_title["text"] = "Number Of Textbooks: " + str(self.controller.scanner.get_textbook_nums())
             screen_width = self.controller.winfo_screenwidth()
             screen_height = self.controller.winfo_screenheight()
             print(screen_width, screen_height)
+            self.in_thread = False
         
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
