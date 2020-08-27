@@ -29,6 +29,7 @@ def handle_client(conn, addr):
             #get the size of the message to be received from client
             msg_length = conn.recv(HEADER).decode(FORMAT)
             if(msg_length):
+                print(get_time() + f"Received data from address {addr}")
                 msg_length = int(msg_length)
                 #receive message from client
                 msg = conn.recv(msg_length).decode(FORMAT)
