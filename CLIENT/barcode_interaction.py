@@ -98,7 +98,7 @@ class scanner:
         #the amount of time between current input and previous input (converted into micro seconds)
         time_elapsed = (datetime.now() - self.start).microseconds + (datetime.now() - self.start).seconds * 1000000
         #this assumes that the input is from barcode scanner as the time between inputs is less than 40 milliseconds
-        if(time_elapsed - self.previous_time < 50000):
+        if(time_elapsed - self.previous_time < 55000):
             #add input to the temporary string (self.barcode_string)
             #we don't want the enter or shift key to be added as to our final string
             if(key != Key.enter and key != Key.shift):

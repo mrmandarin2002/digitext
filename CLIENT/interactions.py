@@ -49,6 +49,7 @@ class Client:
             self.tcp_socket.send(send_length)
             success = True
         except:
+            self.connection_established = False
             self.find_connection()
         if(success):
             self.tcp_socket.send(msg.encode("utf-8"))
