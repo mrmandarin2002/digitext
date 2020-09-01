@@ -210,7 +210,7 @@ def get_courses(conn):
     cur.close()
     return result
 
-def clear_data(conn):
+def reset_excel_data(conn):
     # create a cursor object
     cur = conn.cursor()
     cur.execute("DELETE FROM Students;")
