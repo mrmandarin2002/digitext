@@ -185,6 +185,10 @@ class Client:
         #print("Interaction Test: " + str(data))
         return data
 
+    # get the total number of textbooks
+    def get_textbook_total(self):
+        return int(self.command("get_textbook_total", []))
+
     # write textbook inventory to file
     def get_textbook_inventory(self):
         open("textbook_inventory.csv", "w").write("title,price,new,good,fair,poor,destroyed,total\n"+self.command("get_textbook_inv", []).replace("|", ",").replace("~", "\n"))

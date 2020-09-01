@@ -142,7 +142,6 @@ def return_textbook(args):
 def course_requisites(args):
     print(get_time()+"Getting course requisites for course: "+args[0])
     conn = Database.create_connection("server.db")
-    courses = Database.get_courses(conn)
     for c in Database.get_courses(conn):
         if c[1] == args[0]:
             return c[4]
@@ -227,6 +226,14 @@ def get_textbook_counts(args):
     conn.close()
     return "~".join(serialized)
 
+# gets the total number of textbooks
+def get_textbook_total(args):
+    print(get_time()+"Getting total number of textbooks...")
+    conn = Database.create_connection("server.db")
+    total = len(Database.get_textbooks(conn))
+    conn.close()
+    return total
+
 # gets textbook inventory
 def get_textbook_inventory(args):
     print(get_time()+"Getting textbook inventory...")
@@ -281,7 +288,8 @@ interact = {"valid_t": valid_textbook,
             "set_course_r": set_course_textbooks,
             "get_textbook_titles": get_textbook_names,
             "get_textbook_counts": get_textbook_counts,
-            "get_textbook_inv": get_textbook_inventory, 
+            "get_textbook_inv": get_textbook_inventory,
+            "get_textbook_total": get_textbook_total,
             "add_t": add_textbook,
             "merge_t": merge_database_textbooks,
             "add_s": add_student,
