@@ -56,13 +56,7 @@ class scanner:
     textbook_conditions_rev = {"New": 0, "Good": 1, "Fair": 2, "Poor": 3, "Destroyed": 4}
 
     def get_textbook_nums(self):
-        self.textbook_nums = self.server.get_textbook_counts()
-        self.total_textbooks = 0
-        if(len(self.textbook_nums) > 3):
-            for textbook in self.textbook_nums:
-                self.total_textbooks += int(textbook[1])
-            print("Total Amount Of Textbooks " + str(self.total_textbooks))
-        return self.total_textbooks
+        return self.server.get_textbook_total()
 
     def update_textbook_list(self):
         self.textbook_list = self.server.get_textbook_titles()
