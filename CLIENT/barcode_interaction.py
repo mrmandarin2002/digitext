@@ -67,6 +67,27 @@ class scanner:
     def update_textbook_list(self):
         self.textbook_list = self.server.get_textbook_titles()
 
+    def placeholder_check(self, textbook1, textbook2):
+        textbook_split = textbook1.split(' ')
+        print("CHECK Textbook Split:")
+        print(textbook_split)
+        cur_textbook_split = textbook2.split(' ')
+        cur_textbook_split = [i.replace(" ", "").lower() for i in cur_textbook_split]
+        print("CHECK Current Textbook Split:")
+        print(cur_textbook_split)
+        if('Placeholder' in textbook1.split(' ')):
+            textbook_split.remove('Placeholder')
+            cnt = 0
+            for word in textbook_split:
+                if(word.lower() in cur_textbook_split):
+                    cnt+= 1
+            if(cnt == len(textbook_split)):
+                return True
+            else:
+                return False
+        else:
+            return False
+
     def __init__(self, controller):
         self.controller = controller
         #where the interaction with server happens
@@ -163,10 +184,15 @@ class scanner:
                     #the textbooks needed in this course
                     course_textbooks = course_info[3].split('|')
                     #this loop is to find out which textbooks the student needs to take out that were assigned to him
+                    
                     for textbook in course_textbooks:
                         #checks for duplicates and idek 
                         if(len(textbook) > 0 and textbook not in self.student_needed_textbooks and textbook not in self.student_textbooks_title):
-                            self.student_needed_textbooks.append(textbook)
+                            check = False
+                            for student_textbook in self.student_textbooks_title:
+                                check = self.placeholder_check(textbook, student_textbook)
+                            if(not check):
+                                self.student_needed_textbooks.append(textbook)
                 #allows other parts of the program know what type of barcode is scanned in
                 self.barcode_status = "Student"
             else:

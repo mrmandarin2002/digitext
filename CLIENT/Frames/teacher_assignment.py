@@ -127,6 +127,7 @@ class TeacherAssignment(tk.Frame):
                         self.display_teacher_info(controller)
                         self.course_selected = False
                         self.teacher_selected = True
+                        self.new_course = True
                         break
         if(not check):
             messagebox.showerror(title = "Error", message = "Do you even know how to spell your name?")
