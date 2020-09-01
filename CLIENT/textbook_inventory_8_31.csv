@@ -21,7 +21,7 @@ Chemistry,132.0,0,48,127,0,0,175
 Complete C.S. Lewis Signature Classics,35.0,13,0,24,0,0,37
 Computer Science Using C++,127.0,0,2,35,4,0,41
 Death of a Salesman,20.0,0,117,13,1,0,131
-Dr. Jekyll and Mr. Hyde,13.0,30,0,11,9,0,50
+Dr. Jekyll and Mr. Hyde,13.0,0,0,11,9,0,20
 Dracula,15.0,0,51,4,1,0,56
 Essential Elements - Baritone B.C. Book 1,15.0,0,0,0,9,0,9
 Essential Elements - Bb Clarinet Book 1,15.0,0,0,0,11,0,11
@@ -61,8 +61,8 @@ Macbeth,25.0,0,9,35,52,0,96
 MathLinks 9,63.0,0,28,55,78,0,161
 MathWorks 10,68.0,0,0,8,17,0,25
 MathWorks 10 WB,10.0,0,14,0,0,0,14
-MathWorks 11,67.0,0,13,16,0,0,29
-MathWorks 12,68.0,0,3,15,0,0,18
+MathWorks 11,67.0,0,13,15,0,0,28
+MathWorks 12,68.0,0,3,14,0,0,17
 Mathematics 10,68.0,0,0,2,2,0,4
 Mathematics 10 WB,10.0,1,59,85,46,0,191
 Mathworks 10,68.0,0,0,4,0,0,4
@@ -78,9 +78,9 @@ Outliers,25.0,0,0,91,0,0,91
 People of the Lie,20.0,0,0,48,0,0,48
 Physics,76.0,0,54,1,0,0,55
 Pre-Calculus 11,87.0,0,5,129,0,0,134
-Pre-Calculus 11 WB,10.0,0,36,53,0,0,89
+Pre-Calculus 11 WB,10.0,0,36,47,0,0,83
 Pre-Calculus 12,87.0,0,94,11,0,0,105
-Pre-Calculus 12 WB,10.0,0,59,0,0,0,59
+Pre-Calculus 12 WB,10.0,0,65,0,0,0,65
 Pride and Prejudice,17.0,0,11,6,3,0,20
 Psychology And You,115.0,0,21,9,11,0,41
 Romans,20.0,0,0,37,9,0,46
@@ -133,7 +133,6 @@ The Tale of Troy,10.0,0,13,4,26,0,43
 The Yellow Birds,20.0,0,98,3,0,0,101
 Things Fall Apart,15.0,0,0,146,0,0,146
 To Kill Mockingbird,20.0,0,6,95,0,0,101
-To Kill a Mockingbird,12.0,60,0,0,0,0,60
 Tuesdays with Morrie,23.0,0,14,35,0,0,49
 Twelfth Night,10.0,0,10,39,19,0,68
 Understanding Economics,120.0,0,0,31,3,0,34

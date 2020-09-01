@@ -58,22 +58,20 @@ class TextbookScanner(tk.Frame):
             else:
                 print("Cannot Delete This As It Is Not In The Database, Baka")
  
+    #not efficient enough
     def check_similarity(self, textbook_check, textbook_list):
         similar_list = []
-        check_arr = [0] * 128
-        char_list = []
-        for x in range(0, len(textbook_check)):
-            if(ord(textbook_check[x]) not in char_list):
-                char_list.append(ord(textbook_check[x]))
-            check_arr[ord(textbook_check[x])] += 1
+        textbook_check = textbook_check.replace('-', '').replace('.','')
+        check_list = textbook_check.split(' ')
         for textbook in textbook_list:
-            temp_check_arr = check_arr
-            for x in range(0, len(textbook)):
-                temp_check_arr[ord(textbook[x])] -= 1
-            tot_sum = 0
-            for num in char_list:
-                tot_sum += temp_check_arr[num]
-            if(abs(tot_sum + abs(len(textbook) - len(textbook_check))) < ((len(textbook) + len(textbook_check) / 2) * 0.15)):
+            check2_list = textbook_check.replace('-', '').replace('.', '').split(' ')
+            cnt = 0
+            for textbook_check in check_list:
+                for textbook_check2 in check2_list:
+                    if(textbook_check.lower() == textbook_check2.lower()):
+                        cnt += 1
+                        break
+            if(cnt == len(check_list)):
                 similar_list.append(textbook)
         return similar_list
 
@@ -88,8 +86,8 @@ class TextbookScanner(tk.Frame):
         else:
             price_string = self.price_entry.get()
             try:
-                similar_list = self.check_similarity(self.title_entry.get(), controller.scanner.textbook_list)
-                print(similar_list)
+                #similar_list = self.check_similarity(self.title_entry.get(), controller.scanner.textbook_list)
+                #print(similar_list)
                 self.current_price = float(price_string)
                 self.current_title = self.title_entry.get()
                 self.set_button.config(text = "RESET")

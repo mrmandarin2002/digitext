@@ -247,6 +247,7 @@ def import_students(conn, sheets_filename):
             cur.close()
             conn.commit()
 
+
 # function to import courses from enrollments sheet and teachers sheet
 def import_courses(conn, sheets_filename):
     # open enrollments, courses, and teachers sheets
@@ -267,3 +268,6 @@ def import_courses(conn, sheets_filename):
                     course_name = courses.cell_value(j, 0)
             insert_course(conn, str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))), course_name, teacher_name)
             course_identifiers.append(str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))))
+
+import_courses(create_connection("server.db"), "SampleData.xlsx")
+import_students(create_connection("server.db"), "SampleData.xlsx")
