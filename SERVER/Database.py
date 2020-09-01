@@ -210,6 +210,13 @@ def get_courses(conn):
     cur.close()
     return result
 
+def clear_data(conn):
+    # create a cursor object
+    cur = conn.cursor()
+    cur.execute("DELETE FROM Students;")
+    cur.execute("DELETE FROM Courses;")
+    cur.close()
+
 # function to import students from enrollment sheet of formated excel document (SampleData.xlsx)
 def import_students(conn, sheets_filename):
     # open enrollments sheet
@@ -269,5 +276,3 @@ def import_courses(conn, sheets_filename):
             insert_course(conn, str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))), course_name, teacher_name)
             course_identifiers.append(str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))))
 
-import_courses(create_connection("server.db"), "SampleData.xlsx")
-import_students(create_connection("server.db"), "SampleData.xlsx")
