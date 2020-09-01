@@ -275,4 +275,3 @@ def import_courses(conn, sheets_filename):
                     course_name = courses.cell_value(j, 0)
             insert_course(conn, str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))), course_name, teacher_name)
             course_identifiers.append(str(enrollment.cell_value(i, 4)).split(".")[0]+"."+str(int(float(enrollment.cell_value(i, 5)))))
-

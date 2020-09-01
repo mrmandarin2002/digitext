@@ -61,8 +61,9 @@ class TeacherAssignment(tk.Frame):
                 self.course_name_label["text"] = "Course Name: " + self.course_list.get(self.cidx)
                 self.course_textbooks.delete(0, tk.END)
                 print("COURSE NUMBER: " + str(self.courses_info[self.cidx][0]))
-                self.current_course_textbooks = controller.scanner.server.course_r(self.courses_info[self.cidx][0])
+                self.current_course_textbooks = controller.scanner.server.info_c(self.courses_info[self.cidx][0])[3].split('|')
                 print(self.current_course_textbooks)
+
                 self.textbook_nums = 0
                 self.current_textbook_list.clear()
                 for textbook in self.current_course_textbooks:
@@ -109,18 +110,6 @@ class TeacherAssignment(tk.Frame):
                     for course in self.full_courses_info:
                         if(course[1] == self.courses_info[self.cidx][1]):
                             controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
-
-    def confirm_changes(self, controller):
-        self.changes_made = False
-        self.new_course = True
-        print(self.current_textbook_list)
-        print(self.cidx)
-        if(self.identical_courses):
-            controller.scanner.server.set_course_r(self.teacher_courses[self.cidx], self.current_textbook_list)
-        else:
-            for course in self.full_courses_info:
-                if(course[1] == self.courses_info[self.cidx][1]):
-                    controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
 
     #searches for a teacher's name
     def search_teacher(self, controller):
