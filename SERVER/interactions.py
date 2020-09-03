@@ -1,6 +1,7 @@
 # import neccessary classes and functions
 from datetime import datetime
 import Database
+import string
 
 # function to get the current time
 def get_time():
@@ -8,6 +9,7 @@ def get_time():
 
 # checks if a student is valid in the database
 def valid_student(args): # student number
+    args[0] = [i for i in args[0].lower() if i in string.ascii_lowercase]
     print(get_time()+"Checking if "+args[0]+" is a valid student id...")
     conn = Database.create_connection("server.db")
     students = Database.get_students(conn)
@@ -29,6 +31,7 @@ def add_student(args):
 
 # gets student information from the database
 def information_student(args): # student number
+    args[0] = [i for i in args[0].lower() if i in string.ascii_lowercase]
     print(get_time()+"Returning information of textbook "+args[0]+"...")
     conn = Database.create_connection("server.db")
     students = Database.get_students(conn)
@@ -42,6 +45,7 @@ def information_student(args): # student number
 
 # get textbooks assigned to a student
 def student_textbooks(args): # student number
+    args[0] = [i for i in args[0].lower() if i in string.ascii_lowercase]
     print(get_time()+"Returning textbooks currently held by student: "+args[0])
     conn = Database.create_connection("server.db")
     textbooks = []
@@ -53,6 +57,7 @@ def student_textbooks(args): # student number
 # gets the textbook return information of a specific student from the database
 # the information consists of a list: entries from the returned textbooks table corresponding to the student
 def student_return_info(args): # student number
+    args[0] = [i for i in args[0].lower() if i in string.ascii_lowercase]
     print(get_time()+"Returning textbook return information of student "+args[0]+"...")
     conn = Database.create_connection("server.db")
     # get the textbooks returned by the student
@@ -65,6 +70,7 @@ def student_return_info(args): # student number
 
 # get textbooks that a student should have
 def student_requisites(args): # student number
+    args[0] = [i for i in args[0].lower() if i in string.ascii_lowercase]
     print(get_time()+"Returning requisite textbooks for student: "+args[0])
     conn = Database.create_connection("server.db")
     for s in Database.get_students(conn):
@@ -75,6 +81,13 @@ def student_requisites(args): # student number
         if c[1] in courses:
             textbooks.append(c[4].split("|"))
     return "|".join(textbooks)
+
+def get_student_pairs(args):
+    print(get_time()+"Returning student name-id pairs...")
+    conn = Database.create_connection("server.db")
+    a = "~".join([i[1]+"|"+i[2] for i in Database.get_students(conn)])
+    conn.close()
+    return a
 
 # checks if a textbook is valid in the database
 def valid_textbook(args): # textbook number
@@ -283,6 +296,7 @@ interact = {"valid_t": valid_textbook,
             "student_t": student_textbooks,
             "student_r": student_requisites,
             "student_returned": student_return_info,
+            "student_pairs": get_student_pairs,
             "get_teachers": get_teachers,
             "get_teacher_c": get_teacher_courses,
             "set_course_r": set_course_textbooks,

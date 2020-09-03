@@ -130,6 +130,10 @@ class Client:
         else:
             return value
 
+    # get student pairs
+    def student_pairs(self):
+        return [i.split("|") for i in self.command("student_pairs", []).split("~")]
+
     # textbook id validation method
     def valid_t(self, textbook_id):
         if self.command("valid_t", [textbook_id]) == "1":
