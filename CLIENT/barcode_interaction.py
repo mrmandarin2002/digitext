@@ -7,6 +7,15 @@ from datetime import datetime
 from pynput.keyboard import Key, Listener
 from tkinter import messagebox
 
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.units import inch, cm
+from reportlab.pdfbase.pdfmetrics import stringWidth
+
+import barcode
+from barcode.writer import ImageWriter
+
+import os, shutil
+
 #####
 #the scanner class is how the program detects input from the barcode
 #also where data regarding the specifics of the scanned barcode is procssed
@@ -54,6 +63,51 @@ class scanner:
     
     textbook_conditions = ["New", "Good", "Fair", "Poor", "Destroyed"]
     textbook_conditions_rev = {"New": 0, "Good": 1, "Fair": 2, "Poor": 3, "Destroyed": 4}
+
+    def create_barcode_image(self, barcode_id):
+        barcode_file = barcode.get("code128", barcode_id, writer = ImageWriter())
+        barcode_file.save('student_barcode', {"module_height" : 9.0, "module_width" : 0.25, "text_distance" : 0.5})
+
+    def make_invoice_pdf(self, distribution):
+        current_path = os.getcwd()
+        print ("The current working directory is %s" % current_path)
+        os.path.exists(current_path + "/invoices")
+        if(not os.path.exists(current_path + "/invoices")):
+            os.mkdir(current_path + '/invoices')
+        self.create_barcode_image(self.student_info[1])
+        invoice = Canvas(self.student_info[2].replace(' ', ', ') + " invoice.pdf", pagesize=(8.5 * inch, 11 * inch))
+        invoice.setFont("Times-Bold", 18)
+        invoice.drawString(1*inch, 10*inch, self.student_info[2].replace(' ',', '))
+        invoice.drawString(1 *inch, 9.5 * inch, "Student ID: " + self.student_info[1])
+        string_x = stringWidth("Student ID: " + self.student_info[1], "Times-Bold", 18)
+        invoice.drawImage("student_barcode.png", 1.25 * inch + string_x, 9.325 * inch, 160.0, 77.0)
+        total_price = 0
+        cnt = 0
+        if(not distribution):
+            for textbook in self.student_textbooks:
+                textbook_info = self.server.info_t(textbook)
+                total_price += float(textbook_info[2])
+                invoice.setFont("Times-Bold", 13)
+                invoice.drawString(1 * inch, (9 -(0.4 * cnt)) * inch, str(cnt + 1) + ". " + textbook_info[1])
+                string_x = stringWidth(str(cnt + 1) + ". " + textbook_info[1], "Times-Bold", 13) 
+                print(string_x)
+                invoice.setFont("Times-Roman", 13)
+                invoice.drawString(1 * inch + string_x,  (9 - (0.4 * cnt)) * inch, " | Barcode: " + str(textbook_info[0]) + " | Price: " + str(textbook_info[2] + " | Condition: " + self.textbook_conditions[int(textbook_info[3])]))
+                cnt += 1
+            invoice.setFont("Times-Bold", 14)
+            invoice.drawString(1 * inch, (9 - (0.4 * (cnt - 1)) - 0.5) * inch, "Total Value of Textbooks: $")
+            string_x = stringWidth("Total Value of Textbooks: $", "Times-Bold", 14)
+            invoice.setFont("Times-Roman", 14)
+            invoice.drawString(1 * inch + string_x, (9 - (0.4 * (cnt - 1)) - 0.5) * inch, str(total_price))
+        else:
+            for textbook in self.student_needed_textbooks:
+                invoice.setFont("Times-Bold", 13)
+                invoice.drawString(1 * inch, (9 -(0.4 * cnt)) * inch, str(cnt + 1) + ". " + textbook)
+                cnt += 1
+        invoice.save()
+        shutil.move(current_path + "/" + self.student_info[2].replace(' ', ', ') + " invoice.pdf", current_path + "/invoices/" + self.student_info[2].replace(' ', ', ') + " invoice.pdf")
+        os.remove(current_path + "\\" + "student_barcode.png")
+        os.startfile(current_path + "\\invoices\\" + self.student_info[2].replace(' ', ', ') + " invoice.pdf")
 
     def get_textbook_nums(self):
         return self.server.get_textbook_total()

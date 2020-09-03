@@ -10,10 +10,18 @@ from Frames import info
 from Frames import textbook_scanner
 from Frames import teacher_assignment
 
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.units import inch, cm
+from reportlab.pdfbase.pdfmetrics import stringWidth
+
+import barcode
+from barcode.writer import ImageWriter
+
 import json, traceback, playsound, pynput
 
 from urllib import request, parse
 from os import path
+import os, shutil
 
 #import own files
 import interactions, barcode_interaction, window
