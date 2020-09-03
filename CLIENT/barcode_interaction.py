@@ -178,7 +178,6 @@ class scanner:
                     #the textbooks needed in this course
                     course_textbooks = course_info[3].split('|')
                     #this loop is to find out which textbooks the student needs to take out that were assigned to him
-                    
                     for textbook in course_textbooks:
                         #checks for duplicates and idek 
                         if(len(textbook) > 0 and textbook not in self.student_needed_textbooks and textbook not in self.student_textbooks_title):

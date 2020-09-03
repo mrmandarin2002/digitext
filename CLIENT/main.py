@@ -46,6 +46,7 @@ class client(tk.Tk):
         self.MAIN_FONT = "Helvetica"
         self.MAROON = "#DFF9FB"
         self.PINK = '#FF00D4'
+        self.BLUE = '#96AAEB'
 
         #different type of fonts used throughout the program
         self.TITLE_FONT = tkfont.Font(family=self.MAIN_FONT, size=22, weight="bold")
