@@ -66,6 +66,24 @@ class TextbookManagement(tk.Frame):
                 if(self.day == 'D'):
                     #to check if the student has been assigned this textbook by a teacher
                     #if not check if he wants to take out anyways
+                    for idx, textbook in enumerate(controller.student_needed_textbooks):
+                        textbook_split = textbook.split(' ')
+                        print("Textbook Split:")
+                        print(textbook_split)
+                        cur_textbook_split = controller.textbook_info[1].split(' ')
+                        cur_textbook_split = [i.replace(" ", "").lower() for i in cur_textbook_split]
+                        print("Current Textbook Split:")
+                        print(cur_textbook_split)
+                        if('Placeholder' in textbook.split(' ')):
+                            textbook_split.remove('Placeholder')
+                            cnt = 0
+                            for word in textbook_split:
+                                if(word.lower() in cur_textbook_split):
+                                    cnt+= 1
+                            if(cnt == len(textbook_split)):
+                                controller.student_needed_textbooks[idx] = controller.textbook_info[1]
+                                
+                            
                     if(controller.textbook_info[1] in controller.student_needed_textbooks or messagebox.askyesno("???", "This textbook is not needed by this student, would you like to try to assign it to him anyways?")):
                         #to check if we need to remove the textbook from the student's needed list later
                         textbook_assigned = False

@@ -10,10 +10,18 @@ from Frames import info
 from Frames import textbook_scanner
 from Frames import teacher_assignment
 
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.units import inch, cm
+from reportlab.pdfbase.pdfmetrics import stringWidth
+
+import barcode
+from barcode.writer import ImageWriter
+
 import json, traceback, playsound, pynput
 
 from urllib import request, parse
 from os import path
+import os, shutil
 
 #import own files
 import interactions, barcode_interaction, window
@@ -46,6 +54,7 @@ class client(tk.Tk):
         self.MAIN_FONT = "Helvetica"
         self.MAROON = "#DFF9FB"
         self.PINK = '#FF00D4'
+        self.BLUE = '#96AAEB'
 
         #different type of fonts used throughout the program
         self.TITLE_FONT = tkfont.Font(family=self.MAIN_FONT, size=22, weight="bold")
@@ -89,7 +98,7 @@ class client(tk.Tk):
             frame.grid(row = 0, column = 0, sticky = "nswe")
         
         #this is the starting window
-        self.show_frame("Info", False)
+        self.show_frame("Menu", False)
 
     #this shows the frame / window of the page we want to display
     def show_frame(self, page_name, distribution):

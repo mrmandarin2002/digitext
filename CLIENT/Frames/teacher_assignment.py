@@ -61,8 +61,9 @@ class TeacherAssignment(tk.Frame):
                 self.course_name_label["text"] = "Course Name: " + self.course_list.get(self.cidx)
                 self.course_textbooks.delete(0, tk.END)
                 print("COURSE NUMBER: " + str(self.courses_info[self.cidx][0]))
-                self.current_course_textbooks = controller.scanner.server.course_r(self.courses_info[self.cidx][0])
+                self.current_course_textbooks = controller.scanner.server.info_c(self.courses_info[self.cidx][0])[3].split('|')
                 print(self.current_course_textbooks)
+
                 self.textbook_nums = 0
                 self.current_textbook_list.clear()
                 for textbook in self.current_course_textbooks:
@@ -110,18 +111,6 @@ class TeacherAssignment(tk.Frame):
                         if(course[1] == self.courses_info[self.cidx][1]):
                             controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
 
-    def confirm_changes(self, controller):
-        self.changes_made = False
-        self.new_course = True
-        print(self.current_textbook_list)
-        print(self.cidx)
-        if(self.identical_courses):
-            controller.scanner.server.set_course_r(self.teacher_courses[self.cidx], self.current_textbook_list)
-        else:
-            for course in self.full_courses_info:
-                if(course[1] == self.courses_info[self.cidx][1]):
-                    controller.scanner.server.set_course_r(course[0], self.current_textbook_list)
-
     #searches for a teacher's name
     def search_teacher(self, controller):
         check = False
@@ -138,6 +127,7 @@ class TeacherAssignment(tk.Frame):
                         self.display_teacher_info(controller)
                         self.course_selected = False
                         self.teacher_selected = True
+                        self.new_course = True
                         break
         if(not check):
             messagebox.showerror(title = "Error", message = "Do you even know how to spell your name?")
@@ -163,7 +153,7 @@ class TeacherAssignment(tk.Frame):
         self.search_button.grid(row = 3, column = 0, pady = 10, columnspan = 2)
         courses_label = tk.Label(self, text = "Select Course", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         courses_label.grid(row = 4, column = 0, padx = 10, pady = (5,0), columnspan = 2, sticky = "W")
-        self.course_list = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON)
+        self.course_list = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.BLUE)
         self.course_list.grid(row = 5, column = 0, columnspan = 3, padx = 10, pady = 5, sticky = "W")
         self.identical_button = tk.Button(self, text = "Display Identical Courses", font = controller.BUTTON_FONT, command = lambda: self.display_identical_courses(controller))
         self.identical_button.grid(row = 6, column = 0, columnspan = 3, padx = 10, pady = 2, sticky = "W")
@@ -178,7 +168,7 @@ class TeacherAssignment(tk.Frame):
         self.course_section_label.grid(row = 2, column = 5, sticky = "W")
         self.course_textbook_label = tk.Label(self, text = "Course Textbooks:", font = controller.SUBTITLE_FONT, bg = controller.MAROON)
         self.course_textbook_label.grid(row = 4, column = 5, sticky = "W")
-        self.course_textbooks = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON)
+        self.course_textbooks = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.BLUE)
         self.course_textbooks.grid(row = 5, column = 5, pady = 5, sticky = "NW")
         self.course_textbooks.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller))
         self.button_container = tk.Frame(self)

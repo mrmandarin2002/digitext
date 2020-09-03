@@ -41,7 +41,7 @@ class Info(tk.Frame):
             self.clear()
             self.student_name_label.config(text = "Student Name: " + controller.student_info[2].replace(' ', ', '))
             cnt = 1
-            self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.MAROON)
+            self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.BLUE)
             for textbook in controller.student_textbooks:
                 textbook_info = controller.server.info_t(textbook)
                 self.textbook_list.insert(cnt, textbook_info[1])
@@ -77,6 +77,14 @@ class Info(tk.Frame):
         else:
             messagebox.showerror("ERROR", "Please select a textbook you would like to delete")
 
+        
+    def make_invoice(self):
+        try:
+            if(messagebox.askyesno("Make Invoice", "Would you like to make an invoice for " + self.controller.scanner.student_info[2] + "?")):
+                self.controller.scanner.make_invoice_pdf(False)
+        except:
+            messagebox.showerror("ERROR", "Make sure you've scanned in a student before making the invoice")
+
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
@@ -111,12 +119,13 @@ class Info(tk.Frame):
         student_textbooks_label.grid(row = 0, column = 1, sticky = "W", pady = (30, 0))
         
         if(controller.settings["version"] == "teacher"):
-            delete_button = tk.Button(self, text = "Delete Textbook", font = controller.MENU_FONT, command = lambda: self.delete_textbook(controller = controller))
+            delete_button = tk.Button(self, text = "Make Invoice", font = controller.MENU_FONT, command = lambda: self.make_invoice())
             delete_button.grid(row = 9, column = 0, padx = 10, pady = (10, 0), sticky = "W")    
             pady_dif_back = 55    
             manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
             manual_entry.grid(row = 10, column = 0, padx = 10, sticky = "W")
             textbook_searchup = tk.Button(self, text = "Textbook Search/Merge", font = controller.MENU_FONT, command = lambda: window.merge_textbook_window(self, controller).show(controller))
             textbook_searchup.grid(row = 11, column = 0, padx = 10, sticky = "W")
+
         back_button = controller.make_back_button(controller = self)
         back_button.grid(row = 12, column = 0, padx = 10, pady = (25,0), sticky = "W")

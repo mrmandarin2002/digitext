@@ -40,7 +40,6 @@ class Client:
 
     # basic data echo method
     def echo(self, msg):
-        print("IN ECHO")
         msg_length = len(msg)
         send_length = str(msg_length).encode(FORMAT)
         send_length += b' ' * (HEADER - len(send_length))
@@ -57,22 +56,15 @@ class Client:
             cnt = 0
             while (len(data_length) < HEADER):
                 cnt += 1
-                print("DATA LOOP COUNT: " + str(cnt))
                 data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
-            print("DATA LENGTH: " + data_length)
-            print ("LEN: " + str(len(data_length)))
             if(int(data_length)):
-                print("IN IF")
                 data = ""
                 cnt = 0
                 while(len(data) < int(data_length)):
                     data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
                     cnt += 1
-                    print("LOOP COUNT: " + str(cnt))
-                    print(data)
                 return data # return decoded data
             else:
-                print("IN ELSE")
                 return ""
         else:
             return ""
@@ -204,3 +196,4 @@ class Client:
     # merge two textbooks in the database
     def merge_textbooks(self, original, new):
         return self.command("merge_t", [original, new])
+

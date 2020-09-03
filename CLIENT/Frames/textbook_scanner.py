@@ -60,20 +60,28 @@ class TextbookScanner(tk.Frame):
  
     #not efficient enough
     def check_similarity(self, textbook_check, textbook_list):
-        similar_list = []
-        textbook_check = textbook_check.replace('-', '').replace('.','')
+        answer = []
+        start_time = time.time()
+        textbook_check = textbook_check.replace('-', ' ')
+        textbook_check = textbook_check.replace(',', ' ')
         check_list = textbook_check.split(' ')
+        check_list = [i.replace(' ', '').lower() for i in check_list]
+        print(check_list)
         for textbook in textbook_list:
-            check2_list = textbook_check.replace('-', '').replace('.', '').split(' ')
             cnt = 0
-            for textbook_check in check_list:
-                for textbook_check2 in check2_list:
-                    if(textbook_check.lower() == textbook_check2.lower()):
-                        cnt += 1
-                        break
-            if(cnt == len(check_list)):
-                similar_list.append(textbook)
-        return similar_list
+            cur_textbook_check = textbook.replace('-', ' ')
+            cur_textbook_check = cur_textbook_check.replace(',', ' ')
+            cur_check_list = cur_textbook_check.split(' ')
+            cur_check_list = [i.replace(' ', '').lower() for i in cur_check_list]
+            for word in check_list:
+                if(word in cur_check_list):
+                    cnt += 1
+            if(cnt >= min(len(cur_check_list), len(check_list))):
+                answer.append(textbook)
+            
+        print("Check_similarity Runtime")
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return answer
 
     def set_values(self, controller):
         if(self.values_set):
@@ -86,8 +94,8 @@ class TextbookScanner(tk.Frame):
         else:
             price_string = self.price_entry.get()
             try:
-                #similar_list = self.check_similarity(self.title_entry.get(), controller.scanner.textbook_list)
-                #print(similar_list)
+                similar_list = self.check_similarity(self.title_entry.get(), controller.scanner.textbook_list)
+                print(similar_list)
                 self.current_price = float(price_string)
                 self.current_title = self.title_entry.get()
                 self.set_button.config(text = "RESET")
