@@ -122,6 +122,10 @@ class Client:
         else:
             return value
 
+    # get student withdrawn textbooks
+    def student_withdrawn(self, student_id):
+        return self.command("student_withdrawn", [student_id]).split("|")
+
     # get student pairs
     def student_pairs(self):
         return [i.split("|") for i in self.command("student_pairs", []).split("~")]

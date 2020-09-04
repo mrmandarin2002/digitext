@@ -95,6 +95,7 @@ def student_withdrawn(args):
     conn.close()
     return "|".join(textbooks)
 
+# get pairs of all student numbers and names
 def get_student_pairs(args):
     print(get_time()+"Returning student name-id pairs...")
     conn = Database.create_connection("server.db")
@@ -309,6 +310,7 @@ interact = {"valid_t": valid_textbook,
             "student_t": student_textbooks,
             "student_r": student_requisites,
             "student_returned": student_return_info,
+            "student_withdrawn": student_withdrawn,
             "student_pairs": get_student_pairs,
             "get_teachers": get_teachers,
             "get_teacher_c": get_teacher_courses,
