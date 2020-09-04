@@ -82,6 +82,19 @@ def student_requisites(args): # student number
             textbooks.append(c[4].split("|"))
     return "|".join(textbooks)
 
+# get the textbooks that a student has withdrawn
+def student_withdrawn(args):
+    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
+    print(get_time()+"Returning withdrawn textbooks for student: "+args[0])
+    conn = Database.create_connection("server.db")
+    textbooks = []
+    for t in Database.get_returned_textbooks(conn):
+        if t[2] == args[0]:
+            # NOT AT ALL OPTIMAL (Loops through all textbooks to get title)
+            textbooks.append([i[2] for i in Database.get_textbooks(conn) if i[1] == t[2]])
+    conn.close()
+    return "|".join(textbooks)
+
 def get_student_pairs(args):
     print(get_time()+"Returning student name-id pairs...")
     conn = Database.create_connection("server.db")
