@@ -23,8 +23,10 @@ class TextbookManagement(tk.Frame):
         print(self.day)
         if(self.day == 'R'):
             self.mode_label["text"] = "Mode: Return"
+            self.student_textbooks_label["text"] = "Textbooks Taken Out: "
         else:
             self.mode_label["text"] = "Mode: Distribution"
+            self.student_textbooks_label["text"] = "Needed Textbooks: "
         self.textbook_listbox.delete(0, tk.END)
  
     #Whenever a barcode is scanned
@@ -83,7 +85,6 @@ class TextbookManagement(tk.Frame):
                             if(cnt == len(textbook_split)):
                                 controller.student_needed_textbooks[idx] = controller.textbook_info[1]
                                 
-                            
                     if(controller.textbook_info[1] in controller.student_needed_textbooks or messagebox.askyesno("???", "This textbook is not needed by this student, would you like to try to assign it to him anyways?")):
                         #to check if we need to remove the textbook from the student's needed list later
                         textbook_assigned = False
@@ -183,5 +184,5 @@ class TextbookManagement(tk.Frame):
         invisible_label.grid(row = 13, padx = 150)
         manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
         manual_entry.grid(row = 11, column = 0, padx = 10, sticky = "W")
-        self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON)
-        self.textbook_listbox.grid(row = 1, column = 1, sticky = "NW", rowspan = 10)
+        self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON, height = 20)
+        self.textbook_listbox.grid(row = 1, column = 1, sticky = "NW", rowspan = 20)

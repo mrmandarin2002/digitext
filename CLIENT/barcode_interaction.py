@@ -206,6 +206,7 @@ class scanner:
                 error = True
         #checks if the barcode is a student's
         elif(self.server.valid_s(self.current_barcode)):
+            start_time = time.time()
             #gets the student's info from the server
             self.student_info = self.server.info_s(self.current_barcode)
             #for debugging I guess
@@ -221,6 +222,7 @@ class scanner:
                 self.student_courses.clear()
                 #this creates a list of student's textbooks based on title instead of barcode ID
                 #useful for comparisons....
+                start_time = time.time()
                 for textbook in self.student_textbooks:
                     self.student_textbooks_title.append(self.server.info_t(textbook)[1])
                 #this creates a list of a student's courses with the help of student_info
@@ -240,6 +242,7 @@ class scanner:
                                 check = self.placeholder_check(textbook, student_textbook)
                             if(not check):
                                 self.student_needed_textbooks.append(textbook)
+                print("--- %s seconds ---" % (time.time() - start_time))
                 #allows other parts of the program know what type of barcode is scanned in
                 self.barcode_status = "Student"
             else:

@@ -37,11 +37,9 @@ class TextbookScanner(tk.Frame):
                 elif(controller.barcode_status == "Student"):
                     messagebox.showwarning("Warning!", "You Are Scanning In " + controller.student_info[2] + "'s barcode ID! Please Add Textbooks, We Have Enough Students At This School")
                 else:
-                    start_time = time.time()
                     self.current_condition = controller.textbook_conditions_rev[self.condition_entry.get()]
                     controller.server.add_t(controller.current_barcode, self.current_title, str(self.current_price), str(self.current_condition))
                     controller.update_textbook_list()
-                    print("--- %s seconds ---" % (time.time() - start_time))
                     try:
                         playsound("Textbook_Scan_In_Sound.mp3", block = False)
                     except:

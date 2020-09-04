@@ -83,6 +83,7 @@ class price_window(tk.Toplevel):
         title_label.grid(row = 0, column = 0, padx = 5, pady = 5)
         self.condition_choices = ["New", "Good", "Fair", "Poor", "Destroyed"]
         self.condition_entry = ttk.Combobox(self, values = self.condition_choices, font = self.FIELD_FONT, state = "readonly", width = 10)
+        self.condition_entry.current(int(controller.textbook_info[3]))
         self.condition_entry.grid(row = 1, column = 0, padx = 5, pady = 5)
         confirm_button = tk.Button(self, text = "Confirm Condition", font = self.BUTTON_FONT, command = self.death)
         confirm_button.grid(row = 3, column = 0, padx = 5, pady = (0, 10))
