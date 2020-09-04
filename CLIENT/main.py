@@ -98,7 +98,7 @@ class client(tk.Tk):
             frame.grid(row = 0, column = 0, sticky = "nswe")
         
         #this is the starting window
-        self.show_frame("Menu", False)
+        self.show_frame("Info", False)
 
     #this shows the frame / window of the page we want to display
     def show_frame(self, page_name, distribution):
