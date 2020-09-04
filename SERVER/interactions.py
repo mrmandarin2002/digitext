@@ -9,7 +9,7 @@ def get_time():
 
 # checks if a student is valid in the database
 def valid_student(args): # student number
-    args[0] = [i for i in args[0].lower() if i not in string.ascii_lowercase]
+    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Checking if "+args[0]+" is a valid student id...")
     conn = Database.create_connection("server.db")
     students = Database.get_students(conn)
