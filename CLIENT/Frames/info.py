@@ -79,11 +79,8 @@ class Info(tk.Frame):
 
         
     def make_invoice(self):
-        try:
-            if(messagebox.askyesno("Make Invoice", "Would you like to make an invoice for " + self.controller.scanner.student_info[2] + "?")):
-                self.controller.scanner.make_invoice_pdf(False)
-        except:
-            messagebox.showerror("ERROR", "Make sure you've scanned in a student before making the invoice")
+        if(messagebox.askyesno("Make Invoice", "Would you like to make an invoice for " + self.controller.scanner.student_info[2] + "?")):
+            self.controller.scanner.make_invoice_pdf(True)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)

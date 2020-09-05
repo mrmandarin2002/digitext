@@ -93,11 +93,7 @@ class TextbookManagement(tk.Frame):
                             messagebox.showerror("ERROR", "This textbook is already assigned to this student")
                         #if the same type of textbook is already taken out by the student
                         elif(controller.textbook_info[1] in controller.student_textbooks_title):
-                            controller.server.assign_t(controller.current_barcode, self.current_student_barcode)
-                            self.num_of_textbooks += 1
-                            self.student_tnum_label["text"] = "Number Of Textbooks Out: " + str(self.num_of_textbooks)
-                            textbook_assigned = True
-                            #messagebox.showerror("ERROR", "Student already took out a copy of " + controller.textbook_info[1] + ". He cannot own more than one type of the same textbook!")
+                            messagebox.showerror("ERROR", "Student already took out a copy of " + controller.textbook_info[1] + ". He cannot own more than one type of the same textbook!")
                         #if the textbook is owned by nobody (assign)
                         elif(controller.textbook_info[4] == "None"):
                             #officially assigns textbook to student
