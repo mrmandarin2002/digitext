@@ -53,6 +53,7 @@ class client(tk.Tk):
 
         self.MAIN_FONT = "Helvetica"
         self.MAROON = "#DFF9FB"
+
         self.PINK = '#FF00D4'
         self.BLUE = '#96AAEB'
 
@@ -104,6 +105,7 @@ class client(tk.Tk):
     def show_frame(self, page_name, distribution):
         self.frames["TextbookManagement"].day = distribution
         self.current_frame_name = page_name
+        self.frames["TextbookManagement"].student_scanned = False
         self.frames[page_name].clear()
         self.frames[page_name].tkraise()
 

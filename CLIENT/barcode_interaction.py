@@ -223,6 +223,7 @@ class scanner:
                 #this creates a list of student's textbooks based on title instead of barcode ID
                 #useful for comparisons....
                 start_time = time.time()
+                #student_textbooks_title = self.server.student_withdrawn(self.current_barcode)
                 for textbook in self.student_textbooks:
                     self.student_textbooks_title.append(self.server.info_t(textbook)[1])
                 #this creates a list of a student's courses with the help of student_info
