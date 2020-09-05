@@ -84,16 +84,18 @@ def student_requisites(args): # student number
 
 # get the textbooks that a student has withdrawn
 def student_withdrawn(args):
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
-    print(get_time()+"Returning withdrawn textbooks for student: "+args[0])
-    conn = Database.create_connection("server.db")
-    textbooks = []
-    for t in Database.get_returned_textbooks(conn):
-        if t[2] == args[0]:
-            # NOT AT ALL OPTIMAL (Loops through all textbooks to get title)
-            textbooks.append([i[2] for i in Database.get_textbooks(conn) if i[1] == t[2]])
-    conn.close()
-    return "|".join(textbooks)
+    print ("YEEE")
+    textbook_ids = (student_textbooks(args)).split('|')
+    print(textbook_ids)
+    textbooks_titles = []
+    for textbook_id in textbook_ids:
+        print("Textbook_id")
+        print(textbook_id)
+        textbook_info = information_textbook(textbook_id)
+        print(textbook_info)
+        textbook_info = textbook_info.split("|")
+        print("done")
+    return "|".join(textbooks_titles)
 
 # get pairs of all student numbers and names
 def get_student_pairs(args):
