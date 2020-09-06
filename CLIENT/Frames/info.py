@@ -41,7 +41,7 @@ class Info(tk.Frame):
             self.clear()
             self.student_name_label.config(text = "Student Name: " + controller.student_info[2].replace(' ', ', '))
             cnt = 1
-            self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.BLUE, height = 18)
+            self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.BLUE, height = 18, width = 30)
             for textbook in controller.student_textbooks:
                 textbook_info = controller.server.info_t(textbook)
                 self.textbook_list.insert(cnt, textbook_info[1])

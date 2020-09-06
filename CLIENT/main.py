@@ -65,6 +65,7 @@ class client(tk.Tk):
         self.BUTTON_FONT = tkfont.Font(family= self.MAIN_FONT, size=10)
         self.BACK_BUTTON_FONT = tkfont.Font(family = self.MAIN_FONT, size = 8)
         self.MENU_FONT = tkfont.Font(family= self.MAIN_FONT, size=13)
+        self.ENTRY_FONT = tkfont.Font(family = self.MAIN_FONT, size = 16)
 
         if(path.exists("settings.json")):
             with open('settings.json') as settings_file:
@@ -117,12 +118,12 @@ class client(tk.Tk):
             return tk.Button(controller, text = d_text, command = lambda: self.show_frame(scene, False), font = self.BUTTON_FONT)
     
     def make_back_button(self, controller):
-        return tk.Button(controller, text = "Back to Menu", command = lambda: self.show_frame("Menu", False), font = self.BACK_BUTTON_FONT)
+        return tk.Button(controller, text = "Back to Menu", command = lambda: self.show_frame("Menu", False), font = self.BUTTON_FONT)
 
 if __name__ == '__main__':
     root = client()
     root.title("DigiText")
-    root.geometry("600x500")
+    root.geometry("650x520")
     #root.resizable(False, False)
     root.mainloop()
 

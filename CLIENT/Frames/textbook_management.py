@@ -127,10 +127,10 @@ class TextbookManagement(tk.Frame):
                     if(controller.textbook_info[4] == self.current_student_barcode):
                         self.num_of_textbooks -= 1
                         self.student_tnum_label["text"] = "Number Of Textbooks Out: " + str(self.num_of_textbooks)
-                        self.textbook_listbox.delete(controller.student_textbooks.index(controller.current_barcode))
                         final_condition = window.price_window(self, controller).show()
                         controller.student_textbooks.remove(controller.current_barcode)
                         controller.server.return_t(controller.current_barcode, controller.textbook_conditions_rev[final_condition])
+                        self.textbook_listbox.delete(controller.student_textbooks.index(controller.current_barcode))
                         if(not self.num_of_textbooks):
                             messagebox.showwarning("Done!", controller.student_info[2].replace(' ', ', ') + " is done returning textbooks!")
                     elif(controller.textbook_info[4] != "None"):
@@ -180,5 +180,5 @@ class TextbookManagement(tk.Frame):
         invisible_label.grid(row = 13, padx = 150)
         manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
         manual_entry.grid(row = 11, column = 0, padx = 10, sticky = "W")
-        self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON, height = 20)
+        self.textbook_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON, height = 20, width = 35)
         self.textbook_listbox.grid(row = 1, column = 1, sticky = "NW", rowspan = 20)
