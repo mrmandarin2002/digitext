@@ -22,6 +22,8 @@ server.bind(server_address)
 print(get_time()+"Server socket initialized")
 print(get_time()+"Connect all clients to " + ip_address)
 
+fill_dictionaries()
+
 def handle_client(conn, addr):
     print(get_time() + f"Client with address {addr} connected.")
     while True:

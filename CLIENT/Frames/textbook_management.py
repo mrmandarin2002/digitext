@@ -85,7 +85,7 @@ class TextbookManagement(tk.Frame):
                             if(cnt == len(textbook_split)):
                                 controller.student_needed_textbooks[idx] = controller.textbook_info[1]
                                 
-                    if(controller.textbook_info[1] in controller.student_needed_textbooks or messagebox.askyesno("???", "This textbook is not needed by this student, would you like to try to assign it to him anyways?")):
+                    if(controller.textbook_info[4] != self.current_student_barcode and (controller.textbook_info[1] in controller.student_needed_textbooks or messagebox.askyesno("???", "This textbook is not needed by this student, would you like to try to assign it to him anyways?"))):
                         #to check if we need to remove the textbook from the student's needed list later
                         textbook_assigned = False
                         #if the textbook is already assigned to him
@@ -123,14 +123,16 @@ class TextbookManagement(tk.Frame):
                                     if(len(controller.student_needed_textbooks) == 0):
                                         messagebox.showinfo("DONE!", controller.student_info[2].replace(' ',', ') + " is done taking out his textbooks!")
                                     break
+                    else:
+                        messagebox.showerror("ERROR", "This textbook is already assigned to this student")
                 else:
                     if(controller.textbook_info[4] == self.current_student_barcode):
+                        final_condition = window.price_window(self, controller).show()
+                        controller.server.return_t(controller.current_barcode, controller.textbook_conditions_rev[final_condition])
                         self.num_of_textbooks -= 1
                         self.student_tnum_label["text"] = "Number Of Textbooks Out: " + str(self.num_of_textbooks)
-                        final_condition = window.price_window(self, controller).show()
-                        controller.student_textbooks.remove(controller.current_barcode)
-                        controller.server.return_t(controller.current_barcode, controller.textbook_conditions_rev[final_condition])
                         self.textbook_listbox.delete(controller.student_textbooks.index(controller.current_barcode))
+                        controller.student_textbooks.remove(controller.current_barcode)
                         if(not self.num_of_textbooks):
                             messagebox.showwarning("Done!", controller.student_info[2].replace(' ', ', ') + " is done returning textbooks!")
                     elif(controller.textbook_info[4] != "None"):

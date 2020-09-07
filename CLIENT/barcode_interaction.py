@@ -167,7 +167,7 @@ class scanner:
         #the amount of time between current input and previous input (converted into micro seconds)
         time_elapsed = (datetime.now() - self.start).microseconds + (datetime.now() - self.start).seconds * 1000000
         #this assumes that the input is from barcode scanner as the time between inputs is less than 40 milliseconds
-        if(time_elapsed - self.previous_time < 55000):
+        if(time_elapsed - self.previous_time < 60000):
             #add input to the temporary string (self.barcode_string)
             #we don't want the enter or shift key to be added as to our final string
             if(key != Key.enter and key != Key.shift):
@@ -214,6 +214,7 @@ class scanner:
             print("Student Info: ")
             print(self.student_info)
             if(len(self.student_info) > 2):
+                start_time = time.time()
                 #gets the textbooks the student has taken out
                 self.student_textbooks = self.server.student_t(self.current_barcode)
                 #clears a bunch of lists so that the relevant stuff can be added
@@ -222,10 +223,10 @@ class scanner:
                 self.student_courses.clear()
                 #this creates a list of student's textbooks based on title instead of barcode ID
                 #useful for comparisons....
-                start_time = time.time()
-                #student_textbooks_title = self.server.student_withdrawn(self.current_barcode)
-                for textbook in self.student_textbooks:
-                    self.student_textbooks_title.append(self.server.info_t(textbook)[1])
+                self.student_textbooks_title = self.server.student_withdrawn(self.current_barcode)
+                print("Student Textbooks: ", self.student_textbooks_title)
+                #for textbook in self.student_textbooks:
+                #    self.student_textbooks_title.append(self.server.info_t(textbook)[1])
                 #this creates a list of a student's courses with the help of student_info
                 for x in range(4, len(self.student_info)):
                     #gets info of a student's courses

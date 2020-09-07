@@ -2,6 +2,31 @@
 from datetime import datetime
 import Database
 import string
+import time
+
+textbook_dictionary = {}
+student_dictionary = {}
+
+def fill_dictionaries():
+    start_time = time.time()
+    conn = Database.create_connection("server.db")
+    textbooks = Database.get_textbooks(conn)
+    students = Database.get_students(conn)
+    cnt = 0
+    for textbook in textbooks:
+        try:
+            textbook_dictionary[int(textbook[1])] = textbook
+            if(int(textbook[1]) < 1000000 or int(textbook[1]) >= 10000000):
+                cnt += 1
+                #print("Bad Textbook #" + str(cnt) + "!", textbook)
+        except:
+            print("Error, could not process:", textbook)
+    for student in students:
+        if(student[4] != ''):
+            #print(student)
+            student_dictionary[int(student[1])] = student
+    print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
+
 
 # function to get the current time
 def get_time():
@@ -9,18 +34,27 @@ def get_time():
 
 # checks if a student is valid in the database
 def valid_student(args): # student number
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
+    #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Checking if "+args[0]+" is a valid student id...")
-    conn = Database.create_connection("server.db")
-    students = Database.get_students(conn)
-    for student in students:
-        if student[1] == str(args[0]):
-            conn.close()
+    try:
+        if(int(args[0]) in student_dictionary):
             print(get_time() + "Student ID is valid")
-            return "1"
-    conn.close()
-    print(get_time() + "Student ID is invalid")
-    return "0" 
+            return '1'
+        else:
+            print(get_time() + "Student ID is invalid")
+            return '0'
+    except:
+        print("Used Heinrich's Code for valid_student :(") 
+        conn = Database.create_connection("server.db")
+        students = Database.get_students(conn)
+        for student in students:
+            if student[1] == str(args[0]):
+                conn.close()
+                print(get_time() + "Student ID is valid")
+                return "1"
+        conn.close()
+        print(get_time() + "Student ID is invalid")
+        return "0" 
 
 # adds a student to the database
 def add_student(args):
@@ -31,21 +65,31 @@ def add_student(args):
 
 # gets student information from the database
 def information_student(args): # student number
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
-    print(get_time()+"Returning information of textbook "+args[0]+"...")
-    conn = Database.create_connection("server.db")
-    students = Database.get_students(conn)
-    for student in students:
-        if student[1] == str(args[0]):
-            student_strings = []
-            for i in student:
-                student_strings.append(str(i))
-            conn.close()
-            return "|".join(student_strings)
+    #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase]
+    start_time = time.time()
+    print(get_time()+"Returning information of student "+args[0]+"...")
+    try:
+        student_info = student_dictionary[int(args[0])]
+        student_strings = []
+        for i in student_info:
+            student_strings.append(str(i))
+        return "|".join(student_strings)
+    except:
+        print("Used Heinrich's Code for valid_textbook :(") 
+        conn = Database.create_connection("server.db")
+        students = Database.get_students(conn)
+        for student in students:
+            if student[1] == str(args[0]):
+                student_strings = []
+                for i in student:
+                    student_strings.append(str(i))
+                conn.close()
+                print("Information Student: %s seconds ---" % (time.time() - start_time))
+                return "|".join(student_strings)
 
 # get textbooks assigned to a student
 def student_textbooks(args): # student number
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
+    #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Returning textbooks currently held by student: "+args[0])
     conn = Database.create_connection("server.db")
     textbooks = []
@@ -57,7 +101,7 @@ def student_textbooks(args): # student number
 # gets the textbook return information of a specific student from the database
 # the information consists of a list: entries from the returned textbooks table corresponding to the student
 def student_return_info(args): # student number
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
+    #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Returning textbook return information of student "+args[0]+"...")
     conn = Database.create_connection("server.db")
     # get the textbooks returned by the student
@@ -70,7 +114,7 @@ def student_return_info(args): # student number
 
 # get textbooks that a student should have
 def student_requisites(args): # student number
-    args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
+    #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Returning requisite textbooks for student: "+args[0])
     conn = Database.create_connection("server.db")
     for s in Database.get_students(conn):
@@ -84,17 +128,15 @@ def student_requisites(args): # student number
 
 # get the textbooks that a student has withdrawn
 def student_withdrawn(args):
-    print ("YEEE")
+    start_time = time.time()
+    print(get_time()+"Returning textbooks withdrawn by student: "+args[0]+"...")
     textbook_ids = (student_textbooks(args)).split('|')
-    print(textbook_ids)
     textbooks_titles = []
     for textbook_id in textbook_ids:
-        print("Textbook_id")
-        print(textbook_id)
-        textbook_info = information_textbook(textbook_id)
-        print(textbook_info)
+        textbook_info = information_textbook([textbook_id])
         textbook_info = textbook_info.split("|")
-        print("done")
+        textbooks_titles.append(textbook_info[1])
+    print("Student Withdrawn: %s seconds ---" % (time.time() - start_time))
     return "|".join(textbooks_titles)
 
 # get pairs of all student numbers and names
@@ -108,36 +150,61 @@ def get_student_pairs(args):
 # checks if a textbook is valid in the database
 def valid_textbook(args): # textbook number
     print(get_time()+"Checking if "+args[0]+" is a valid textbook id...")
-    conn = Database.create_connection("server.db")
-    textbooks = Database.get_textbooks(conn)
-    for textbook in textbooks:
-        if textbook[1] == str(args[0]):
-            conn.close()
-            print(get_time() + "Textbook ID is valid")
-            return "1"
-    conn.close()
-    print(get_time() + "Textbook ID is invalid")
-    return "0"
+    try:
+        if(int(args[0]) in textbook_dictionary):
+            return '1'
+        else:
+            return '0'
+    except:
+        print("Used Heinrich's Code for valid_textbook :(") 
+        conn = Database.create_connection("server.db")
+        textbooks = Database.get_textbooks(conn)
+        for textbook in textbooks:
+            if textbook[1] == str(args[0]):
+                conn.close()
+                print(get_time() + "Textbook ID is valid")
+                return "1"
+        conn.close()
+        print(get_time() + "Textbook ID is invalid")
+        return "0"
 
 # gets textbook information from the database
 def information_textbook(args): # textbook number
+    start_time = time.time()
     print(get_time()+"Returning information of textbook "+args[0]+"...")
-    conn = Database.create_connection("server.db")
-    textbooks = Database.get_textbooks(conn)
-    for textbook in textbooks:
-        if textbook[1] == str(args[0]):
-            textbook_strings = []
-            for i in textbook:
-                textbook_strings.append(str(i))
-            # textbook_strings[-1] = str(Database.get_studentNumber(conn, textbook_strings[-1]))
-            conn.close()
-            return "|".join(textbook_strings[1:])
+    try:
+        #more efficient way
+        textbook_info = textbook_dictionary[int(args[0])]
+        textbook_strings = []
+        for i in textbook_info:
+            textbook_strings.append(str(i))
+        #print("Information textbook: %s seconds ---" % (time.time() - start_time))
+        #print(textbook_strings)
+        return '|'.join(textbook_strings[1:])
+    except:
+        #heinrich's way
+        print("Had to use Heinrich's method for info_textbook :(")
+        conn = Database.create_connection("server.db")
+        textbooks = Database.get_textbooks(conn)
+        for textbook in textbooks:
+            if textbook[1] == str(args[0]):
+                textbook_strings = []
+                for i in textbook:
+                    textbook_strings.append(str(i))
+                # textbook_strings[-1] = str(Database.get_studentNumber(conn, textbook_strings[-1]))
+                conn.close()
+                print("Information textbook: %s seconds ---" % (time.time() - start_time))
+                return "|".join(textbook_strings[1:])
 
 # delete textbook from database
 def delete_textbook(args): # textbook number
     print(get_time()+"Deleting "+args[0]+" from textbook table...")
     conn = Database.create_connection("server.db")
     Database.remove_textbook(conn, args[0])
+    try:
+        del textbook_dictionary[int(args[0])]
+    except:
+        print("Guess you don't exist :/")
     conn.close()
     return "1"
 
@@ -145,6 +212,7 @@ def delete_textbook(args): # textbook number
 def add_textbook(args): # textbook number, title, cost, condition
     print(get_time()+"Adding textbook to database\n\tNumber: "+args[0]+"\n\tTitle: "+args[1]+"\n\tCost: "+args[2]+"\n\tCondition: "+args[3])
     conn = Database.create_connection("server.db")
+    textbook_dictionary[int(args[0])] = [-1, args[0], args[1], args[2], args[3], None]
     Database.insert_textbook(conn, args[0], args[1], args[2], args[3])
     conn.close()
     return "1"
@@ -153,6 +221,12 @@ def add_textbook(args): # textbook number, title, cost, condition
 def assign_textbook(args): # textbook number, student number
     print(get_time()+"Assigning textbook: "+args[0]+" to student: "+args[1]+" in database...")
     conn = Database.create_connection("server.db")
+    textbook_info = textbook_dictionary[int(args[0])]
+    textbook_strings = []
+    for i in textbook_info:
+        textbook_strings.append(i)
+    textbook_strings[5] = args[1]
+    textbook_dictionary[int(args[0])] = tuple(textbook_strings)
     Database.assign_textbook(conn, args[0], args[1])
     conn.close()
     return "1"
@@ -164,6 +238,13 @@ def return_textbook(args):
     Database.return_textbook(conn, args[0], args[1])
     Database.update_condition(conn, args[0], args[1])
     Database.assign_textbook(conn, args[0], "None")
+    textbook_info = textbook_dictionary[int(args[0])]
+    textbook_strings = []
+    for i in textbook_info:
+        textbook_strings.append(i)
+    textbook_strings[5] = None
+    textbook_strings[4] = args[1]
+    textbook_dictionary[int(args[0])] =tuple(textbook_strings)
     conn.close()
     return "1"
 

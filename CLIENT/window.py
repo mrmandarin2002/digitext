@@ -91,6 +91,7 @@ class price_window(tk.Toplevel):
         confirm_button = tk.Button(self, text = "Confirm Condition", font = self.BUTTON_FONT, command = self.death)
         confirm_button.grid(row = 3, column = 0, padx = 5, pady = (0, 10))
         self.bind('<Return>', self.death)
+        self.focus_force()
 
     def death(self, event = None):
         self.condition.set(self.condition_entry.get())
