@@ -201,3 +201,7 @@ class Client:
     def merge_textbooks(self, original, new):
         return self.command("merge_t", [original, new])
 
+    def student_r(self, student_id):
+        return self.command("student_r", [student_id]).split('|')
+        
+

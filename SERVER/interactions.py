@@ -139,13 +139,16 @@ def student_requisites(args): # student number
     #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
     print(get_time()+"Returning requisite textbooks for student: "+args[0])
     conn = Database.create_connection("server.db")
-    for s in Database.get_students(conn):
-        if s[1] == args[0]:
-            courses = s[4].split("|")
+    courses = student_list[int(args[0])][4].split("|")
+    #print(courses)
     textbooks = []
     for c in Database.get_courses(conn):
         if c[1] in courses:
-            textbooks.append(c[4].split("|"))
+            course_textbooks = c[4].split("|")
+            for textbook in course_textbooks:
+                if(textbook != '' and textbook not in textbooks):
+                    textbooks.append(textbook)
+    #print(textbooks)
     return "|".join(textbooks)
 
 # get the textbooks that a student has withdrawn
@@ -305,11 +308,6 @@ def course_numbers(args):
         numbers.append(c[1])
     conn.close()
     return "|".join(numbers)
-
-
-#########
-#not working with current list 
-#########
 
 # sets the requisite textbooks for a given course
 def set_course_textbooks(args):

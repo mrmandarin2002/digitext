@@ -55,8 +55,8 @@ class TextbookManagement(tk.Frame):
             else:
                 #adds the textbook that are taken out by the student (or an error occurs if 0)
                 if(self.num_of_textbooks):
-                    for cnt, textbook in enumerate(controller.student_textbooks):
-                        self.textbook_listbox.insert(cnt, controller.server.info_t(textbook)[1])
+                    for cnt, textbook in enumerate(controller.student_textbooks_title):
+                        self.textbook_listbox.insert(cnt, textbook)
                 else:
                     messagebox.showerror("ERROR", controller.student_info[2] + " has taken out no textbooks")
 

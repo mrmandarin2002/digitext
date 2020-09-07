@@ -117,12 +117,12 @@ class scanner:
 
     def placeholder_check(self, textbook1, textbook2):
         textbook_split = textbook1.split(' ')
-        print("CHECK Textbook Split:")
-        print(textbook_split)
+        #print("CHECK Textbook Split:")
+        #print(textbook_split)
         cur_textbook_split = textbook2.split(' ')
         cur_textbook_split = [i.replace(" ", "").lower() for i in cur_textbook_split]
-        print("CHECK Current Textbook Split:")
-        print(cur_textbook_split)
+        #print("CHECK Current Textbook Split:")
+        #print(cur_textbook_split)
         if('Placeholder' in textbook1.split(' ')):
             textbook_split.remove('Placeholder')
             cnt = 0
@@ -228,6 +228,20 @@ class scanner:
                 #for textbook in self.student_textbooks:
                 #    self.student_textbooks_title.append(self.server.info_t(textbook)[1])
                 #this creates a list of a student's courses with the help of student_info
+
+                self.course_textbooks = self.server.student_r(self.current_barcode)
+
+                for textbook in self.course_textbooks:
+                    if(len(textbook) > 0 and textbook not in self.student_needed_textbooks and textbook not in self.student_textbooks_title):
+                        check = False
+                        for student_textbook in self.student_textbooks_title:
+                            check = self.placeholder_check(textbook, student_textbook)
+                        if(not check):
+                            self.student_needed_textbooks.append(textbook)
+
+                #old code not as efficient
+                #not sure if I used self.student_courses in anything tho :thunk:
+                '''
                 for x in range(4, len(self.student_info)):
                     #gets info of a student's courses
                     course_info = self.server.info_c(self.student_info[x])
@@ -244,6 +258,7 @@ class scanner:
                                 check = self.placeholder_check(textbook, student_textbook)
                             if(not check):
                                 self.student_needed_textbooks.append(textbook)
+                '''
                 print("--- %s seconds ---" % (time.time() - start_time))
                 #allows other parts of the program know what type of barcode is scanned in
                 self.barcode_status = "Student"

@@ -42,9 +42,8 @@ class Info(tk.Frame):
             self.student_name_label.config(text = "Student Name: " + controller.student_info[2].replace(' ', ', '))
             cnt = 1
             self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.BLUE, height = 18, width = 30)
-            for textbook in controller.student_textbooks:
-                textbook_info = controller.server.info_t(textbook)
-                self.textbook_list.insert(cnt, textbook_info[1])
+            for textbook in controller.student_textbooks_title:
+                self.textbook_list.insert(cnt, textbook)
                 cnt += 1
             self.textbook_list.grid(row = 1, column = 1, sticky = "NW", rowspan = 15)
             self.textbook_list.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller))
