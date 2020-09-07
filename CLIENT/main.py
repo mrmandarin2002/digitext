@@ -30,7 +30,7 @@ version = "teacher"
 
 #the center of the universe (digitext really)
 class client(tk.Tk):
-
+    
     current_frame_name = ''
     ip_address = ""
 
