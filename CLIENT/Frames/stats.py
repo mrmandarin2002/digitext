@@ -25,6 +25,7 @@ class Stats(tk.Frame):
             self.distributed_textbooks["text"] = "Textbooks Distributed: " + str(num_data[2])
             self.students_left["text"] = "Students To Go: " + str(num_data[3])
             self.student_listbox.delete(0, tk.END)
+            print(num_data)
             for x in range(4, len(num_data)):
                 self.student_listbox.insert(x, str(num_data[x]))
             self.in_thread = False
@@ -41,10 +42,10 @@ class Stats(tk.Frame):
         self.distributed_textbooks = tk.Label(self, text = "Textbooks Distributed: ", font = controller.TITLE_FONT2, bg = controller.MAROON)
         self.distributed_textbooks.pack(side = "top", pady = 4, padx = 0)
         self.students_left = tk.Label(self, text = "Students To Go: ", font = controller.TITLE_FONT2, bg = controller.MAROON)
-        self.students_left.pack(side = "top", pady = 4, padx = 0)
-        self.scanning_label = tk.Label(self, text = "Students Currently Scanning: ", font = controller.TITLE_FONT, bg = controller.MAROON)
+        self.students_left.pack(side = "top", pady = 2, padx = 0)
+        self.scanning_label = tk.Label(self, text = "Students Currently Scanning: ", font = controller.ENTRY_FONT, bg = controller.MAROON)
         self.scanning_label.pack(side = "top", pady = 4, padx = 0)
-        self.student_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON, height = 10, width = 35)
+        self.student_listbox = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.ENTRY_FONT, selectmode = "SINGLE", selectbackground = controller.MAROON, height = 9, width = 25)
         self.student_listbox.pack(side = "top", pady = 4, padx = 0)
         export_textbook_info_button = tk.Button(self, text = "Export Textbook Info", font = controller.MENU_FONT, command = controller.scanner.server.get_textbook_inventory)
         #export_textbook_info_button.pack(pady = (10, 0))

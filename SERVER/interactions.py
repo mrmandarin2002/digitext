@@ -84,7 +84,6 @@ def fill_dictionaries():
             print("Error, could not process:", textbook)
     
     conn.close()
-    print(student_list[222019])
     print("Total Number of Textbooks: ", cnt_info[0])
     print("Textbooks that still need to be distributed: ", cnt_info[1])
     print("Textbooks that have been distributed: ", cnt_info[2])
@@ -446,12 +445,13 @@ def get_textbook_total(args):
     for x in cnt_info:
         cnt_strings.append(str(x))
     for student in student_activity_list:
-        print(student)
-        if(student_needed_cnt[int(student[0])] == 0 or (student[2] - time.time() > max_time)):
+        #print(student)
+        #print(time.time())
+        if(student_needed_cnt[int(student[0])] == 0 or (time.time() - student[2]) > max_time):
             print("REMOVING STUDENT: ", student)
             student_activity_list.remove(student)
         else:
-            cnt_strings.append(str(x))
+            cnt_strings.append(student[1])
     return '|'.join(cnt_strings)
 
 # gets textbook inventory
@@ -497,8 +497,12 @@ def ping(args): # no arguments
 def student_activity(args):
     print(args[0], " is active!")
     if(student_needed_cnt[int(args[0])]):
-        student_info = information_student([args[0]])
-        if(student_info[2] not in student_activity_list):
+        student_info = information_student([args[0]]).split('|')
+        check = True
+        for student in student_activity_list:
+            if(student[1] == student_info[2]):
+                check = False
+        if(check):
             student_activity_list.append([student_info[1], student_info[2], time.time()])
 
 

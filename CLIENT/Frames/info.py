@@ -79,7 +79,7 @@ class Info(tk.Frame):
         
     def make_invoice(self):
         if(messagebox.askyesno("Make Invoice", "Would you like to make an invoice for " + self.controller.scanner.student_info[2] + "?")):
-            self.controller.scanner.make_invoice_pdf(True)
+            self.controller.scanner.make_invoice_pdf(False)
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)

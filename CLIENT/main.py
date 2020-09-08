@@ -59,7 +59,7 @@ class client(tk.Tk):
 
         #different type of fonts used throughout the program
         self.TITLE_FONT = tkfont.Font(family=self.MAIN_FONT, size=22, weight="bold")
-        self.TITLE_FONT2 = tkfont.Font(family=self.MAIN_FONT, size=25, weight="bold")
+        self.TITLE_FONT2 = tkfont.Font(family=self.MAIN_FONT, size=24, weight="bold")
         self.SUBTITLE_FONT = tkfont.Font(family = self.MAIN_FONT, size = 15, weight = "bold")
         self.FIELD_FONT = tkfont.Font(family = self.MAIN_FONT, size = 11)
         self.BUTTON_FONT = tkfont.Font(family= self.MAIN_FONT, size=10)
@@ -99,7 +99,7 @@ class client(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row = 0, column = 0, sticky = "nswe")
         
-        
+
         #this is the starting window
         self.show_frame("Info", False)
 

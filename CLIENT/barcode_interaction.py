@@ -156,7 +156,7 @@ class scanner:
         if(len(self.textbook_nums) > 3):
             for textbook in self.textbook_nums:
                 self.total_textbooks += int(textbook[1])
-            print("Total Amount of textbooks:" + str(self.total_textbooks))
+            #print("Total Amount of textbooks:" + str(self.total_textbooks))
 
         #starts the thread where program listens for input (if there is input call on_press function below)
         keyLis = Listener(on_press=lambda key : self.on_press(key, controller))
@@ -176,7 +176,6 @@ class scanner:
             #since the final input of scanner is always enter, if the string we have been adding to is a certain length...
             #the program decides its a barcode. It's quite foolproof
             if(key == Key.enter and len(self.barcode_string) > 5):
-                print("IN")
                 #this makes "self.current_barcode" our official barcode id! For now...
                 self.current_barcode = self.barcode_string
                 #reset the the temporary barcode string
@@ -196,10 +195,10 @@ class scanner:
     #this function checks what the hell the barcode is
     def check_barcode(self, controller):
         error = False
-        print("Barcode: " + self.current_barcode)
+        print("Barcode Scanned: " + self.current_barcode)
         #check's if it's a textbook's barcode
         if(self.server.valid_t(self.current_barcode)):
-            print("TEXTBOOK BARCODE!")
+            print("TEXTBOOK BARCODE!: ", self.textbook_info)
             self.textbook_info = self.server.info_t(self.current_barcode)
             if(len(self.textbook_info) > 2):
                 self.barcode_status = "Textbook"
@@ -212,8 +211,7 @@ class scanner:
             self.student_info = self.server.info_s(self.current_barcode)
             #for debugging I guess
             print("STUDENT BARCODE!")
-            print("Student Info: ")
-            print(self.student_info)
+            print("Student Info: ", self.student_info)
             if(len(self.student_info) > 2):
                 start_time = time.time()
                 #gets the textbooks the student has taken out
@@ -225,7 +223,7 @@ class scanner:
                 #this creates a list of student's textbooks based on title instead of barcode ID
                 #useful for comparisons....
                 self.student_textbooks_title = self.server.student_withdrawn(self.current_barcode)
-                print("Student Textbooks: ", self.student_textbooks_title)
+                #print("Student Textbooks: ", self.student_textbooks_title)
                 #for textbook in self.student_textbooks:
                 #    self.student_textbooks_title.append(self.server.info_t(textbook)[1])
                 #this creates a list of a student's courses with the help of student_info
