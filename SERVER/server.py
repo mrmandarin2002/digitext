@@ -27,31 +27,33 @@ fill_dictionaries()
 def handle_client(conn, addr):
     print(get_time() + f"Client with address {addr} connected.")
     while True:
-        try:
-            #get the size of the message to be received from client
-            msg_length = conn.recv(HEADER).decode(FORMAT)
-            if(msg_length):
-                print(get_time() + f"Received data from address {addr}")
-                msg_length = int(msg_length)
-                #receive message from client
-                msg = conn.recv(msg_length).decode(FORMAT)
-                print(get_time() + msg)
-                if msg == DISCONNECT_MESSAGE:
-                    break
+        #try:
+        #get the size of the message to be received from client
+        msg_length = conn.recv(HEADER).decode(FORMAT)
+        if(msg_length):
+            print(get_time() + f"Received data from address {addr}")
+            msg_length = int(msg_length)
+            #receive message from client
+            msg = conn.recv(msg_length).decode(FORMAT)
+            print(get_time() + msg)
+            if msg == DISCONNECT_MESSAGE:
+                break
 
-                #get info to be returned / changed
-                function_selection = msg.split(';')[0]
-                received_data = msg.split(";")[1].split("|")
-                data_return = str(interact[function_selection](received_data)).encode(FORMAT)
-                send_length = (str(len(data_return)) + (' ' * (HEADER - len(str(len(data_return)))))).encode(FORMAT)
-                conn.send(send_length)
-                conn.send(data_return)
+            #get info to be returned / changed
+            function_selection = msg.split(';')[0]
+            received_data = msg.split(";")[1].split("|")
+            data_return = str(interact[function_selection](received_data)).encode(FORMAT)
+            send_length = (str(len(data_return)) + (' ' * (HEADER - len(str(len(data_return)))))).encode(FORMAT)
+            conn.send(send_length)
+            conn.send(data_return)
 
+        '''
         except Exception as e:
             print("An error occurred." + str(e))
             print(f"Connection with address {addr} closed.")
             conn.close()
             break
+        '''
 
 # main server loop
 print(get_time()+"Starting main server loop...")

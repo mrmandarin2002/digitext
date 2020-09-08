@@ -9,12 +9,13 @@ textbook_dictionary = {}
 student_list = [[]] * 500000
 course_list = [[]] * 10000
 student_textbooks_list = []
+student_needed_cnt = []
 
 #an array of cnts to keep track of
 #0 - total number of textbooks
 #1 - textbooks that need to be distributed
 #2 - textbooks that have been distributed
-cnt_info = [0,0,0]
+cnt_info = [0,0,0,0]
 #gotta hash the string first
 
 def string_hash(str_hash):
@@ -51,10 +52,13 @@ def fill_dictionaries():
     cnt = 0
     for x in range(0, 500000):
         student_textbooks_list.append([])
+        student_needed_cnt.append(0)
     for student in students:
         if(student[4] != ''):
+            cnt_info[3] += 1
             student_list[int(student[1])] = student
-            cnt_info[1] += len(student_requisites([student[1]]).split('|'))
+            student_needed_cnt[int(student[1])] = len(student_requisites([student[1]]).split('|'))
+            cnt_info[1] += student_needed_cnt[int(student[1])]
 
     for textbook in textbooks:
         cnt_info[0] += 1
@@ -62,10 +66,12 @@ def fill_dictionaries():
             #print(textbook)
             cnt_info[2] += 1 
             student_textbooks_list[int(textbook[5])].append(textbook[1])
-
             needed_textbooks = student_requisites([textbook[5]]).split('|')
             for textbook_needed in needed_textbooks:
-                if(textbook_needed == textbook[2] or placeholder_check(textbook_needed, textbook[2])):       
+                if(textbook_needed == textbook[2] or placeholder_check(textbook_needed, textbook[2])):
+                    student_needed_cnt[int(student[1])] -= 1
+                    if(not student_needed_cnt[int(student[1])]):
+                        cnt_info[3] -= 1
                     #print(textbook) 
                     cnt_info[1] -= 1 
         try:
@@ -297,10 +303,13 @@ def assign_textbook(args): # textbook number, student number
     Database.assign_textbook(conn, args[0], args[1])
     conn.close()
     cnt_info[2] += 1
-    needed_textbooks = student_requisites([textbook[5]]).split('|')
+    needed_textbooks = student_requisites([textbook_strings[5]]).split('|')
     for textbook_needed in needed_textbooks:
-        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook[2])):       
+        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook_strings[2])):       
             #print(textbook) 
+            student_needed_cnt[int(args[1])] -= 1
+            if(not student_needed_cnt[int(args[1])]):
+                cnt_info[3] -= 1
             cnt_info[1] -= 1 
     return "1"
 
@@ -313,19 +322,22 @@ def return_textbook(args):
     Database.assign_textbook(conn, args[0], "None")
     textbook_info = textbook_dictionary[int(args[0])]
     textbook_strings = []
-    #print(textbook_info)
     student_textbooks_list[int(textbook_info[5])].remove(textbook_info[1])
     for i in textbook_info:
         textbook_strings.append(i)
+    needed_textbooks = student_requisites([textbook_strings[5]]).split('|')
+    student = textbook_strings[5]
     textbook_strings[5] = None
     textbook_strings[4] = args[1]
     textbook_dictionary[int(args[0])] =tuple(textbook_strings)
     conn.close()
-    needed_textbooks = student_requisites([textbook[5]]).split('|')
     cnt_info[2] -= 1
     for textbook_needed in needed_textbooks:
-        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook[2])):       
+        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook_strings[2])):       
             #print(textbook) 
+            student_needed_cnt[int(student)] += 1
+            if(student_needed_cnt[int(student)] == 1):
+                cnt_info[3] += 1
             cnt_info[1] += 1 
     return "1"
 

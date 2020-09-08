@@ -23,6 +23,7 @@ class Stats(tk.Frame):
             self.welcome_title["text"] = "Number Of Textbooks: " + str(num_data[0])
             self.assigned_textbooks["text"] = "Textbooks To Go: " + str(num_data[1])
             self.distributed_textbooks["text"] = "Textbooks Distributed: " + str(num_data[2])
+            self.students_left["text"] = "Student To Go: " + str(num_data[3])
             screen_width = self.controller.winfo_screenwidth()
             screen_height = self.controller.winfo_screenheight()
             print(screen_width, screen_height)
