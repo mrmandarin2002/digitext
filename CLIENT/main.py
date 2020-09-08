@@ -99,6 +99,7 @@ class client(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row = 0, column = 0, sticky = "nswe")
         
+        
         #this is the starting window
         self.show_frame("Info", False)
 

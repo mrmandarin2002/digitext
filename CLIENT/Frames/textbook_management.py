@@ -46,6 +46,7 @@ class TextbookManagement(tk.Frame):
             #displays the number of textbooks taken out
             self.student_tnum_label["text"] = "Number Of Textbooks Out: " + str(len(controller.student_textbooks))
             self.current_student_barcode = controller.current_barcode
+            controller.server.student_activity(controller.current_barcode)
             #which mode it's in
             if(self.day == 'D'):
                 #adds the textbooks that are assigned to the student in a list

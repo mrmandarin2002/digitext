@@ -203,5 +203,8 @@ class Client:
 
     def student_r(self, student_id):
         return self.command("student_r", [student_id]).split('|')
+
+    def student_activity(self, student_id):
+        return self.command("student_activity", [student_id])
         
 

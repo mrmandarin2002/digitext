@@ -237,6 +237,8 @@ class scanner:
                         check = False
                         for student_textbook in self.student_textbooks_title:
                             check = self.placeholder_check(textbook, student_textbook)
+                            if(check):
+                                break
                         if(not check):
                             self.student_needed_textbooks.append(textbook)
 

@@ -16,6 +16,7 @@ student_needed_cnt = []
 #1 - textbooks that need to be distributed
 #2 - textbooks that have been distributed
 cnt_info = [0,0,0,0]
+student_activity_list = []
 #gotta hash the string first
 
 def string_hash(str_hash):
@@ -69,10 +70,10 @@ def fill_dictionaries():
             needed_textbooks = student_requisites([textbook[5]]).split('|')
             for textbook_needed in needed_textbooks:
                 if(textbook_needed == textbook[2] or placeholder_check(textbook_needed, textbook[2])):
-                    student_needed_cnt[int(student[1])] -= 1
-                    if(not student_needed_cnt[int(student[1])]):
+                    student_needed_cnt[int(textbook[5])] -= 1
+                    if(student_needed_cnt[int(textbook[5])] == 0):
+                        print(textbook[5])
                         cnt_info[3] -= 1
-                    #print(textbook) 
                     cnt_info[1] -= 1 
         try:
             textbook_dictionary[int(textbook[1])] = textbook
@@ -83,9 +84,11 @@ def fill_dictionaries():
             print("Error, could not process:", textbook)
     
     conn.close()
+    print(student_list[222019])
     print("Total Number of Textbooks: ", cnt_info[0])
     print("Textbooks that still need to be distributed: ", cnt_info[1])
     print("Textbooks that have been distributed: ", cnt_info[2])
+    print("Students who have to take out textbooks: ", cnt_info[3])
     print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
 
 # function to get the current time
@@ -202,9 +205,11 @@ def student_withdrawn(args):
     textbook_ids = (student_textbooks(args)).split('|')
     textbooks_titles = []
     for textbook_id in textbook_ids:
-        textbook_info = information_textbook([textbook_id])
-        textbook_info = textbook_info.split("|")
-        textbooks_titles.append(textbook_info[1])
+        if(textbook_id):
+            textbook_info = information_textbook([textbook_id])
+            if(textbook_info):
+                textbook_info = textbook_info.split("|")
+                textbooks_titles.append(textbook_info[1])
     #print("Student Withdrawn: %s seconds ---" % (time.time() - start_time))
     return "|".join(textbooks_titles)
 
@@ -274,7 +279,7 @@ def delete_textbook(args): # textbook number
         del textbook_dictionary[int(args[0])]
     except:
         print("Guess you don't exist :/")
-    textbook_cnt -= 1
+    cnt_info[0] -= 1
     conn.close()
     return "1"
 
@@ -435,9 +440,18 @@ def get_textbook_counts(args):
 # gets the total number of textbooks
 def get_textbook_total(args):
     print(get_time()+"Getting total number of textbooks...")
+    #max time spent on list
+    max_time = 300.0
     cnt_strings = []
     for x in cnt_info:
         cnt_strings.append(str(x))
+    for student in student_activity_list:
+        print(student)
+        if(student_needed_cnt[int(student[0])] == 0 or (student[2] - time.time() > max_time)):
+            print("REMOVING STUDENT: ", student)
+            student_activity_list.remove(student)
+        else:
+            cnt_strings.append(str(x))
     return '|'.join(cnt_strings)
 
 # gets textbook inventory
@@ -479,6 +493,15 @@ def ping(args): # no arguments
     # print(get_time()+"Received ping...")
     return "1"
 
+#student id
+def student_activity(args):
+    print(args[0], " is active!")
+    if(student_needed_cnt[int(args[0])]):
+        student_info = information_student([args[0]])
+        if(student_info[2] not in student_activity_list):
+            student_activity_list.append([student_info[1], student_info[2], time.time()])
+
+
 # interactions function dictionary
 interact = {"valid_t": valid_textbook,
             "valid_s": valid_student,
@@ -505,4 +528,5 @@ interact = {"valid_t": valid_textbook,
             "course_r": course_requisites,
             "assign_t": assign_textbook,
             "return_t": return_textbook,
+            "student_activity": student_activity,
             "p": ping}
