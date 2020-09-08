@@ -110,7 +110,8 @@ class scanner:
         os.startfile(current_path + "\\invoices\\" + self.student_info[2].replace(' ', ', ') + " invoice.pdf")
 
     def get_textbook_nums(self):
-        return self.server.get_textbook_total()
+        data = self.server.get_textbook_total()
+        return data
 
     def update_textbook_list(self):
         self.textbook_list = self.server.get_textbook_titles()

@@ -7,12 +7,40 @@ import hashlib
 
 textbook_dictionary = {}
 student_list = [[]] * 500000
+course_list = [[]] * 10000
 student_textbooks_list = []
+
+#an array of cnts to keep track of
+#0 - total number of textbooks
+#1 - textbooks that need to be distributed
+#2 - textbooks that have been distributed
+cnt_info = [0,0,0]
 #gotta hash the string first
 
 def string_hash(str_hash):
     str_hash = str_hash.encode('utf-8')
     return int(hashlib.md5(str_hash).hexdigest(), 16)
+
+def placeholder_check(textbook1, textbook2):
+    textbook_split = textbook1.split(' ')
+    #print("CHECK Textbook Split:")
+    #print(textbook_split)
+    cur_textbook_split = textbook2.split(' ')
+    cur_textbook_split = [i.replace(" ", "").lower() for i in cur_textbook_split]
+    #print("CHECK Current Textbook Split:")
+    #print(cur_textbook_split)
+    if('Placeholder' in textbook1.split(' ')):
+        textbook_split.remove('Placeholder')
+        cnt = 0
+        for word in textbook_split:
+            if(word.lower() in cur_textbook_split):
+                cnt+= 1
+        if(cnt == len(textbook_split)):
+            return True
+        else:
+            return False
+    else:
+        return False
 
 def fill_dictionaries():
     start_time = time.time()
@@ -25,23 +53,33 @@ def fill_dictionaries():
         student_textbooks_list.append([])
     for student in students:
         if(student[4] != ''):
-            #print(int(student[1]))
-            #print(student)
             student_list[int(student[1])] = student
-            #student_textbooks_list[int(student[1])] = student_textbooks([student[1]])
-            #print(student_list[int(student[1])])
-            #student_textbooks_dictionary
+            cnt_info[1] += len(student_requisites([student[1]]).split('|'))
+
     for textbook in textbooks:
-        if(textbook[5] != None and textbook[5] != 'None'): 
+        cnt_info[0] += 1
+        if(textbook[5] != None and textbook[5] != 'None'):
+            #print(textbook)
+            cnt_info[2] += 1 
             student_textbooks_list[int(textbook[5])].append(textbook[1])
+
+            needed_textbooks = student_requisites([textbook[5]]).split('|')
+            for textbook_needed in needed_textbooks:
+                if(textbook_needed == textbook[2] or placeholder_check(textbook_needed, textbook[2])):       
+                    #print(textbook) 
+                    cnt_info[1] -= 1 
         try:
             textbook_dictionary[int(textbook[1])] = textbook
             if(int(textbook[1]) < 1000000 or int(textbook[1]) >= 10000000):
-                cnt += 1
+                pass
                 #print("Bad Textbook #" + str(cnt) + "!", textbook)
         except:
             print("Error, could not process:", textbook)
+    
     conn.close()
+    print("Total Number of Textbooks: ", cnt_info[0])
+    print("Textbooks that still need to be distributed: ", cnt_info[1])
+    print("Textbooks that have been distributed: ", cnt_info[2])
     print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
 
 # function to get the current time
@@ -137,7 +175,7 @@ def student_return_info(args): # student number
 # get textbooks that a student should have
 def student_requisites(args): # student number
     #args[0] = "".join([i for i in args[0].lower() if i not in string.ascii_lowercase])
-    print(get_time()+"Returning requisite textbooks for student: "+args[0])
+    #print(get_time()+"Returning requisite textbooks for student: "+args[0])
     conn = Database.create_connection("server.db")
     courses = student_list[int(args[0])][4].split("|")
     #print(courses)
@@ -161,7 +199,7 @@ def student_withdrawn(args):
         textbook_info = information_textbook([textbook_id])
         textbook_info = textbook_info.split("|")
         textbooks_titles.append(textbook_info[1])
-    print("Student Withdrawn: %s seconds ---" % (time.time() - start_time))
+    #print("Student Withdrawn: %s seconds ---" % (time.time() - start_time))
     return "|".join(textbooks_titles)
 
 # get pairs of all student numbers and names
@@ -230,6 +268,7 @@ def delete_textbook(args): # textbook number
         del textbook_dictionary[int(args[0])]
     except:
         print("Guess you don't exist :/")
+    textbook_cnt -= 1
     conn.close()
     return "1"
 
@@ -239,6 +278,7 @@ def add_textbook(args): # textbook number, title, cost, condition
     conn = Database.create_connection("server.db")
     textbook_dictionary[int(args[0])] = [-1, args[0], args[1], args[2], args[3], None]
     Database.insert_textbook(conn, args[0], args[1], args[2], args[3])
+    textbook_cnt += 1
     conn.close()
     return "1"
 
@@ -253,8 +293,15 @@ def assign_textbook(args): # textbook number, student number
     student_textbooks_list[int(args[1])].append(args[0])
     textbook_strings[5] = args[1]
     textbook_dictionary[int(args[0])] = tuple(textbook_strings)
+    
     Database.assign_textbook(conn, args[0], args[1])
     conn.close()
+    cnt_info[2] += 1
+    needed_textbooks = student_requisites([textbook[5]]).split('|')
+    for textbook_needed in needed_textbooks:
+        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook[2])):       
+            #print(textbook) 
+            cnt_info[1] -= 1 
     return "1"
 
 # return a textbook from a student in the database
@@ -274,6 +321,12 @@ def return_textbook(args):
     textbook_strings[4] = args[1]
     textbook_dictionary[int(args[0])] =tuple(textbook_strings)
     conn.close()
+    needed_textbooks = student_requisites([textbook[5]]).split('|')
+    cnt_info[2] -= 1
+    for textbook_needed in needed_textbooks:
+        if(textbook_needed == textbook_strings[2] or placeholder_check(textbook_needed, textbook[2])):       
+            #print(textbook) 
+            cnt_info[1] += 1 
     return "1"
 
 # return the requisite textbooks for a given course
@@ -370,10 +423,10 @@ def get_textbook_counts(args):
 # gets the total number of textbooks
 def get_textbook_total(args):
     print(get_time()+"Getting total number of textbooks...")
-    conn = Database.create_connection("server.db")
-    total = len(Database.get_textbooks(conn))
-    conn.close()
-    return total
+    cnt_strings = []
+    for x in cnt_info:
+        cnt_strings.append(str(x))
+    return '|'.join(cnt_strings)
 
 # gets textbook inventory
 def get_textbook_inventory(args):

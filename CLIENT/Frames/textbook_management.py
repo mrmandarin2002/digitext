@@ -48,7 +48,6 @@ class TextbookManagement(tk.Frame):
             self.current_student_barcode = controller.current_barcode
             #which mode it's in
             if(self.day == 'D'):
-                print(controller.student_info)
                 #adds the textbooks that are assigned to the student in a list
                 for cnt, textbook in enumerate(controller.student_needed_textbooks):
                     self.textbook_listbox.insert(cnt, textbook)

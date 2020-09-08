@@ -187,7 +187,7 @@ class Client:
 
     # get the total number of textbooks
     def get_textbook_total(self):
-        return int(self.command("get_textbook_total", []))
+        return (self.command("get_textbook_total", [])).split('|')
 
     # write textbook inventory to file
     def get_textbook_inventory(self):

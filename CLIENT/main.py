@@ -59,7 +59,7 @@ class client(tk.Tk):
 
         #different type of fonts used throughout the program
         self.TITLE_FONT = tkfont.Font(family=self.MAIN_FONT, size=22, weight="bold")
-        self.TITLE_FONT2 = tkfont.Font(family=self.MAIN_FONT, size=27, weight="bold")
+        self.TITLE_FONT2 = tkfont.Font(family=self.MAIN_FONT, size=25, weight="bold")
         self.SUBTITLE_FONT = tkfont.Font(family = self.MAIN_FONT, size = 15, weight = "bold")
         self.FIELD_FONT = tkfont.Font(family = self.MAIN_FONT, size = 11)
         self.BUTTON_FONT = tkfont.Font(family= self.MAIN_FONT, size=10)
