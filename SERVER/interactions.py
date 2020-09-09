@@ -10,6 +10,7 @@ student_list = [[]] * 500000
 course_list = [[]] * 10000
 student_textbooks_list = []
 student_needed_cnt = []
+textbook_needed_cnt = {}
 
 #an array of cnts to keep track of
 #0 - total number of textbooks
@@ -58,8 +59,14 @@ def fill_dictionaries():
         if(student[4] != ''):
             cnt_info[3] += 1
             student_list[int(student[1])] = student
-            student_needed_cnt[int(student[1])] = len(student_requisites([student[1]]).split('|'))
+            needed_textbooks_s = student_requisites([student[1]]).split('|')
+            student_needed_cnt[int(student[1])] = len(needed_textbooks_s)
             cnt_info[1] += student_needed_cnt[int(student[1])]
+            for textbook in needed_textbooks_s:
+                if(textbook in textbook_needed_cnt):
+                    textbook_needed_cnt[textbook] += 1
+                else:
+                    textbook_needed_cnt[textbook] = 1
 
     for textbook in textbooks:
         cnt_info[0] += 1
@@ -89,6 +96,8 @@ def fill_dictionaries():
     print("Textbooks that have been distributed: ", cnt_info[2])
     print("Students who have to take out textbooks: ", cnt_info[3])
     print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
+    for textbook in textbook_needed_cnt:
+        print(textbook, ": ", textbook_needed_cnt[textbook])
 
 # function to get the current time
 def get_time():
@@ -288,7 +297,7 @@ def add_textbook(args): # textbook number, title, cost, condition
     conn = Database.create_connection("server.db")
     textbook_dictionary[int(args[0])] = [-1, args[0], args[1], args[2], args[3], None]
     Database.insert_textbook(conn, args[0], args[1], args[2], args[3])
-    textbook_cnt += 1
+    cnt_info[0] += 1
     conn.close()
     return "1"
 
@@ -451,7 +460,7 @@ def get_textbook_total(args):
             print("REMOVING STUDENT: ", student)
             student_activity_list.remove(student)
         else:
-            cnt_strings.append(student[1])
+            cnt_strings.append(student[1] + " | Left: " + str(student_needed_cnt[int(student[0])]))
     return '|'.join(cnt_strings)
 
 # gets textbook inventory
