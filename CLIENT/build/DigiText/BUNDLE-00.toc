@@ -1,3 +1,3 @@
 ([('DigiText',
-   '/Users/derekma/Documents/GitHub/digitext/CLIENT/dist/DigiText',
+   '/Users/derekma/Documents/GitHub/digitext/Releases/MacOS/DigiText',
    'EXECUTABLE')],)

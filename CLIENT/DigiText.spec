@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\derek\\Documents\\GitHub\\digitext\\CLIENT'],
+             pathex=['/Users/derekma/Documents/GitHub/digitext/CLIENT'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,8 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='sphs_icon.ico')
+          console=False , icon='sphs_icon.icns')
+app = BUNDLE(exe,
+             name='DigiText.app',
+             icon='sphs_icon.icns',
+             bundle_identifier=None)
