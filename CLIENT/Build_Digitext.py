@@ -31,6 +31,7 @@ PyInstaller.__main__.run([
     '--name=%s' % "DigiText",
     '--onefile',
     '--icon=%s' % 'sphs_icon.ico',
+    '--distpath=%s' % out_directory,
     "main.py",
 ])
 
