@@ -52,22 +52,21 @@ class Client:
             self.find_connection()
         if(success):
             try:
-                self.tcp_socket.send(msg.encode("utf-8"))
-                if(msg != DISCONNECT_MESSAGE):     
-                    data_length = ""
+                self.tcp_socket.send(msg.encode("utf-8"))   
+                data_length = ""
+                cnt = 0
+                while (len(data_length) < HEADER):
+                    cnt += 1
+                    data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
+                if(int(data_length)):
+                    data = ""
                     cnt = 0
-                    while (len(data_length) < HEADER):
+                    while(len(data) < int(data_length)):
+                        data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
                         cnt += 1
-                        data_length += self.tcp_socket.recv(HEADER).decode(FORMAT)
-                    if(int(data_length)):
-                        data = ""
-                        cnt = 0
-                        while(len(data) < int(data_length)):
-                            data += (self.tcp_socket.recv(int(data_length))).decode("utf-8")
-                            cnt += 1
-                        return data # return decoded data
-                    else:
-                        return ""
+                    return data # return decoded data
+                else:
+                    return ""
             except:
                 print("Critical Network Issue")
                 self.connection_established = False
