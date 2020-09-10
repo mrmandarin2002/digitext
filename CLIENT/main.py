@@ -34,6 +34,10 @@ class client(tk.Tk):
     current_frame_name = ''
     ip_address = ""
 
+    def on_closing(self):
+        self.scanner.server.disconnect()
+        self.destroy()
+
     def update_settings(self):
         self.settings = {}
         self.settings["ip_address"] = self.ip_address
@@ -47,6 +51,8 @@ class client(tk.Tk):
     #some initialization stuff I found on the internet. Don't know how but it works!
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)
         #this is the list of different windows ("frames as called in tkinter"). The basic idea between page switches...
         #is that I already pre-load all the windows and switch between them as necessary
         self.scene_list = (stats.Stats, textbook_management.TextbookManagement,menu.Menu, info.Info, textbook_scanner.TextbookScanner, teacher_assignment.TeacherAssignment)

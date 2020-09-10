@@ -37,6 +37,7 @@ def handle_client(conn, addr):
             msg = conn.recv(msg_length).decode(FORMAT)
             print(get_time() + msg)
             if msg == DISCONNECT_MESSAGE:
+                print(get_time() + f"{addr} disconnected!")
                 break
 
             #get info to be returned / changed
