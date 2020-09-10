@@ -11,6 +11,7 @@ course_list = [[]] * 10000
 student_textbooks_list = []
 student_needed_cnt = []
 textbook_needed_cnt = {}
+textbook_total_cnt = {}
 
 #an array of cnts to keep track of
 #0 - total number of textbooks
@@ -69,6 +70,10 @@ def fill_dictionaries():
                     textbook_needed_cnt[textbook] = 1
 
     for textbook in textbooks:
+        if(textbook[2] in textbook_total_cnt):
+            textbook_total_cnt[textbook[2]] = textbook_total_cnt[textbook[2]] + 1
+        else:
+            textbook_total_cnt[textbook[2]] = 1
         cnt_info[0] += 1
         if(textbook[5] != None and textbook[5] != 'None'):
             #print(textbook)
@@ -79,7 +84,7 @@ def fill_dictionaries():
                 if(textbook_needed == textbook[2] or placeholder_check(textbook_needed, textbook[2])):
                     student_needed_cnt[int(textbook[5])] -= 1
                     if(student_needed_cnt[int(textbook[5])] == 0):
-                        print(textbook[5])
+                        #print(textbook[5])
                         cnt_info[3] -= 1
                     cnt_info[1] -= 1 
         try:
@@ -95,9 +100,17 @@ def fill_dictionaries():
     print("Textbooks that still need to be distributed: ", cnt_info[1])
     print("Textbooks that have been distributed: ", cnt_info[2])
     print("Students who have to take out textbooks: ", cnt_info[3])
-    print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
+    print("Textbooks which will most definitely be problematic")
+    '''
+    problematic_list = []
     for textbook in textbook_needed_cnt:
-        print(textbook, ": ", textbook_needed_cnt[textbook])
+        if(textbook_needed_cnt[textbook] > textbook_total_cnt[textbook]):
+            problematic_list.append(textbook + " | Need: " + str(textbook_needed_cnt[textbook]) + " | Have: " + str(textbook_total_cnt[textbook]))
+    problematic_list.sort()
+    for cnt, textbook in enumerate(problematic_list):
+        print(str(cnt) + ". ", textbook)
+    '''
+    print("Fill Dicionary Processing Time: %s seconds ---" % (time.time() - start_time))
 
 # function to get the current time
 def get_time():

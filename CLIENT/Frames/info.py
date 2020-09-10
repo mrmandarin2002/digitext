@@ -4,10 +4,8 @@ from tkinter import messagebox
 import window
 
 class Info(tk.Frame):
-
     textbook_selected = False
     textbook_selected_index = 0
-    textbook_list_made = False
 
     def clear(self):
         self.barcode_label.config(text = "Current Barcode: ")
@@ -17,16 +15,15 @@ class Info(tk.Frame):
         self.textbook_price_label.config(text = "Textbook Price: ")
         self.student_name_label.config(text = "Student Name: ")
         self.textbook_barcode_label["text"] = "Textbook Barcode: "
-        if(self.textbook_list_made):
-            self.textbook_list_made = False
-            self.textbook_list.delete(0, tk.END)
-            self.textbook_list.grid_forget()
+        self.textbook_list_made = False
+        self.textbook_list.delete(0, tk.END)
 
     def select_textbook(self, event, controller):
-        self.textbook_selected = True
-        self.textbook_selected_index = int((self.textbook_list.curselection())[0])
-        controller.textbook_info = controller.server.info_t(controller.student_textbooks[self.textbook_selected_index])
-        self.display_textbook_info(controller)
+        if(controller.controller.current_frame_name == "Info"):
+            self.textbook_selected = True
+            self.textbook_selected_index = int((self.textbook_list.curselection())[0])
+            controller.textbook_info = controller.server.info_t(controller.student_textbooks[self.textbook_selected_index])
+            self.display_textbook_info(controller)
 
     def display_textbook_info(self, controller):
         self.textbook_title_label["text"] = "Textbook Title: " + controller.textbook_info[1]
@@ -41,12 +38,9 @@ class Info(tk.Frame):
             self.clear()
             self.student_name_label.config(text = "Student Name: " + controller.student_info[2].replace(' ', ', '))
             cnt = 1
-            self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.controller.MAROON, font = controller.controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.controller.BLUE, height = 18, width = 30)
             for textbook in controller.student_textbooks_title:
                 self.textbook_list.insert(cnt, textbook)
                 cnt += 1
-            self.textbook_list.grid(row = 1, column = 1, sticky = "NW", rowspan = 15)
-            self.textbook_list.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller))
 
         elif(controller.barcode_status == "Textbook"):
             self.clear()
@@ -117,6 +111,9 @@ class Info(tk.Frame):
         delete_button.grid(row = 9, column = 0, padx = 10, pady = (10, 0), sticky = "W")     
         manual_entry = tk.Button(self, text = "Manual Barcode Entry", font = controller.MENU_FONT, command = lambda: window.manual_barcode_entry_window(self, controller).show(controller))
         manual_entry.grid(row = 10, column = 0, padx = 10, sticky = "W")
+        self.textbook_list = tk.Listbox(self, bd = 0, bg = controller.MAROON, font = controller.MENU_FONT, selectmode = "SINGLE", selectbackground = controller.BLUE, height = 18, width = 30)
+        self.textbook_list.grid(row = 1, column = 1, sticky = "NW", rowspan = 15)
+        self.textbook_list.bind('<<ListboxSelect>>', lambda event: self.select_textbook(event,controller.scanner))
         pady_dif = 30
         if(controller.settings["version"] == "teacher"):
             pady_dif = 0

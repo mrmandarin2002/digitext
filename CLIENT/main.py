@@ -99,7 +99,6 @@ class client(tk.Tk):
             self.frames[page_name] = frame
             frame.grid(row = 0, column = 0, sticky = "nswe")
         
-
         #this is the starting window
         self.show_frame("Menu", False)
 
@@ -127,7 +126,5 @@ if __name__ == '__main__':
     root.geometry("650x520")
     #root.resizable(False, False)
     root.mainloop()
-
-            
 
 
