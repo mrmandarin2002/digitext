@@ -65,4 +65,3 @@ while True:
     thread = threading.Thread(target = handle_client, args = (conn, addr))
     thread.start()
     print(get_time() + f" New client connected. There are currently {threading.activeCount() - 1} client(s) connected!")
-        

@@ -20,7 +20,7 @@ def close_connection(conn):
 def insert_student(conn, number, name, deposit):
     # create an sql command string
     sql_cmd = """INSERT INTO Students(StudentNumber, StudentName, StudentDeposit, StudentCourses)
-             VALUES(?,?,?, ?)"""
+             VALUES(?,?,?,?)"""
     # create a cursor object
     cur = conn.cursor()
     # execute the sql command string using the function parameters
